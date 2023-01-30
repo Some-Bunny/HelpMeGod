@@ -1,6 +1,7 @@
 ﻿using System;
+using System.Collections;
 using System.IO;
-using SimpleFileBrowser;
+using AnotherFileBrowser.Windows;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -77,7 +78,11 @@ public class FileButton : DropdownContentButton
 
 	public static void Open()
 	{
-		FileBrowser.OnSuccess OnSuccess = delegate(string path)
+		var bp = new BrowserProperties();
+		bp.filter = "Room files (*.room, *.newroom) | *.room; *.newroom";
+		bp.filterIndex = 0;
+		bp.title = "Import";
+		new FileBrowser().OpenFileBrowser(bp, path =>
 		{
 			if (!string.IsNullOrEmpty(path))
 			{
@@ -85,20 +90,22 @@ public class FileButton : DropdownContentButton
 				Manager.FilePath = path;
 				ImportExport.ImportGateKeeper(path);
 			}
-		};
-		FileBrowser.ShowLoadDialog(OnSuccess, null, false, FileButton.GetInitialPath(), "Open", "Select");
+		});
 	}
 
 	public static void UpdateFolder()
 	{
-		FileBrowser.OnSuccess OnSuccess = delegate (string path)
+
+		var bp = new FolderBrowserProperties();
+		bp.title = "Select folder to upgrade rooms from";
+		bp.rootFolder = Environment.SpecialFolder.MyDocuments;
+		new FileBrowser().OpenFolderBrowser(bp, path =>
 		{
 			if (!string.IsNullOrEmpty(path))
 			{
 				ImportExport.ConvertToNewRoomFormat(path);
 			}
-		};
-		FileBrowser.ShowLoadDialog(OnSuccess, null, true, FileButton.GetInitialPath(), "Open", "Select");
+		});
 	}
 
 	public static void Save()
@@ -117,12 +124,30 @@ public class FileButton : DropdownContentButton
 	
 	public static void SaveAs()
 	{
+		var bp = new BrowserProperties();
+		bp.filter = "Room files (*.newroom) | *.newroom";
+		bp.filterIndex = 0;
+		bp.title = "Save As...";
+		new FileBrowser().OpenSaveFileBrowser(bp, path =>
+		{
+			if (!string.IsNullOrEmpty(path))
+			{
+				if (!path.Contains("."))
+				{
+					path += ".newroom";
+				}
+				Manager.FilePath = path;
+				FileButton.Save();
+			}
+		});
+
+
+		/*
 		FileBrowser.OnSuccess OnSuccess = delegate(string path)
 		{
 			if (!string.IsNullOrEmpty(path))
 			{
-				bool flag2 = !path.Contains(".");
-				if (flag2)
+				if (!path.Contains("."))
 				{
 					//path += ".room";
 					path += ".newroom";
@@ -131,7 +156,7 @@ public class FileButton : DropdownContentButton
 				FileButton.Save();
 			}
 		};
-		FileBrowser.ShowSaveDialog(OnSuccess, null, false, FileButton.GetInitialPath(), "Save As...", "Save");
+		FileBrowser.ShowSaveDialog(OnSuccess, null, false, FileButton.GetInitialPath(), "Save As...", "Save");*/
 	}
 
 	

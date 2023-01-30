@@ -20,10 +20,14 @@ public static class ImportExport
 				return;
 			}
 		}
+
+		CanvasHandler.Instance.Trim();
+
+		Debug.Log(TilemapHandler.Bounds.size);
+
 		ImportExport.NewRoomData data = new ImportExport.NewRoomData
 		{
 			roomSize = new Vector2Int(TilemapHandler.Bounds.size.x, TilemapHandler.Bounds.size.y),
-			//tilePositions = new Vector2[0],
 			enemyGUIDs = new string[0],
 			enemyPositions = new Vector2[0],
 			enemyAttributes = new string[0],
@@ -42,7 +46,7 @@ public static class ImportExport
 			placeableAttributes = new string[0],
 			weight = 1f
 		};
-		CanvasHandler.Instance.Trim();
+		
 		Manager i = Manager.Instance;
 
 		i.GetTilemap(TilemapHandler.MapType.Environment).GetComponent<EnvironmentMap>().CollectDataForExport(ref data);
@@ -52,7 +56,7 @@ public static class ImportExport
 		i.GetTilemap(TilemapHandler.MapType.Exits).GetComponent<ExitMap>().CollectDataForExport(ref data);
 		i.GetTilemap(TilemapHandler.MapType.Placeables).GetComponent<PlaceableMap>().CollectDataForExport(ref data);
 		Manager.Instance.roomProperties.CollectRoomProperties(ref data);
-		using (StreamWriter sw = new StreamWriter(path, true))
+		using (StreamWriter sw = new StreamWriter(path, false))
 		{			
 			sw.WriteLine(JsonUtility.ToJson(data));
 		}
@@ -241,6 +245,7 @@ public static class ImportExport
 			ImportExport.onLoad = delegate ()
 			{
 				ImportExport.PrepareEnemyMaps(data);
+				ImportExport.PrepareNodeMaps(data);
 			};
 			ImportExport.postStart = delegate ()
 			{
@@ -286,6 +291,7 @@ public static class ImportExport
 		ImportExport.BuildEnvironmentMapFromNewData(data);
 		ImportExport.BuildExitMapFromData(data);
 		ImportExport.BuildEnemyMapsFromData(data);
+		ImportExport.BuildNodeMapsFromData(data);
 		ImportExport.BuildPlaceableMapFromData(data);
 	}
 
@@ -368,22 +374,7 @@ public static class ImportExport
 					tiles[x, y] = ImportExport.TileFromNumber(int.Parse(data.tileInfo[x + (y * width)].ToString()), tilemapHandler);
 				}
 			}
-			//0 0 0 0 0 0 0 0 - 
-			//1 2 3 4 5 6 7 8
-			//2 4 6 8 10 12 14 16
-
-			//0 1 2 3 4 5 6 7 8
-			//1 2 3 4 5 6 7 8 9
-			//2 3 4 5 6 7 8 9 10
-
-			//0 1 2 3 4 5 6 7 8
-			//9 10 11 12
-
-			//for (int i = 0; i < data.tileInfo.Length; i++)
-            //{
-			//	
-			//	tiles[(int)data.tilePositions[i].x, (int)data.tilePositions[i].y] = ImportExport.TileFromNumber(int.Parse(data.tileInfo[i].ToString()), tilemapHandler);
-			//}			
+	
 			tilemapHandler.BuildFromTileArray(tiles);
 		}
 		catch (Exception e)
@@ -518,10 +509,53 @@ public static class ImportExport
 		}
 	}
 
+	public static void BuildNodeMapsFromData(ImportExport.NewRoomData data)
+	{
+		if (NodePathLayerHandler.Instance.LayerCount != 0)
+		{
+			List<Tile[,]> tileArrays = new List<Tile[,]>();
+			for (int i = 0; i < NodePathLayerHandler.Instance.LayerCount; i++)
+			{
+				tileArrays.Add(new Tile[Manager.roomSize.x, Manager.roomSize.y]);
+			}
+			for (int j = 0; j < data.nodeTypes.Length; j++)
+			{
+				int layer = data.nodePaths[j];
+				NodeMap mapHandler = NodePathLayerHandler.Instance.GetMap(layer);
+				string guid = data.nodeTypes[j];
+
+
+
+				Vector2 position = data.nodePositions[j];
+				string id = mapHandler.tileDatabase.GetID(guid);
+
+				Debug.Log(id);
+
+				if (string.IsNullOrEmpty(id))
+                {
+					
+                }
+				else if(!mapHandler.palette.ContainsKey(id))
+				{
+					Debug.Log(id);
+				}
+				else
+				{
+					DataTile tile = TilemapHandler.Clone(mapHandler.palette[id]);
+					tileArrays[layer][(int)position.x, (int)position.y] = tile;
+				}
+			}
+			for (int k = 0; k < NodePathLayerHandler.Instance.LayerCount; k++)
+			{
+				NodePathLayerHandler.Instance.GetMap(k).BuildFromTileArray(tileArrays[k]);
+			}
+		}
+	}
+
 	public static void BuildEnemyMapsFromData(ImportExport.NewRoomData data)
 	{
-		bool flag = EnemyLayerHandler.Instance.LayerCount == 0;
-		if (!flag)
+		
+		if (EnemyLayerHandler.Instance.LayerCount != 0)
 		{
 			List<Tile[,]> tileArrays = new List<Tile[,]>();
 			for (int i = 0; i < EnemyLayerHandler.Instance.LayerCount; i++)
@@ -591,6 +625,22 @@ public static class ImportExport
 				EnemyLayerHandler.Instance.GetMap(k).BuildFromTileArray(tileArrays[k]);
 			}
 		}
+	}
+
+
+	public static void PrepareNodeMaps(ImportExport.NewRoomData data)
+	{
+		if (data.nodeTypes == null || data.nodePaths == null || data.nodePositions == null || data.nodeWrapModes == null) return;
+
+		if (data.nodeTypes.Length != data.nodePaths.Length || data.nodeTypes.Length != data.nodePositions.Length || data.nodeTypes.Length != data.nodeWrapModes.Length)
+		{
+			Debug.LogError($"Uneven enemy data array length: {data.nodeTypes.Length} != {data.nodePositions.Length} != {data.nodePaths.Length} != {data.nodeWrapModes.Length}");
+			//return;
+		}
+		int numLayers = 0;
+		foreach (int layer in data.nodePaths) numLayers = Mathf.Max(numLayers, layer);
+		NodePathLayerHandler.Instance.scheduledLayers = numLayers + 1;
+
 	}
 
 	public static void PrepareEnemyMaps(ImportExport.NewRoomData data)

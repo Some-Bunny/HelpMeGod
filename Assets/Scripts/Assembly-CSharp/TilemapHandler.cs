@@ -356,7 +356,19 @@ public abstract class TilemapHandler : MonoBehaviour
 		{
 			for (int j = 0; j < tiles.GetLength(1); j++)
 			{
-				this.map.SetTile(TilemapHandler.GameToLocalPosition(i, j), tiles[i, j]);
+
+				if (this is NodeMap)
+                {
+					var tile = TilemapHandler.Clone(tiles[i, j]);
+
+					this.map.SetTile(TilemapHandler.GameToLocalPosition(i, j), tile);
+
+					(this as NodeMap).AddNewNodeTile(tile, TilemapHandler.GameToLocalPosition(i, j));
+				}
+				else
+                {
+					this.map.SetTile(TilemapHandler.GameToLocalPosition(i, j), tiles[i, j]);
+				}
 			}
 		}
 	}
@@ -459,11 +471,9 @@ public abstract class TilemapHandler : MonoBehaviour
 	
 	public static DataTile Clone(Tile other)
 	{
-		bool flag = other == null;
-		DataTile result;
-		if (flag)
+		if (other == null)
 		{
-			result = null;
+			return null;
 		}
 		else
 		{
@@ -478,9 +488,8 @@ public abstract class TilemapHandler : MonoBehaviour
 			tile.transform = other.transform;
 			DataTile dataTile;
 			tile.data = (((dataTile = (other as DataTile)) != null) ? JObject.Parse(dataTile.data.ToString()) : new JObject());
-			result = tile;
+			return tile;
 		}
-		return result;
 	}
 
 	

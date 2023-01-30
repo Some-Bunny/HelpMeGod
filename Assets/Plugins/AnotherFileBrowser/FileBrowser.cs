@@ -28,13 +28,62 @@ namespace AnotherFileBrowser.Windows
             ofd.FilterIndex = browserProperties.filterIndex + 1;
             ofd.RestoreDirectory = browserProperties.restoreDirectory;
 
+
             if (ofd.ShowDialog(new WindowWrapper(GetActiveWindow())) == DialogResult.OK)
             {
                 filepath(ofd.FileName);
             }
         }
 
-       
+
+        public void OpenSaveFileBrowser(BrowserProperties browserProperties, Action<string> filepath)
+        {
+            var ofd = new VistaSaveFileDialog();
+            ofd.Title = browserProperties.title == null ? "Select a File" : browserProperties.title;
+            ofd.InitialDirectory = browserProperties.initialDir == null ? @"C:\" : browserProperties.initialDir;
+            ofd.Filter = browserProperties.filter == null ? "All files (*.*)|*.*" : browserProperties.filter;
+            ofd.FilterIndex = browserProperties.filterIndex + 1;
+            ofd.RestoreDirectory = browserProperties.restoreDirectory;
+
+
+            if (ofd.ShowDialog(new WindowWrapper(GetActiveWindow())) == DialogResult.OK)
+            {
+                filepath(ofd.FileName);
+            }
+        }
+
+
+        /// <summary>
+        /// FileDialog for picking a single folder
+        /// </summary>
+        /// <param name="browserProperties">Special Properties of File Dialog</param>
+        /// <param name="filepath">User picked path (Callback)</param>
+        public void OpenFolderBrowser(FolderBrowserProperties browserProperties, Action<string> filepath)
+        {
+            var ofd = new VistaFolderBrowserDialog();
+            ofd.Description = browserProperties.title == null ? "Select a File" : browserProperties.title;           
+            ofd.ShowNewFolderButton = browserProperties.showNewFolderButton;
+            ofd.RootFolder = browserProperties.rootFolder;
+
+
+            if (ofd.ShowDialog(new WindowWrapper(GetActiveWindow())) == DialogResult.OK)
+            {
+                filepath(ofd.SelectedPath);
+            }
+        }
+    }
+
+
+
+    public class FolderBrowserProperties
+    {
+        public string title; //Title of the Dialog
+        public Environment.SpecialFolder rootFolder; //Where dialog will be opened initially
+        public bool showNewFolderButton = false; //Restore to last return directory
+
+
+        public FolderBrowserProperties() { }
+        public FolderBrowserProperties(string title) { this.title = title; }
     }
 
     public class BrowserProperties

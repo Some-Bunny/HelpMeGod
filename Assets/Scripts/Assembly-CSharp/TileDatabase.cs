@@ -48,13 +48,12 @@ public class TileDatabase
 	{
 		foreach (string key in this.AllEntries.Keys)
 		{
-			bool flag = this.AllEntries[key].Equals(guid);
-			if (flag)
+			if (this.AllEntries[key].Equals(guid))
 			{
 				return key;
 			}
 		}
-		Debug.LogError("EnemyDatabase: Could not find enemy with GUID " + guid);
+		Debug.LogError("Database: Could not find enemy with GUID " + guid);
 		return null;
 	}
 

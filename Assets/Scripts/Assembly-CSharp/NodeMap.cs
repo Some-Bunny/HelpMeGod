@@ -58,11 +58,14 @@ public class NodeMap : TilemapHandler
 				if (!tiles[x, y]) continue;
 				DataTile tile = tiles[x, y] as DataTile;
 
+				if (!string.IsNullOrEmpty(this.tileDatabase.AllEntries[tile.name]))
+                {
+					guids[tile.placmentOrder] = (this.tileDatabase.AllEntries[tile.name]);
+					positions[tile.placmentOrder] = (new Vector2((float)x, (float)y));
+					triggers.Add(trigger.ToString());
+					layers.Add(index);
+				}
 
-				guids[tile.placmentOrder] = (this.tileDatabase.AllEntries[tile.name]);
-				positions[tile.placmentOrder] = (new Vector2((float)x, (float)y));
-				triggers.Add(trigger.ToString());
-				layers.Add(index);
 			}
 		}
 
@@ -114,10 +117,12 @@ public class NodeMap : TilemapHandler
     {
 		//nodes.Clear();
 
+		//Debug.Log(tile.name);
+
+
+
 		if (tile == null) return;
 
-		//tile.position = ((Vector2Int)position);
-		//nodes.Add(tile);
 		var allTiles = base.AllTiles();
 		var tileList = new List<Tile>();
 		foreach (var t in allTiles)
@@ -134,11 +139,10 @@ public class NodeMap : TilemapHandler
 
 			if (dataTile.placmentOrder >= 0) nodes[dataTile.placmentOrder] = dataTile;
 		}
+
+		
+
 		if (tile.placmentOrder < 0) tile.placmentOrder = nodes.Length - 1; nodes[tile.placmentOrder] = tile;
-
-
-
-
 	}
 
 	public DataTile[] nodes = new DataTile[0];
