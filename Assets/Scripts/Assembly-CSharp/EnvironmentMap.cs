@@ -148,9 +148,9 @@ public class EnvironmentMap : TilemapHandler
 			for (int x = 0; x < tiles.GetLength(0); x++)
 			{
 				Tile tile = tiles[x, y];
-				if (!tile)
+				if (tile == null)
 				{
-					tileData += 0;
+					tileData += 2;
 				}
 				else
 				{
@@ -166,7 +166,11 @@ public class EnvironmentMap : TilemapHandler
 					else if (name.Contains("pit"))
 					{
 						tileData += 3;
-					}											
+					}	
+					else
+                    {
+						tileData += 2;
+					}
 				}
 			}
 		}

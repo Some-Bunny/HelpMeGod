@@ -34,6 +34,7 @@ public static class ImportExport
 			waveTriggers = new string[0],
 			enemyReinforcementLayers = new int[0],
 			nodePaths = new int[0],
+			nodeOrder = new int[0],
 			nodePositions = new Vector2[0],
 			nodeTypes = new string[0],
 			nodeWrapModes = new string[0],
@@ -513,13 +514,28 @@ public static class ImportExport
 	{
 		if (NodePathLayerHandler.Instance.LayerCount != 0)
 		{
-			List<Tile[,]> tileArrays = new List<Tile[,]>();
+			List<Dictionary<Vector2Int, Tile>> tileArrays = new List<Dictionary<Vector2Int, Tile>>();
 			for (int i = 0; i < NodePathLayerHandler.Instance.LayerCount; i++)
 			{
-				tileArrays.Add(new Tile[Manager.roomSize.x, Manager.roomSize.y]);
+				//tileArrays.Add(new Tile[Manager.roomSize.x, Manager.roomSize.y]);
+				tileArrays.Add(new Dictionary<Vector2Int, Tile>());
 			}
-			for (int j = 0; j < data.nodeTypes.Length; j++)
+
+			Dictionary<int, int> stupidJankyPieceOfShit = new Dictionary<int, int>();
+
+			for (int j = 0; j < data.nodeOrder.Length; j++)
 			{
+				Debug.LogWarning($"data.nodeOrder[]{data.nodeOrder[j]} - j{j}");
+				stupidJankyPieceOfShit.Add(data.nodeOrder[j], j);
+			}
+
+			for (int i = 0; i < data.nodeOrder.Length; i++)
+			{
+
+				int j = 0;
+				stupidJankyPieceOfShit.TryGetValue(i, out j);
+				Debug.LogWarning($"{data.nodeTypes[j]} - j{j} - i{i} - {data.nodeTypes[j]}");
+
 				int layer = data.nodePaths[j];
 				NodeMap mapHandler = NodePathLayerHandler.Instance.GetMap(layer);
 				string guid = data.nodeTypes[j];
@@ -532,22 +548,32 @@ public static class ImportExport
 				Debug.Log(id);
 
 				if (string.IsNullOrEmpty(id))
-                {
-					
-                }
-				else if(!mapHandler.palette.ContainsKey(id))
 				{
-					Debug.Log(id);
+
+				}
+				else if (!mapHandler.palette.ContainsKey(id))
+				{
+					//Debug.Log(id);
 				}
 				else
 				{
 					DataTile tile = TilemapHandler.Clone(mapHandler.palette[id]);
-					tileArrays[layer][(int)position.x, (int)position.y] = tile;
+					//Debug.Log($"{(int)position.x}, {(int)position.y} --- {Manager.roomSize.x}, {Manager.roomSize.y} --- {data.nodePositions[j]}");
+
+					//tileArrays[layer][(int)position.x, (int)position.y] = tile;
+					tileArrays[layer].Add(new Vector2Int((int)position.x, (int)position.y), tile);
 				}
 			}
+
 			for (int k = 0; k < NodePathLayerHandler.Instance.LayerCount; k++)
 			{
-				NodePathLayerHandler.Instance.GetMap(k).BuildFromTileArray(tileArrays[k]);
+				foreach(var tileShit in tileArrays[k])
+                {
+					NodePathLayerHandler.Instance.GetMap(k).map.SetTile(TilemapHandler.GameToLocalPosition(tileShit.Key), tileShit.Value);
+
+					(NodePathLayerHandler.Instance.GetMap(k) as NodeMap).AddNewNodeTile(tileShit.Value as DataTile, TilemapHandler.GameToLocalPosition(tileShit.Key));
+				}
+				//NodePathLayerHandler.Instance.GetMap(k).BuildFromTileArray(tileArrays[k]);
 			}
 		}
 	}
@@ -630,7 +656,7 @@ public static class ImportExport
 
 	public static void PrepareNodeMaps(ImportExport.NewRoomData data)
 	{
-		if (data.nodeTypes == null || data.nodePaths == null || data.nodePositions == null || data.nodeWrapModes == null) return;
+		if (data.nodeTypes == null || data.nodePaths == null || data.nodePositions == null || data.nodeWrapModes == null || data.nodeOrder == null) return;
 
 		if (data.nodeTypes.Length != data.nodePaths.Length || data.nodeTypes.Length != data.nodePositions.Length || data.nodeTypes.Length != data.nodeWrapModes.Length)
 		{
@@ -737,6 +763,7 @@ public static class ImportExport
 		public string[] nodeWrapModes;
 		public Vector2[] nodePositions;
 		public int[] nodePaths;
+		public int[] nodeOrder;
 
 
 		public Vector2[] placeablePositions;

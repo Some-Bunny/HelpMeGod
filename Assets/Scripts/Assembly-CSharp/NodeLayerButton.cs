@@ -29,7 +29,7 @@ public class NodeLayerButton : MonoBehaviour
         triggerDropdowns = new List<Transform>();
         SetupDropdown<SerializedPathWrapMode>(triggerDropdown);
 
-        triggerDropdowns.Add(triggerDropdown.transform);
+        triggerDropdowns.Add(triggerDropdown.transform);      
     }
 
     private void SetupDropdown<T>(Dropdown dropdown) where T : Enum
@@ -48,6 +48,7 @@ public class NodeLayerButton : MonoBehaviour
         this.Selected = true;
         this.selectedPanel.SetActive(true);
         NodePathLayerHandler.Instance.SetSelectedLayer(this);
+        
     }
 
     public void SetText(string text)

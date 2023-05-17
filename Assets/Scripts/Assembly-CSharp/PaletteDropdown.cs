@@ -93,11 +93,7 @@ public class PaletteDropdown : MonoBehaviour
 	
 	public TilePalette[] palettes;
 
-	public TilePalette nodeModePallet;
-
-	
 	public static PaletteDropdown Instance;
 
-	
 	private Dropdown dropdown;
 }

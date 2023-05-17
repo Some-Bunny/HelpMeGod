@@ -350,7 +350,7 @@ public abstract class TilemapHandler : MonoBehaviour
 	}
 
 	
-	public void BuildFromTileArray(Tile[,] tiles)
+	public void BuildFromTileArray(Tile[,] tiles, int overrideNodeOrder = -1)
 	{
 		for (int i = 0; i < tiles.GetLength(0); i++)
 		{
@@ -359,11 +359,12 @@ public abstract class TilemapHandler : MonoBehaviour
 
 				if (this is NodeMap)
                 {
-					var tile = TilemapHandler.Clone(tiles[i, j]);
+					//var tile = TilemapHandler.Clone(tiles[i, j]);
+					var tile = tiles[i, j];
 
 					this.map.SetTile(TilemapHandler.GameToLocalPosition(i, j), tile);
 
-					(this as NodeMap).AddNewNodeTile(tile, TilemapHandler.GameToLocalPosition(i, j));
+					(this as NodeMap).AddNewNodeTile(tile as DataTile, TilemapHandler.GameToLocalPosition(i, j), overrideNodeOrder);
 				}
 				else
                 {

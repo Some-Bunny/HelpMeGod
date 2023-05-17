@@ -222,7 +222,7 @@ public class NodePathLayerHandler : MonoBehaviour
 	public NodeLayerButton layerButtonPrefab;
 
 	
-	private List<NodeMap> nodeMaps;
+	public List<NodeMap> nodeMaps;
 
 	
 	private List<NodeLayerButton> buttons;

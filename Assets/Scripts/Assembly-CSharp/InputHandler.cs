@@ -548,10 +548,34 @@ public class InputHandler : MonoBehaviour
 		nodeMode = !nodeMode;
 
 		EnemyLayer.SetActive(!nodeMode);
-		NodeLayer.SetActive(nodeMode);
+		NodeLayer.SetActive(nodeMode);	
 
 		InputHandler.Instance.BrushType = BrushButton.BrushType.BRUSH;
-		PaletteDropdown.Instance.ToggleNodeMode();
+
+		NodePaletteDropdown.Instance.gameObject.transform.parent.gameObject.SetActive(nodeMode);
+		PaletteDropdown.Instance.gameObject.transform.parent.gameObject.SetActive(!nodeMode);
+
+		if (InputHandler.Instance.nodeMode)
+		{			
+			NodePaletteDropdown.Instance.SetValue(TilemapHandler.MapType.Nodes);
+
+			Manager.Instance.environment.GetComponent<Tilemap>().color = new Color(1f, 1f, 1f, 0.5f);
+			Manager.Instance.exits.GetComponent<Tilemap>().color = new Color(1f, 1f, 1f, 0.5f);
+			Manager.Instance.placeables.GetComponent<Tilemap>().color = new Color(1f, 1f, 1f, 0.5f);
+			EnemyLayerHandler.Instance.enemyMaps.ForEach(x => x.GetComponent<Tilemap>().color = new Color(1f, 1f, 1f, 0.5f));
+			NodePathLayerHandler.Instance.nodeMaps.ForEach(x => x.GetComponent<Tilemap>().color = Color.white);
+		}
+		else
+		{			
+			PaletteDropdown.Instance.SetValue(TilemapHandler.MapType.Environment);
+
+			Manager.Instance.environment.GetComponent<Tilemap>().color = Color.white;
+			Manager.Instance.exits.GetComponent<Tilemap>().color = Color.white;
+			Manager.Instance.placeables.GetComponent<Tilemap>().color = Color.white;
+			EnemyLayerHandler.Instance.enemyMaps.ForEach(x => x.GetComponent<Tilemap>().color = Color.white);
+			NodePathLayerHandler.Instance.nodeMaps.ForEach(x => x.GetComponent<Tilemap>().color = new Color(1f, 1f, 1f, 0.5f));
+		}
+
 	}
 
 	
