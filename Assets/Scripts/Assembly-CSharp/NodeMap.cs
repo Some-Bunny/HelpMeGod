@@ -1,8 +1,11 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -18,7 +21,8 @@ public class NodeMap : TilemapHandler
 		//List<string> attributes = new List<string>();
 		List<string> triggers = new List<string>();
 		List<int> layers = new List<int>();
-		for (int x = 0; x < tiles.GetLength(0); x++)
+
+        for (int x = 0; x < tiles.GetLength(0); x++)
 		{
 			for (int y = 0; y < tiles.GetLength(1); y++)
 			{
@@ -28,15 +32,15 @@ public class NodeMap : TilemapHandler
 				positions.Add(new Vector2((float)x, (float)y));
 				triggers.Add(trigger.ToString());
 				layers.Add(index);
-			}
-		}
+            }
+        }
 		data.nodeTypes = data.nodeTypes.Concat(guids.ToArray()).ToArray<string>();
 		data.nodePositions = data.nodePositions.Concat(positions.ToArray()).ToArray<Vector2>();
 		data.nodePaths = data.nodePaths.Concat(layers.ToArray()).ToArray<int>();
 		data.nodeWrapModes = data.nodeWrapModes.Concat(triggers.ToArray()).ToArray();
-	}
+    }
 
-	public void CollectDataForExport2(ref ImportExport.NewRoomData data, int index, Enums.SerializedPathWrapMode trigger)
+    public void CollectDataForExport2(ref ImportExport.NewRoomData data, int index, Enums.SerializedPathWrapMode trigger)
 	{
 
 		//DataTile[,] tiles = (DataTile[,])base.AllTiles();
@@ -65,7 +69,8 @@ public class NodeMap : TilemapHandler
 			{
 				if (!tiles[x, y]) continue;
 				DataTile tile = tiles[x, y] as DataTile;
-				guids.Add(this.tileDatabase.AllEntries[tile.name]);
+                tile.isNode = true;
+                guids.Add(this.tileDatabase.AllEntries[tile.name]);
 				positions.Add(new Vector2((float)x, (float)y));
 				//DataTile dataTile;
 				triggers.Add(trigger.ToString());		
@@ -74,13 +79,17 @@ public class NodeMap : TilemapHandler
 			}
 		}
 
+
+
+
 		data.nodeTypes = data.nodeTypes.Concat(guids.ToArray()).ToArray<string>();
 		data.nodePositions = data.nodePositions.Concat(positions.ToArray()).ToArray<Vector2>();
 		data.nodePaths = data.nodePaths.Concat(layers.ToArray()).ToArray<int>();
 		data.nodeOrder = data.nodeOrder.Concat(order.ToArray()).ToArray<int>();
 		data.nodeWrapModes = data.nodeWrapModes.Concat(triggers.ToArray()).ToArray();
 
-		var diediediediediediediediedie = 0;
+
+        var diediediediediediediediedie = 0;
 		/*foreach (var cunt in nodes)
         {
 			if (cunt == null) continue;
@@ -137,33 +146,37 @@ public class NodeMap : TilemapHandler
 		Vector2[] positions = new Vector2[nodes.Length];
 		List<string> triggers = new List<string>();
 		List<int> layers = new List<int>();
-		//foreach (var node in nodes)
-		//{
-		//	guids.Add(this.tileDatabase.AllEntries[node.name]);
-		//	positions.Add(node.position);
-		//	triggers.Add(trigger.ToString());
-		//	layers.Add(index);
-		//}
-		for (int x = 0; x < tiles.GetLength(0); x++)
+
+        //foreach (var node in nodes)
+        //{
+        //	guids.Add(this.tileDatabase.AllEntries[node.name]);
+        //	positions.Add(node.position);
+        //	triggers.Add(trigger.ToString());
+        //	layers.Add(index);
+        //}
+        for (int x = 0; x < tiles.GetLength(0); x++)
 		{
 			for (int y = 0; y < tiles.GetLength(1); y++)
 			{
 				if (!tiles[x, y]) continue;
 				DataTile tile = tiles[x, y] as DataTile;
+                tile.isNode = true;
 
-				
-				guids[tile.placmentOrder] = (this.tileDatabase.AllEntries[tile.name]);
-				positions[tile.placmentOrder] = (new Vector2((float)x, (float)y));
+
+                guids[tile.placmentOrder] = (this.tileDatabase.AllEntries[tile.name]);
+                positions[tile.placmentOrder] = (new Vector2((float)x, (float)y));
 				triggers.Add(trigger.ToString());
 				layers.Add(index);
-			}
-		}
+            }
+        }
 
-		data.nodeTypes = data.nodeTypes.Concat(guids.ToArray()).ToArray<string>();
+        data.nodeTypes = data.nodeTypes.Concat(guids.ToArray()).ToArray<string>();
 		data.nodePositions = data.nodePositions.Concat(positions.ToArray()).ToArray<Vector2>();
 		data.nodePaths = data.nodePaths.Concat(layers.ToArray()).ToArray<int>();
-		data.nodeWrapModes = data.nodeWrapModes.Concat(triggers.ToArray()).ToArray();
-	}
+        data.nodeWrapModes = data.nodeWrapModes.Concat(triggers.ToArray()).ToArray();
+        
+
+    }
 
 
 
@@ -171,14 +184,14 @@ public class NodeMap : TilemapHandler
     {
 
 		overrideOrder = -1;
+		Debug.LogError("ORDER:");
+        //nodes.Clear();
 
-		//nodes.Clear();
-
-		//Debug.Log(tile.name);
+        //Debug.Log(tile.name);
 
 
 
-		/*if (tile == null) return;
+        /*if (tile == null) return;
 
 		var allTiles = base.AllTiles();
 		var tileList = new List<Tile>();
@@ -202,10 +215,11 @@ public class NodeMap : TilemapHandler
 		//var fuckYou = nodes.ToList();
 		//var fuckYou = new List<DataTile>();*/
 
-		if (tile != null)
+        if (tile != null)
 		{
-			//Debug.Log(position);
-			var pos = this.GetComponent<Tilemap>().LocalToCell(position);
+            //Debug.Log(position);
+            tile.isNode = true;
+            var pos = this.GetComponent<Tilemap>().LocalToCell(position);
 			tile.position = new Vector2(pos.x, pos.y);
 			//Debug.Log(pos);
 		} 
@@ -214,32 +228,61 @@ public class NodeMap : TilemapHandler
 			fuckYou.Remove(fuckYou.Find(item => item != null && item.position == new Vector2(position.x, position.y)));
         }
 
-		fuckYou.Add(tile);
+        fuckYou.Add(tile);
 
-		fuckYou.RemoveAll(item => item == null || (item.position == tile?.position && item != tile));
+        fuckYou.RemoveAll(item => item == null || (item.position == tile?.position && item != tile));
 
-		if (overrideOrder > 0)
+
+        if (overrideOrder > 0)
         {
-			tile.placmentOrder = overrideOrder;
+            tile.placmentOrder = overrideOrder;
 			fuckYou.Sort();
 		}
 		else
         {
 			foreach (var dTile in fuckYou)
 			{
-				//Debug.Log(dTile.name);
-				dTile.placmentOrder = fuckYou.IndexOf(dTile);
+                Debug.Log(dTile.name);
+                dTile.placmentOrder = fuckYou.IndexOf(dTile);
 			}
 		}
+        Debug.LogError("J: " + tile.placmentOrder.ToString());
 
+        if (tile != null)
+		{
+            List<AC> aCs;
+            AttributeDatabase.TryGetListing("all_nodes", out aCs);
+            foreach (AC ac in aCs)
+            {
+                if (!tile.data.ContainsKey(ac.longName)) tile.data.Add(ac.longName, JToken.FromObject(tile.placmentOrder.ToString()));
+            }
+        }
+        //Debug.LogError("J: " + JToken.FromObject(tile.data["nodPos"]).ToString());
+//
 
-		nodes = fuckYou.ToArray();
-	}
+        List<object> paths2 = new List<object>();
+        for (int i = 0; i < this.fuckYou.Count; i++) paths2.Add(i.ToString());
+        AttributeDatabase.allAttributes["nodPos"].possibleValues = paths2.ToArray();
+    }
 
-	public DataTile[] nodes = new DataTile[0];
+    protected override void InitializeTiles()
+    {
+        base.InitializeTiles();
+        foreach (Tile tile in this.tiles)
+        {
+            DataTile dataTile = tile as DataTile;
+            List<AC> aCs;
+            AttributeDatabase.TryGetListing("all_nodes", out aCs);
+
+        }
+    }
+
+    public DataTile[] nodes = new DataTile[0];
 	public List<DataTile> fuckYou = new List<DataTile>();
 
-	public override TileDatabase InitializeDatabase()
+
+
+    public override TileDatabase InitializeDatabase()
 	{
 		this.tileDatabase = new TileDatabase();
 		this.tileDatabase.Entries = new Dictionary<string, string>

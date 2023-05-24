@@ -8,7 +8,7 @@ public class DataTile : Tile/*, IEquatable<DataTile>, IComparable<DataTile>*/
 {
 	
 	public JObject data = new JObject();
-
+    public bool isNode = false;
 	public int placmentOrder = -1;
 	public Vector2 position;
     

@@ -74,7 +74,7 @@ public class AttributesHandler : MonoBehaviour
 					{
 						this.AddTileAttribute(att.Key, att.Value);
 					}
-					bool flag4 = this.attributes.Count == 0;
+					bool flag4 = this.attributes.Count == 0 && dataTile.isNode == false;
 					if (flag4)
 					{
 						RectTransform nothing = UnityEngine.Object.Instantiate<GameObject>(this.nothingSelectedPrefab, this.content.transform).GetComponent<RectTransform>();
@@ -82,7 +82,7 @@ public class AttributesHandler : MonoBehaviour
 						nothing.GetComponent<Text>().text = "\nSelected object has no properties.";
 						this.nothingSelectObject = nothing.gameObject;
 					}
-					this.content.sizeDelta = new Vector2(530f, this.totalHeight + this.margin);
+                    this.content.sizeDelta = new Vector2(530f, this.totalHeight + this.margin);
 					this.Populated = true;
 				}
 			}
@@ -136,12 +136,23 @@ public class AttributesHandler : MonoBehaviour
 		att.propertyName = attributeName;
 		att.text.text = attributeName.SplitCamelCase().UppercaseFirst();
 		att.Value = attribute.ToObject<object>();
-		this.attributes.Add(att);
+        this.attributes.Add(att);
 		this.PositionAttribute(this.attributes.Count - 1);
 	}
 
-	
-	public void PositionAttribute(int index)
+    public void AddTileAttribute(string attributeName, DataTile tile)
+    {
+        GameObject prefab = this.intAttributePrefab;
+        AttributeItem att = UnityEngine.Object.Instantiate<GameObject>(prefab, this.content.transform).GetComponent<AttributeItem>();
+        att.propertyName = attributeName;
+        att.text.text = attributeName.SplitCamelCase().UppercaseFirst();
+		att.Value = tile.placmentOrder;
+        this.attributes.Add(att);
+        this.PositionAttribute(this.attributes.Count - 1);
+    }
+
+
+    public void PositionAttribute(int index)
 	{
 		AttributeItem att = this.attributes[index];
 		RectTransform rect = att.GetComponent<RectTransform>();

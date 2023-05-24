@@ -210,7 +210,11 @@ public static class AttributeDatabase
 			"tTMS",
 			new AC("timeToMaxSpeed", "tTMS", 1.5f, new object[0])
 		},
-	};
+        {
+            "nodPos",
+            new AC("Node Order", "nodPos", "0", new object[]{ "0" })
+        },
+    };
 
 	
 	public static Dictionary<AttributeDatabase.ValidAttribute, string[]> attributeListings = new Dictionary<AttributeDatabase.ValidAttribute, string[]>
@@ -237,8 +241,14 @@ public static class AttributeDatabase
 				"maxD"
 			}
 		},
-
-		{
+        {
+            (string name) => name == "all_nodes",
+            new string[]
+            {
+                "nodPos"
+            }
+        },
+        {
 			(string name) => name == "floor",
 			new string[]
 			{

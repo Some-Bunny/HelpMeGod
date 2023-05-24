@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Newtonsoft.Json.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -56,7 +57,8 @@ public static class ImportExport
 		NodePathLayerHandler.Instance.CollectDataForExport(ref data);
 		i.GetTilemap(TilemapHandler.MapType.Exits).GetComponent<ExitMap>().CollectDataForExport(ref data);
 		i.GetTilemap(TilemapHandler.MapType.Placeables).GetComponent<PlaceableMap>().CollectDataForExport(ref data);
-		Manager.Instance.roomProperties.CollectRoomProperties(ref data);
+
+        Manager.Instance.roomProperties.CollectRoomProperties(ref data);
 		using (StreamWriter sw = new StreamWriter(path, false))
 		{			
 			sw.WriteLine(JsonUtility.ToJson(data));
@@ -292,8 +294,8 @@ public static class ImportExport
 		ImportExport.BuildEnvironmentMapFromNewData(data);
 		ImportExport.BuildExitMapFromData(data);
 		ImportExport.BuildEnemyMapsFromData(data);
-		ImportExport.BuildNodeMapsFromData(data);
-		ImportExport.BuildPlaceableMapFromData(data);
+        ImportExport.BuildPlaceableMapFromData(data);
+        ImportExport.BuildNodeMapsFromData(data);
 	}
 
 	public static void BuildMapsFromData(Texture2D texture, ImportExport.RoomData data)
@@ -512,7 +514,8 @@ public static class ImportExport
 
 	public static void BuildNodeMapsFromData(ImportExport.NewRoomData data)
 	{
-		if (NodePathLayerHandler.Instance.LayerCount != 0)
+        //nodePaths
+        if (NodePathLayerHandler.Instance.LayerCount != 0)
 		{
 			List<Dictionary<Vector2Int, Tile>> tileArrays = new List<Dictionary<Vector2Int, Tile>>();
 			for (int i = 0; i < NodePathLayerHandler.Instance.LayerCount; i++)
@@ -521,20 +524,20 @@ public static class ImportExport
 				tileArrays.Add(new Dictionary<Vector2Int, Tile>());
 			}
 
-			Dictionary<int, int> stupidJankyPieceOfShit = new Dictionary<int, int>();
-
+			List<Tuple<int, int>> stupidJankyPieceOfShit = new List<Tuple<int, int>>();  //Dictionary<int, int> stupidJankyPieceOfShit = new Dictionary<int, int>();
 			for (int j = 0; j < data.nodeOrder.Length; j++)
 			{
-				Debug.LogWarning($"data.nodeOrder[]{data.nodeOrder[j]} - j{j}");
-				stupidJankyPieceOfShit.Add(data.nodeOrder[j], j);
+				Debug.LogError($"data.nodeOrder[]{data.nodeOrder[j]} - j{j}");
+
+                stupidJankyPieceOfShit.Add(new Tuple<int, int>(data.nodeOrder[j], j));
 			}
 
 			for (int i = 0; i < data.nodeOrder.Length; i++)
 			{
 
-				int j = 0;
-				stupidJankyPieceOfShit.TryGetValue(i, out j);
-				Debug.LogWarning($"{data.nodeTypes[j]} - j{j} - i{i} - {data.nodeTypes[j]}");
+				int j = stupidJankyPieceOfShit[i].Item2;
+				 //.ToString/.TryGetValue(i, out j);
+				Debug.LogError($"{data.nodeTypes[j]} - j{j} - i{i} - {data.nodeTypes[j]}");
 
 				int layer = data.nodePaths[j];
 				NodeMap mapHandler = NodePathLayerHandler.Instance.GetMap(layer);

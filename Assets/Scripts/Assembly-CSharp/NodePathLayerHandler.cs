@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -117,8 +118,14 @@ public class NodePathLayerHandler : MonoBehaviour
 		{
 			int dist = Math.Min(Math.Abs(index - i), 10);
 			this.nodeMaps[i].GetComponent<Tilemap>().color = ((i == index) ? Color.white : new Color(1f, 1f, 1f, 0.5f - (float)dist / 3f));
-		}
-	}
+        }
+        List<object> paths2 = new List<object>();
+        for (int i = 0; i < GetMap(m_nodeLayer).fuckYou.Count; i++) paths2.Add(i.ToString());
+        if (paths2.Count > 0)
+		{
+            AttributeDatabase.allAttributes["nodPos"].possibleValues = paths2.ToArray();
+        }
+    }
 
 	
 	public void OnClickAddLayer()
@@ -201,13 +208,23 @@ public class NodePathLayerHandler : MonoBehaviour
 	public void OnLayerChanged()
     {
 		List<object> paths = new List<object>();
-		for (int i = 0; i < buttons.Count; i++) paths.Add(i.ToString());
-		AttributeDatabase.allAttributes["tSP"].possibleValues = paths.ToArray();
+        List<object> paths2 = new List<object>();
 
-	}
+        for (int i = 0; i < buttons.Count; i++) paths.Add(i.ToString());
+        for (int i = 0; i < GetMap(m_nodeLayer).fuckYou.Count; i++) paths2.Add(i.ToString());
 
-	
-	public static NodePathLayerHandler Instance;
+
+        AttributeDatabase.allAttributes["tSP"].possibleValues = paths.ToArray();
+		if (paths2.Count > 0)
+		{
+            AttributeDatabase.allAttributes["nodPos"].possibleValues = paths2.ToArray();
+        }
+
+
+    }
+
+
+    public static NodePathLayerHandler Instance;
 
 	
 	public Transform nodeTilemapContainer;
