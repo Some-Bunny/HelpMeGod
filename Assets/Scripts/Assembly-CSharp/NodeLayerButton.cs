@@ -47,6 +47,7 @@ public class NodeLayerButton : MonoBehaviour
     {
         this.Selected = true;
         this.selectedPanel.SetActive(true);
+        //Debug.Log("pressed");
         NodePathLayerHandler.Instance.SetSelectedLayer(this);
         
     }

@@ -1,14 +1,26 @@
 fileFormatVersion: 2
 guid: 40a83df97b770b6408eff28765534d81
-timeCreated: 1653364747
-licenseType: Free
 MonoImporter:
   externalObjects: {}
-  usedFileIDs: []
   serializedVersion: 2
-  defaultReferences: {}
+  defaultReferences:
+  - deleteButton: {instanceID: 0}
+  - EditorPanel: {instanceID: 0}
+  - OptionsBarPanel: {instanceID: 0}
+  - InspectorPanel: {instanceID: 0}
+  - AttributesPanel: {instanceID: 0}
+  - uiMap: {instanceID: 0}
+  - grid: {instanceID: 0}
+  - attributesWindow: {instanceID: 0}
+  - palettesWindow: {instanceID: 0}
+  - selectedTile: {instanceID: 0}
+  - EnemyLayer: {instanceID: 0}
+  - NodeLayer: {instanceID: 0}
+  - LineRenderer_Instance: {instanceID: 0}
+  - LineRenderer: {fileID: 8728862652072558289, guid: 4738afc5eb7906249a7efd082f1b1e21,
+      type: 3}
   executionOrder: 0
-  icon: {fileID: 0}
-  userData:
-  assetBundleName:
-  assetBundleVariant:
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

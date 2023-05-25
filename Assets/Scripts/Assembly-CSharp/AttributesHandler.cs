@@ -74,7 +74,14 @@ public class AttributesHandler : MonoBehaviour
 					{
 						this.AddTileAttribute(att.Key, att.Value);
 					}
-					bool flag4 = this.attributes.Count == 0 && dataTile.isNode == false;
+					if (dataTile.isNode == true) 
+					{
+                        Debug.LogError("=======");
+
+                        Debug.LogError("Derp: "+ dataTile.placmentOrder);
+
+                    }
+                    bool flag4 = this.attributes.Count == 0 && dataTile.isNode == false;
 					if (flag4)
 					{
 						RectTransform nothing = UnityEngine.Object.Instantiate<GameObject>(this.nothingSelectedPrefab, this.content.transform).GetComponent<RectTransform>();
@@ -138,6 +145,7 @@ public class AttributesHandler : MonoBehaviour
 		att.Value = attribute.ToObject<object>();
         this.attributes.Add(att);
 		this.PositionAttribute(this.attributes.Count - 1);
+
 	}
 
     public void AddTileAttribute(string attributeName, DataTile tile)

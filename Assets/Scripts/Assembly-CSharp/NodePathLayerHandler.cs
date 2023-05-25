@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.Scripts.Assembly_CSharp;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
@@ -119,12 +120,48 @@ public class NodePathLayerHandler : MonoBehaviour
 			int dist = Math.Min(Math.Abs(index - i), 10);
 			this.nodeMaps[i].GetComponent<Tilemap>().color = ((i == index) ? Color.white : new Color(1f, 1f, 1f, 0.5f - (float)dist / 3f));
         }
+
+
+       
+
+        /*
+        for (int i = 0; i < GetMap(m_nodeLayer).fuckYou.Count; i++)
+        {
+
+
+
+            Debug.LogError("Node "+i);
+            var node = GetMap(m_nodeLayer).fuckYou[i];
+            Debug.LogError("A");
+
+            int node2 = (i + 1) == GetMap(m_nodeLayer).fuckYou.Count ? 0 : (i + 1);//  GetMap(m_nodeLayer).fuckYou[i];
+            Debug.LogError(node2);
+            Debug.LogError(GetMap(m_nodeLayer).fuckYou.Count);
+
+            Vector3 fuck = new Vector3(GetMap(m_nodeLayer).fuckYou[node2].position.x, GetMap(m_nodeLayer).fuckYou[node2].position.y, 100);
+            Debug.LogError("c");
+            renderer.SetPosition(1, fuck);
+
+            Debug.LogError("d");
+
+
+        }
+        */
+
+
         List<object> paths2 = new List<object>();
         for (int i = 0; i < GetMap(m_nodeLayer).fuckYou.Count; i++) paths2.Add(i.ToString());
         if (paths2.Count > 0)
 		{
             AttributeDatabase.allAttributes["nodPos"].possibleValues = paths2.ToArray();
         }
+
+
+
+        
+
+            
+
     }
 
 	
@@ -155,7 +192,12 @@ public class NodePathLayerHandler : MonoBehaviour
 	}
 
 	
-	public void RepositionButtons()
+	public List<NodeLayerButton> ReturnButtons()
+	{
+		return buttons;
+	}
+
+    public void RepositionButtons()
 	{
 		int count = this.buttons.Count;
 		for (int i = 0; i < count; i++)
@@ -213,7 +255,7 @@ public class NodePathLayerHandler : MonoBehaviour
         for (int i = 0; i < buttons.Count; i++) paths.Add(i.ToString());
         for (int i = 0; i < GetMap(m_nodeLayer).fuckYou.Count; i++) paths2.Add(i.ToString());
 
-
+        //Debug.DrawLine()
         AttributeDatabase.allAttributes["tSP"].possibleValues = paths.ToArray();
 		if (paths2.Count > 0)
 		{

@@ -32,16 +32,19 @@ public class NodePaletteDropdown : MonoBehaviour
 		TilemapHandler.MapType type;
 		if (Enum.TryParse<TilemapHandler.MapType>(val, true, out type))
 		{
+			Debug.LogError("Node Map Active");
 			if (this.palette.mapType == type)
 			{
 				this.palette.currentSub = "";
 				this.palette.Show();
 				this.palette.Populate();
+
 				this.ActivePalette = this.palette;
 			}
 			else
 			{
-				this.palette.Hide();
+                Debug.LogError("Node Map Inactive");
+                this.palette.Hide();
 			}
 		}
 	}

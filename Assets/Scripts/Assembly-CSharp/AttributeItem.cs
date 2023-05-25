@@ -5,6 +5,7 @@ using Newtonsoft.Json.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 
 public abstract class AttributeItem : MonoBehaviour
@@ -24,28 +25,51 @@ public abstract class AttributeItem : MonoBehaviour
             var Obj = JToken.FromObject(dataTile.data[this.propertyName]).ToString();
             dataTile.data[this.propertyName] = JToken.FromObject(this.Value);
 
-			if (dataTile.isNode == true && dataTile.data[this.propertyName] != JToken.FromObject(dataTile.data[this.propertyName]))
+			if (dataTile.isNode == true)
 			{
 
                 int H = int.Parse(Obj);
                 int H2 = int.Parse(JToken.FromObject(this.Value).ToString());
+                Debug.LogError(System.DateTime.Now);
+
                 Debug.LogError("Value Current: " + H.ToString());
                 Debug.LogError("Value New: " + H2.ToString());
 
                 for (int k = 0; k < NodePathLayerHandler.Instance.LayerCount; k++)
 				{
-                    var list = (NodePathLayerHandler.Instance.GetMap(k) as NodeMap).fuckYou;
+                    var nodeMap = (NodePathLayerHandler.Instance.GetMap(k) as NodeMap);
+                    var list = nodeMap.fuckYou;
 					if (list.Contains(dataTile))
 					{
                         foreach (var entry in list)
                         {
                             if (entry.placmentOrder == H2)
                             {
+                                Debug.LogError("Plac Pre entry: " + entry.placmentOrder);
+                                Debug.LogError("Plac Pre dataTile: " + dataTile.placmentOrder);
 
                                 entry.placmentOrder = H;
                                 dataTile.placmentOrder = H2;
 
+                                Debug.LogError("Plac Post entry: " + entry.placmentOrder);
+                                Debug.LogError("Plac Post dataTile: " + dataTile.placmentOrder);
+
+
                                 entry.data[this.propertyName] = JToken.FromObject(H.ToString());
+
+                                InputHandler.Instance.UpdateNodeLines();
+                                //var allTiles = nodeMap.AllTiles();
+
+                                //var pos1 = nodeMap.GetComponent<Tilemap>().LocalToCell(dataTile.position);
+                                //var pos2 = nodeMap.GetComponent<Tilemap>().LocalToCell(entry.position);
+
+                                //string h1 = nodeMap.tileDatabase.AllEntries[dataTile.name];
+                                //string h2 = nodeMap.tileDatabase.AllEntries[entry.name];
+
+                                //var tmp = nodeMap.tileDatabase.AllEntries[dataTile.name];
+                                //nodeMap.tileDatabase.AllEntries[dataTile.name] = nodeMap.tileDatabase.AllEntries[entry.name];
+                                //nodeMap.tileDatabase.AllEntries[entry.name] = tmp;
+
                                 return;
                             }
                         }

@@ -8,6 +8,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using static NodeMap;
 
 public class NodeMap : TilemapHandler
 {
@@ -40,53 +41,131 @@ public class NodeMap : TilemapHandler
 		data.nodeWrapModes = data.nodeWrapModes.Concat(triggers.ToArray()).ToArray();
     }
 
+
+	public class ValueStoragetoPreventHeadaches
+	{
+		public List<int> fuck = new List<int>();
+		public List<Vector2> piss = new List<Vector2>();
+        public List<string> cum = new List<string>();
+    }
+
     public void CollectDataForExport2(ref ImportExport.NewRoomData data, int index, Enums.SerializedPathWrapMode trigger)
 	{
+
+
+
 
 		//DataTile[,] tiles = (DataTile[,])base.AllTiles();
 		Tile[,] tiles = base.AllTiles();
 		//string[] guids = new string[nodes.Length];
+		Dictionary<int, ValueStoragetoPreventHeadaches> fuck = new Dictionary<int, ValueStoragetoPreventHeadaches>() { };
+		//Tuple<int, Vector2> piss = new Tuple<int, Vector2>();
+		//Dictionary<int, List<Vector2>> shit = new Dictionary<int, List<Vector2>>() { };
+
+        //	List<Dictionary<int, List<int>>> order_and_placements = new List<Dictionary<int, List<int>>>();
+        /*
 		List<string> guids = new List<string>();
         //Vector2[] positions = new Vector2[nodes.Length];
 		List<Vector2> positions = new List<Vector2>();
-		List<string> triggers = new List<string>();
 		List<int> layers = new List<int>();
 		List<int> order = new List<int>();
+		*/
+        List<string> triggers = new List<string>();
+        List<string> guids = new List<string>();
+        List<Vector2> positions = new List<Vector2>();
+
+        //foreach (var node in nodes)
+        //{
+        //	guids.Add(this.tileDatabase.AllEntries[node.name]);
+        //	positions.Add(node.position);
+        //	triggers.Add(trigger.ToString());
+        //	layers.Add(index);
+        //}
 
 
-		//foreach (var node in nodes)
-		//{
-		//	guids.Add(this.tileDatabase.AllEntries[node.name]);
-		//	positions.Add(node.position);
-		//	triggers.Add(trigger.ToString());
-		//	layers.Add(index);
-		//}
-
-
-		for (int x = 0; x < tiles.GetLength(0); x++)
+        for (int x = 0; x < tiles.GetLength(0); x++)
 		{
 			for (int y = 0; y < tiles.GetLength(1); y++)
 			{
 				if (!tiles[x, y]) continue;
 				DataTile tile = tiles[x, y] as DataTile;
                 tile.isNode = true;
-                guids.Add(this.tileDatabase.AllEntries[tile.name]);
-				positions.Add(new Vector2((float)x, (float)y));
-				//DataTile dataTile;
-				triggers.Add(trigger.ToString());		
-				layers.Add(index);
-				order.Add(tile.placmentOrder);
-			}
+				if (!fuck.ContainsKey(index)) 
+				{
+					fuck.Add(index, new ValueStoragetoPreventHeadaches() 
+					{
+						fuck = new List<int>() { tile.placmentOrder },
+						piss = new List<Vector2>() { new Vector2((float)x, (float)y) },
+						cum = new List<string>() { this.tileDatabase.AllEntries[tile.name] },
+                    }); //new List<int>() { tile.placmentOrder });
+                    Debug.LogError("new index of" + index + ": " + tile.placmentOrder);
+
+                }
+				else
+				{
+                    ValueStoragetoPreventHeadaches pp;
+					fuck.TryGetValue(index, out pp);
+					pp.fuck.Add(tile.placmentOrder);
+					Debug.LogError(tile.placmentOrder);
+					pp.piss.Add(new Vector2((float)x, (float)y));
+					pp.cum.Add(this.tileDatabase.AllEntries[tile.name]);
+                }
+
+				//positions.Add(new Vector2((float)x, (float)y));
+                triggers.Add(trigger.ToString());
+                //DataTile dataTile;
+                //layers.Add(index);
+                //order.Add(tile.placmentOrder);
+            }
+        }
+        List<Vector2> cextors = new List<Vector2> { };
+        List<string> asad = new List<string> { };
+
+        foreach (var entry in fuck)
+        {
+            foreach (var entry2 in entry.Value.fuck)
+            {
+                cextors.Add(entry.Value.piss[entry2]);
+                asad.Add(entry.Value.cum[entry2]);
+
+
+                //data.nodePaths = data.nodePaths.Concat(layers.ToArray()).ToArray<int>();
+                //data.nodeOrder =  //data.nodeOrder.Concat().ToArray<int>();
+            }
+        }
+
+        foreach (var entry in fuck)
+		{
+			entry.Value.fuck.Sort();
 		}
+		//entry.Keyint[]
+		List<int> indexes = new List<int> { };
+        List<int> order = new List<int> { };
+
+        data.nodeTypes = data.nodeTypes.Concat(asad.ToArray()).ToArray<string>();
+		//data.nodePositions = data.nodePositions.Concat(positions.ToArray()).ToArray<Vector2>();
+
+        foreach (var entry in fuck)
+        {
+            foreach(var entry2 in entry.Value.fuck)
+			{
+				indexes.Add(entry.Key);
+				order.Add(entry2);
+
+                //Debug.LogError("added " + entry.Key + " to indexes");
+                //Debug.LogError("added " + entry2 + " to order");
+
+                //data.nodePaths = data.nodePaths.Concat(layers.ToArray()).ToArray<int>();
+                //data.nodeOrder =  //data.nodeOrder.Concat().ToArray<int>();
+            }
+        }
 
 
+        data.nodePositions = data.nodePositions.Concat(cextors.ToArray()).ToArray<Vector2>();
 
-
-		data.nodeTypes = data.nodeTypes.Concat(guids.ToArray()).ToArray<string>();
-		data.nodePositions = data.nodePositions.Concat(positions.ToArray()).ToArray<Vector2>();
-		data.nodePaths = data.nodePaths.Concat(layers.ToArray()).ToArray<int>();
-		data.nodeOrder = data.nodeOrder.Concat(order.ToArray()).ToArray<int>();
-		data.nodeWrapModes = data.nodeWrapModes.Concat(triggers.ToArray()).ToArray();
+        data.nodePaths = data.nodePaths.Concat(indexes.ToArray()).ToArray<int>();
+        data.nodeOrder = data.nodeOrder.Concat(order.ToArray()).ToArray<int>();
+        data.nodeWrapModes = data.nodeWrapModes.Concat(triggers.ToArray()).ToArray();
 
 
         var diediediediediediediediedie = 0;
@@ -184,7 +263,7 @@ public class NodeMap : TilemapHandler
     {
 
 		overrideOrder = -1;
-		Debug.LogError("ORDER:");
+		//Debug.LogError("ORDER:");
         //nodes.Clear();
 
         //Debug.Log(tile.name);
@@ -246,7 +325,7 @@ public class NodeMap : TilemapHandler
                 dTile.placmentOrder = fuckYou.IndexOf(dTile);
 			}
 		}
-        Debug.LogError("J: " + tile.placmentOrder.ToString());
+        //Debug.LogError("J: " + tile.placmentOrder.ToString());
 
         if (tile != null)
 		{

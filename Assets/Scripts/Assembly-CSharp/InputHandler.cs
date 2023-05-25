@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Assets.Scripts.Assembly_CSharp;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.UI;
@@ -126,10 +128,11 @@ public class InputHandler : MonoBehaviour
 		this.HandleCursor();
 		this.HandleMouseInput();
 		this.HandleTileSelectionColor();
-	}
+        UpdateNodeLines();
+    }
 
-	 
-	private void HandleShortcuts()
+
+    private void HandleShortcuts()
 	{
 		if (!this.shortcutsDisabled)
 		{
@@ -175,7 +178,20 @@ public class InputHandler : MonoBehaviour
 					{
 						GridMap.Instance.Toggle();
 					}
-					if (Input.GetKeyDown(KeyCode.E))
+                    if (Input.GetKeyDown(KeyCode.N))
+                    {
+						this.ToggleNodeMode();
+
+                    }
+                    if (Input.GetKeyDown(KeyCode.X))
+                    {
+						if (this.nodeMode == true)
+						{
+                            NodesVisualEnabled = !NodesVisualEnabled;
+                            NotificationHandler.Instance.Notify("Node Path Visual is" + (NodesVisualEnabled == true ? " enabled." : " disabled."));
+                        }
+                    }
+                    if (Input.GetKeyDown(KeyCode.E))
 					{
 						this.BrushType = BrushButton.BrushType.ERASER;
 					}
@@ -416,11 +432,87 @@ public class InputHandler : MonoBehaviour
 			s.x = Mathf.Clamp(s.x + amount / 10f, 0.15f, 2f);
 			s.y = s.x;
 			this.ScaleAround(this.grid.gameObject, Camera.main.ScreenToWorldPoint(new Vector3(this.m_mousePosition.x, this.m_mousePosition.y, this.grid.transform.localPosition.z)), s);
-		}
+        }
+    }
+
+
+	public void UpdateNodeLines()
+	{
+        if (LineRenderer_Instance)
+        {
+            var inst = NodePathLayerHandler.Instance;
+            var renderer = LineRenderer_Instance.gameObject.GetOrAddComponent<LineRenderer>();
+
+            renderer.startWidth = 0.1f * this.grid.transform.localScale.x;
+            renderer.loop = inst.ReturnButtons()[inst.EnemyMapIndex].WrapMode == Enums.SerializedPathWrapMode.LOOP;
+			renderer.enabled = NodesVisualEnabled;
+			if (NodesVisualEnabled == true)
+			{
+                renderer.positionCount = inst.GetMap(inst.EnemyMapIndex).fuckYou.Count;
+                var localScale = this.grid.transform.localScale;
+                Vector2 localposition = this.grid.transform.position;
+                Vector2 offset = new Vector2(0.5f, 0.5f);
+
+                List<int> H = new List<int>();
+                List<string> cum = new List<string>()
+                {
+                };
+
+                var Mapping = inst.GetMap(inst.EnemyMapIndex);
+
+                for (int e = 0; e < Mapping.fuckYou.Count; e++)
+                {
+                    var t = Mapping.fuckYou[e];
+                    H.Add(t.placmentOrder);
+                    cum.Add(Mapping.tileDatabase.AllEntries[t.name]);
+                }
+
+                for (int e = 0; e < H.Count; e++)
+                {
+                    var pos = inst.GetMap(inst.EnemyMapIndex).fuckYou[H[e]].position;
+                    pos += ReturnOffset(cum[H[e]]);
+                    var calc = (pos * localScale) + localposition; //(pos + localScale) * localposition;
+                    Vector3 peepee = new Vector3((calc).x, (calc).y, 20);
+                    renderer.SetPosition(e, peepee);
+                }
+
+            }
+
+            LineRenderer_Instance.transform.parent = NodePathLayerHandler.Instance.gameObject.transform;
+            LineRenderer_Instance.transform.position = this.grid.transform.position;
+        }
+    }
+	 
+	public Vector2 ReturnOffset(string name)
+	{
+		switch (name)
+		{
+			case "Center":
+				
+				return new Vector2(0.5f,0.5f);
+            case "North":
+                return new Vector2(0.5f, 1f);
+            case "NorthEast":
+                return new Vector2(1f, 1f);
+            case "East":
+                return new Vector2(1f, 0.5f);
+            case "SouthEast":
+                return new Vector2(1f, 0f);
+            case "South":
+                return new Vector2(0.5f, 0f);
+            case "SouthWest":
+                return new Vector2(0f, 0f);
+            case "West":
+                return new Vector2(0, 0.5f);
+            
+			case "NorthWest":
+                return new Vector2(0f, 1f);
+            default:
+                return new Vector2(0.5f, 0.5f);
+        }
 	}
 
-	 
-	private void ScaleAround(GameObject target, Vector3 pivot, Vector3 newScale)
+    private void ScaleAround(GameObject target, Vector3 pivot, Vector3 newScale)
 	{
 		Vector3 A = target.transform.localPosition;
 		Vector3 C = A - pivot;
@@ -428,12 +520,12 @@ public class InputHandler : MonoBehaviour
 		Vector3 FP = pivot + C * RS;
 		target.transform.localScale = newScale;
 		target.transform.localPosition = FP;
-	}
+    }
 
 	 
 	private void Pan()
 	{
-		Vector3 d = this.m_mousePosition - this.m_mouseLastPosition;
+        Vector3 d = this.m_mousePosition - this.m_mouseLastPosition;
 		this.grid.transform.position += d / 61f;
 	}
 
@@ -513,6 +605,7 @@ public class InputHandler : MonoBehaviour
 		}
 	}
 
+	public static bool NodesVisualEnabled = true;
 	 
 	private Vector3Int MouseToGridPosition()
 	{
@@ -564,8 +657,52 @@ public class InputHandler : MonoBehaviour
 			Manager.Instance.placeables.GetComponent<Tilemap>().color = new Color(1f, 1f, 1f, 0.5f);
 			EnemyLayerHandler.Instance.enemyMaps.ForEach(x => x.GetComponent<Tilemap>().color = new Color(1f, 1f, 1f, 0.5f));
 			NodePathLayerHandler.Instance.nodeMaps.ForEach(x => x.GetComponent<Tilemap>().color = Color.white);
-		}
-		else
+
+			//ReturnButtons
+			var inst = NodePathLayerHandler.Instance;
+            inst.SetSelectedLayer(inst.ReturnButtons()[inst.EnemyMapIndex]);
+
+
+			
+            if (LineRenderer_Instance == null) LineRenderer_Instance = new GameObject("Line Renderer");
+
+			//if (LineRenderer != null) { Debug.LogError("NOT NULL"); }
+            var renderer = LineRenderer_Instance.gameObject.GetOrAddComponent<LineRenderer>();
+            renderer.enabled = NodesVisualEnabled;//(i == index);
+            renderer.material = new Material(Shader.Find("Sprites/Default"));
+            renderer.startColor = Color.green;
+            renderer.endColor = Color.red;
+			renderer.colorGradient = new Gradient()
+			{
+				mode = GradientMode.Blend,
+				colorKeys = new GradientColorKey[] 
+				{ 
+					new GradientColorKey() { color = Color.green * 2, time = 0},
+                    new GradientColorKey() { color = Color.red* 2, time = 1}
+                },
+                alphaKeys = new GradientAlphaKey[]
+				{
+                    new GradientAlphaKey() { alpha =1, time = 0},
+                    new GradientAlphaKey() { alpha =1, time = 1},
+                }
+            };
+            renderer.startWidth = 0.1f * this.grid.transform.localScale.x;
+            renderer.loop = true;
+            renderer.positionCount = inst.GetMap(inst.EnemyMapIndex).fuckYou.Count;
+
+            var localScale = this.grid.transform.localScale;
+            for (int e = 0; e < inst.GetMap(inst.EnemyMapIndex).fuckYou.Count; e++)
+            {
+                var pos = inst.GetMap(inst.EnemyMapIndex).fuckYou[e].position;
+                Vector3 peepee = new Vector3((pos * localScale).x, (pos * localScale).y, 1);
+                Vector3 farrtfart = (new Vector2(0.5f, 0.5f) * localScale);
+                renderer.SetPosition(e, peepee + (localScale) + farrtfart);
+            }
+            LineRenderer_Instance.transform.parent = NodePathLayerHandler.Instance.gameObject.transform;
+			LineRenderer_Instance.transform.position = this.grid.transform.position;
+
+        }
+        else
 		{			
 			PaletteDropdown.Instance.SetValue(TilemapHandler.MapType.Environment);
 
@@ -574,7 +711,8 @@ public class InputHandler : MonoBehaviour
 			Manager.Instance.placeables.GetComponent<Tilemap>().color = Color.white;
 			EnemyLayerHandler.Instance.enemyMaps.ForEach(x => x.GetComponent<Tilemap>().color = Color.white);
 			NodePathLayerHandler.Instance.nodeMaps.ForEach(x => x.GetComponent<Tilemap>().color = new Color(1f, 1f, 1f, 0.5f));
-		}
+
+        }
 
 	}
 
@@ -670,4 +808,31 @@ public class InputHandler : MonoBehaviour
 
 	public GameObject EnemyLayer;
 	public GameObject NodeLayer;
+
+    public GameObject LineRenderer_Instance;
+
+    [SerializeField]
+    public GameObject LineRenderer;
+
+
+
+    /*
+	 *   var renderer = InputHandler.Instance.grid.gameObject.GetOrAddComponent<LineRenderer>();
+            renderer.enabled = true;//(i == index);
+                                    //renderer.material = new Material(Shader.Find("Legacy Shaders/Particles/Alpha Blended Premultiply"));
+            renderer.startColor = Color.green;
+            renderer.endColor = Color.green;
+            renderer.startWidth = 0.1f;
+			renderer.loop = true;
+            renderer.positionCount = GetMap(m_nodeLayer).fuckYou.Count;
+			renderer.transform.parent = InputHandler.Instance.grid.gameObject.transform;
+			var z = renderer.transform.localPosition;//.z += 100;
+			z.z += 100;
+            for (int e = 0; e < GetMap(m_nodeLayer).fuckYou.Count; e++)
+            {
+
+                renderer.SetPosition(e, GetMap(m_nodeLayer).fuckYou[e].position);
+
+            }
+	*/
 }
