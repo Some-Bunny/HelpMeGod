@@ -155,13 +155,6 @@ public class NodePathLayerHandler : MonoBehaviour
 		{
             AttributeDatabase.allAttributes["nodPos"].possibleValues = paths2.ToArray();
         }
-
-
-
-        
-
-            
-
     }
 
 	
@@ -300,4 +293,5 @@ public class NodePathLayerHandler : MonoBehaviour
 
 	
 	public int scheduledLayers = 0;
+
 }

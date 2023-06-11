@@ -130,7 +130,7 @@ public class FileButton : DropdownContentButton
 		bp.title = "Save As...";
 		new FileBrowser().OpenSaveFileBrowser(bp, path =>
 		{
-			if (!string.IsNullOrEmpty(path))
+            if (!string.IsNullOrEmpty(path))
 			{
 				if (!path.Contains("."))
 				{

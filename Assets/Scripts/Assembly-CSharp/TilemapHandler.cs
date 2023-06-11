@@ -49,9 +49,9 @@ public abstract class TilemapHandler : MonoBehaviour
 	public void SetTileWithThickness(Tilemap map, Vector3Int position, Tile tile, int thickness)
 	{
 		DataTile newTile = TilemapHandler.Clone(tile);
+       
 
-
-		if (InputHandler.Instance.nodeMode && InputHandler.Instance.isDrawing) (NodePathLayerHandler.Instance.GetActiveTilemap() as NodeMap).AddNewNodeTile(newTile, position);
+        if (InputHandler.Instance.nodeMode && InputHandler.Instance.isDrawing) (NodePathLayerHandler.Instance.GetActiveTilemap() as NodeMap).AddNewNodeTile(newTile, position);
 
 		map.SetTile(new Vector3Int(position.x, position.y, 0), newTile);
 
@@ -65,9 +65,14 @@ public abstract class TilemapHandler : MonoBehaviour
 				{
 					map.SetTile(t, newTile);
 				}
-				this.FillLine(this.grid.CellToWorld(t), this.grid.CellToWorld(tiles[(i + 1) % tiles.Length]), newTile, 1);
+
+                
+                this.FillLine(this.grid.CellToWorld(t), this.grid.CellToWorld(tiles[(i + 1) % tiles.Length]), newTile, 1);
 			}
 		}
+
+
+
 	}
 
 	public void FillLine(Vector2 start, Vector2 end, Tile tile, int thickness)
@@ -466,11 +471,13 @@ public abstract class TilemapHandler : MonoBehaviour
 				tile.data.Add(ac.longName, JToken.FromObject(ac.defaultValue));
 			}
 		}
-		return tile;
+		spriteSwitch.Add(name, sprite);
+        return tile;
 	}
 
-	
-	public static DataTile Clone(Tile other)
+    public Dictionary<string, Sprite> spriteSwitch = new Dictionary<string, Sprite>();
+
+    public static DataTile Clone(Tile other)
 	{
 		if (other == null)
 		{

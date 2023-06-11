@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -125,6 +126,16 @@ public class EnemyLayerHandler : MonoBehaviour
 		}
 	}
 
+	public void DoTransparency()
+	{
+        int index = m_enemyLayer;
+        for (int i = 0; i < this.enemyMaps.Count; i++)
+		{
+            int dist = Math.Min(Math.Abs((index - i)-1), 10);
+            this.enemyMaps[i].GetComponent<Tilemap>().color = ((i == index) ? new Color(1f, 1f, 1f, 0.5f - 2) : new Color(1f, 1f, 1f, 0.5f - (float)dist / 4f));
+        }
+    }
+
 	
 	public void OnClickAddLayer()
 	{
@@ -199,6 +210,11 @@ public class EnemyLayerHandler : MonoBehaviour
 				this.RepositionButtons();
 			}
 		}
+	}
+
+	public List<EnemyLayerButton> ReturnButtons()
+	{
+		return buttons;
 	}
 
 	

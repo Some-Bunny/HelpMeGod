@@ -24,8 +24,7 @@ public abstract class AttributeItem : MonoBehaviour
 		{
             var Obj = JToken.FromObject(dataTile.data[this.propertyName]).ToString();
             dataTile.data[this.propertyName] = JToken.FromObject(this.Value);
-
-			if (dataTile.isNode == true)
+			if (dataTile.isNode == true && this.propertyName == "Node Order")
 			{
 
                 int H = int.Parse(Obj);
@@ -74,6 +73,33 @@ public abstract class AttributeItem : MonoBehaviour
                             }
                         }
                     }              
+                }
+            }
+            else if (this.propertyName == "Node Type" && dataTile.isNode == true)
+            {
+                dataTile.data[this.propertyName] = JToken.FromObject(this.Value);
+                dataTile.name = JToken.FromObject(this.Value).ToString();
+
+                for (int k = 0; k < NodePathLayerHandler.Instance.LayerCount; k++)
+                {
+
+                    var nodeMap = (NodePathLayerHandler.Instance.GetMap(k) as NodeMap);
+                    Sprite s;
+
+                    nodeMap.spriteSwitch.TryGetValue((this.Value).ToString(), out s);
+                    Debug.Log(JToken.FromObject(this.Value).ToString());
+
+                    if (s) 
+                    {
+                        dataTile.sprite = s;//dataTile.placmentOrder
+                        var fuckYou = FindObjectsOfType<Tilemap>();
+                        foreach (var pieceoffuckingshit in fuckYou)
+                        {
+                            pieceoffuckingshit.RefreshAllTiles();
+                        }
+                        return;
+
+                    }
                 }
             }
         }

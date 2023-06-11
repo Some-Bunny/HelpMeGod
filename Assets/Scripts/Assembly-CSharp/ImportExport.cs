@@ -512,27 +512,52 @@ public static class ImportExport
 		}
 	}
 
-	public static void BuildNodeMapsFromData(ImportExport.NewRoomData data)
+	public static Enums.SerializedPathWrapMode ReturnWrap(string s)
+	{
+		switch(s)
+		{
+			case "LOOP":
+				return Enums.SerializedPathWrapMode.LOOP;
+            case "PINGPONG":
+                return Enums.SerializedPathWrapMode.PINGPONG;
+            case "ONCE":
+                return Enums.SerializedPathWrapMode.ONCE;
+            default:
+                return Enums.SerializedPathWrapMode.LOOP;
+
+        }
+	}
+
+    public static void BuildNodeMapsFromData(ImportExport.NewRoomData data)
 	{
         //nodePaths
         if (NodePathLayerHandler.Instance.LayerCount != 0)
 		{
 			List<Dictionary<Vector2Int, Tile>> tileArrays = new List<Dictionary<Vector2Int, Tile>>();
+			
 			for (int i = 0; i < NodePathLayerHandler.Instance.LayerCount; i++)
-			{
-				//tileArrays.Add(new Tile[Manager.roomSize.x, Manager.roomSize.y]);
-				tileArrays.Add(new Dictionary<Vector2Int, Tile>());
-			}
+            {
+                //tileArrays.Add(new Tile[Manager.roomSize.x, Manager.roomSize.y]);
+                tileArrays.Add(new Dictionary<Vector2Int, Tile>());
+            }
 
-			List<Tuple<int, int>> stupidJankyPieceOfShit = new List<Tuple<int, int>>();  //Dictionary<int, int> stupidJankyPieceOfShit = new Dictionary<int, int>();
-			for (int j = 0; j < data.nodeOrder.Length; j++)
+            Dictionary<int, string> bastard = new Dictionary<int, string>();
+
+            List<Tuple<int, int>> stupidJankyPieceOfShit = new List<Tuple<int, int>>();  //Dictionary<int, int> stupidJankyPieceOfShit = new Dictionary<int, int>();
+
+            for (int j = 0; j < data.nodeOrder.Length; j++)
 			{
 				Debug.LogError($"data.nodeOrder[]{data.nodeOrder[j]} - j{j}");
 
                 stupidJankyPieceOfShit.Add(new Tuple<int, int>(data.nodeOrder[j], j));
-			}
+				if (!bastard.ContainsKey(j))
+				{
+                    bastard.Add(j, data.nodeWrapModes[j]);
+                }
 
-			for (int i = 0; i < data.nodeOrder.Length; i++)
+            }
+
+            for (int i = 0; i < data.nodeOrder.Length; i++)
 			{
 
 				int j = stupidJankyPieceOfShit[i].Item2;
@@ -561,20 +586,29 @@ public static class ImportExport
 				else
 				{
 					DataTile tile = TilemapHandler.Clone(mapHandler.palette[id]);
-					//Debug.Log($"{(int)position.x}, {(int)position.y} --- {Manager.roomSize.x}, {Manager.roomSize.y} --- {data.nodePositions[j]}");
+					tile.placmentOrder = stupidJankyPieceOfShit[i].Item1;
+                    //Debug.Log($"{(int)position.x}, {(int)position.y} --- {Manager.roomSize.x}, {Manager.roomSize.y} --- {data.nodePositions[j]}");
 
-					//tileArrays[layer][(int)position.x, (int)position.y] = tile;
-					tileArrays[layer].Add(new Vector2Int((int)position.x, (int)position.y), tile);
-				}
+                    //tileArrays[layer][(int)position.x, (int)position.y] = tile;
+                    if (!tileArrays[layer].ContainsKey(new Vector2Int((int)position.x, (int)position.y)))
+					{
+                        tileArrays[layer].Add(new Vector2Int((int)position.x, (int)position.y), tile);
+                    }
+                }
 			}
 
 			for (int k = 0; k < NodePathLayerHandler.Instance.LayerCount; k++)
 			{
 				foreach(var tileShit in tileArrays[k])
                 {
-					NodePathLayerHandler.Instance.GetMap(k).map.SetTile(TilemapHandler.GameToLocalPosition(tileShit.Key), tileShit.Value);
+					//NodePathLayerHandler.Instance.GetMap(k)
 
-					(NodePathLayerHandler.Instance.GetMap(k) as NodeMap).AddNewNodeTile(tileShit.Value as DataTile, TilemapHandler.GameToLocalPosition(tileShit.Key));
+					NodePathLayerHandler.Instance.ReturnButtons()[k].WrapMode = ReturnWrap(bastard[k]);
+					NodePathLayerHandler.Instance.ReturnButtons()[k].triggerDropdown.value = (int)ReturnWrap(bastard[k]);
+
+                    NodePathLayerHandler.Instance.GetMap(k).map.SetTile(TilemapHandler.GameToLocalPosition(tileShit.Key), tileShit.Value);
+
+					(NodePathLayerHandler.Instance.GetMap(k) as NodeMap).AddNewNodeTile(tileShit.Value as DataTile, TilemapHandler.GameToLocalPosition(tileShit.Key), (tileShit.Value as DataTile).placmentOrder);
 				}
 				//NodePathLayerHandler.Instance.GetMap(k).BuildFromTileArray(tileArrays[k]);
 			}
@@ -586,15 +620,22 @@ public static class ImportExport
 		
 		if (EnemyLayerHandler.Instance.LayerCount != 0)
 		{
-			List<Tile[,]> tileArrays = new List<Tile[,]>();
+            Dictionary<int, string> bastard = new Dictionary<int, string>();
+            List<Tile[,]> tileArrays = new List<Tile[,]>();
 			for (int i = 0; i < EnemyLayerHandler.Instance.LayerCount; i++)
 			{
 				tileArrays.Add(new Tile[Manager.roomSize.x, Manager.roomSize.y]);
 			}
 			for (int j = 0; j < data.enemyGUIDs.Length; j++)
 			{
-				int layer = data.enemyReinforcementLayers[j];
-				EnemyMap mapHandler = EnemyLayerHandler.Instance.GetMap(layer);
+
+                int layer = data.enemyReinforcementLayers[j];
+                if (!bastard.ContainsKey(layer))
+                {
+					Debug.LogError("WaveTrigger: "+layer +" : " + data.waveTriggers[j]);
+                    bastard.Add(layer, data.waveTriggers[j]);
+                }
+                EnemyMap mapHandler = EnemyLayerHandler.Instance.GetMap(layer);
 				string guid = data.enemyGUIDs[j];
 				Vector2 position = data.enemyPositions[j];
 				string attributes = data.enemyAttributes[j];
@@ -613,13 +654,61 @@ public static class ImportExport
 			}
 			for (int k = 0; k < EnemyLayerHandler.Instance.LayerCount; k++)
 			{
-				EnemyLayerHandler.Instance.GetMap(k).BuildFromTileArray(tileArrays[k]);
+                Debug.LogError("dadsaklokjioojuik " + k);
+
+                EnemyLayerHandler.Instance.ReturnButtons()[k].triggerCondition = ReturnTrigger(bastard[k]);
+                EnemyLayerHandler.Instance.ReturnButtons()[k].triggerDropdown.value = (int)ReturnTrigger(bastard[k]);
+
+                EnemyLayerHandler.Instance.GetMap(k).BuildFromTileArray(tileArrays[k]);
 			}
 		}
 	}
+	//I want to krill myself
+    public static Enums.RoomEventTriggerCondition ReturnTrigger(string s)
+    {
+        switch (s)
+        {
+            case "ON_ENEMIES_CLEARED":
+                return Enums.RoomEventTriggerCondition.ON_ENEMIES_CLEARED;
+            case "ENEMY_BEHAVIOR":
+                return Enums.RoomEventTriggerCondition.ENEMY_BEHAVIOR;
+            case "NPC_TRIGGER_A":
+                return Enums.RoomEventTriggerCondition.NPC_TRIGGER_A;
+            case "ON_HALF_ENEMY_HP_DEPLETED":
+                return Enums.RoomEventTriggerCondition.ON_HALF_ENEMY_HP_DEPLETED;
+            case "ON_ONE_QUARTER_ENEMY_HP_DEPLETED":
+                return Enums.RoomEventTriggerCondition.ON_ONE_QUARTER_ENEMY_HP_DEPLETED;
+            case "ON_THREE_QUARTERS_ENEMY_HP_DEPLETED":
+                return Enums.RoomEventTriggerCondition.ON_THREE_QUARTERS_ENEMY_HP_DEPLETED;
+            case "SEQUENTIAL_WAVE_TRIGGER":
+                return Enums.RoomEventTriggerCondition.SEQUENTIAL_WAVE_TRIGGER;
+            case "SHRINE_WAVE_A":
+                return Enums.RoomEventTriggerCondition.SHRINE_WAVE_A;
+            case "SHRINE_WAVE_B":
+                return Enums.RoomEventTriggerCondition.SHRINE_WAVE_B;
+            case "SHRINE_WAVE_C":
+                return Enums.RoomEventTriggerCondition.SHRINE_WAVE_C;
+            case "NPC_TRIGGER_B":
+                return Enums.RoomEventTriggerCondition.NPC_TRIGGER_B;
+            case "NPC_TRIGGER_C":
+                return Enums.RoomEventTriggerCondition.NPC_TRIGGER_C;
+            case "ON_ENTER":
+                return Enums.RoomEventTriggerCondition.ON_ENTER;
+            case "ON_ENTER_WITH_ENEMIES":
+                return Enums.RoomEventTriggerCondition.ON_ENTER_WITH_ENEMIES;
+            case "ON_EXIT":
+                return Enums.RoomEventTriggerCondition.ON_EXIT;
+            case "ON_NINETY_PERCENT_ENEMY_HP_DEPLETED":
+                return Enums.RoomEventTriggerCondition.ON_NINETY_PERCENT_ENEMY_HP_DEPLETED;
+            case "TIMER":
+                return Enums.RoomEventTriggerCondition.TIMER;
+            default:
+                return Enums.RoomEventTriggerCondition.ON_ENEMIES_CLEARED;
 
+        }
+    }
 
-	public static void BuildEnemyMapsFromData(ImportExport.RoomData data)
+    public static void BuildEnemyMapsFromData(ImportExport.RoomData data)
 	{
 		bool flag = EnemyLayerHandler.Instance.LayerCount == 0;
 		if (!flag)
@@ -667,7 +756,12 @@ public static class ImportExport
 			//return;
 		}
 		int numLayers = 0;
-		foreach (int layer in data.nodePaths) numLayers = Mathf.Max(numLayers, layer);
+		foreach (int layer in data.nodePaths) 
+		{
+            numLayers = Mathf.Max(numLayers, layer); 
+			//data.nodeTypes[layer] = 
+
+        } 
 		NodePathLayerHandler.Instance.scheduledLayers = numLayers + 1;
 
 	}

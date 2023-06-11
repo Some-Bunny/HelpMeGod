@@ -74,13 +74,7 @@ public class AttributesHandler : MonoBehaviour
 					{
 						this.AddTileAttribute(att.Key, att.Value);
 					}
-					if (dataTile.isNode == true) 
-					{
-                        Debug.LogError("=======");
 
-                        Debug.LogError("Derp: "+ dataTile.placmentOrder);
-
-                    }
                     bool flag4 = this.attributes.Count == 0 && dataTile.isNode == false;
 					if (flag4)
 					{

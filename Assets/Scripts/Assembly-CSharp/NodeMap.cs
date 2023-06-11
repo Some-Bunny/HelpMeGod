@@ -9,6 +9,7 @@ using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using static NodeMap;
+using static UnityEngine.EventSystems.EventTrigger;
 
 public class NodeMap : TilemapHandler
 {
@@ -71,8 +72,8 @@ public class NodeMap : TilemapHandler
 		List<int> order = new List<int>();
 		*/
         List<string> triggers = new List<string>();
-        List<string> guids = new List<string>();
-        List<Vector2> positions = new List<Vector2>();
+        //List<string> guids = new List<string>();
+        //List<Vector2> positions = new List<Vector2>();
 
         //foreach (var node in nodes)
         //{
@@ -253,7 +254,6 @@ public class NodeMap : TilemapHandler
 		data.nodePositions = data.nodePositions.Concat(positions.ToArray()).ToArray<Vector2>();
 		data.nodePaths = data.nodePaths.Concat(layers.ToArray()).ToArray<int>();
         data.nodeWrapModes = data.nodeWrapModes.Concat(triggers.ToArray()).ToArray();
-        
 
     }
 
@@ -261,7 +261,6 @@ public class NodeMap : TilemapHandler
 
 	public void AddNewNodeTile(DataTile tile, Vector3Int position, int overrideOrder = -1)
     {
-
 		overrideOrder = -1;
 		//Debug.LogError("ORDER:");
         //nodes.Clear();
@@ -304,7 +303,31 @@ public class NodeMap : TilemapHandler
 		} 
 		else
         {
-			fuckYou.Remove(fuckYou.Find(item => item != null && item.position == new Vector2(position.x, position.y)));
+
+			var tileToDelete = fuckYou.Find(item => item != null && item.position == new Vector2(position.x, position.y));
+			if (tileToDelete != null)
+			{
+                var st = tileToDelete.name ?? "NULL";
+                var fadjaik = tileToDelete != null ? tileToDelete.placmentOrder : -999;
+                Debug.LogError("Deleted:" + st + " | " + fadjaik);
+
+                List<DataTile> tilesToUpdate = new List<DataTile>();
+                foreach (var entry in fuckYou)
+                {
+					if (entry.placmentOrder > fadjaik)
+					{
+						tilesToUpdate.Add(entry);
+                    }
+                }
+				foreach (var entry in tilesToUpdate)
+				{
+					entry.placmentOrder--;
+                    entry.data["Node Order"] = JToken.FromObject(entry.placmentOrder.ToString());
+                }
+				UpdateAtrributeList();
+                fuckYou.Remove(tileToDelete);
+				return;
+            }
         }
 
         fuckYou.Add(tile);
@@ -333,16 +356,48 @@ public class NodeMap : TilemapHandler
             AttributeDatabase.TryGetListing("all_nodes", out aCs);
             foreach (AC ac in aCs)
             {
-                if (!tile.data.ContainsKey(ac.longName)) tile.data.Add(ac.longName, JToken.FromObject(tile.placmentOrder.ToString()));
+				if (!tile.data.ContainsKey(ac.longName) && ac.longName == "Node Order") tile.data.Add(ac.longName, JToken.FromObject(tile.placmentOrder.ToString()));
+				else if (!tile.data.ContainsKey(ac.longName))
+				{
+
+                    tile.data.Add(ac.longName, JToken.FromObject(tile.name));
+                    tile.data[ac.longName] = JToken.FromObject(tile.name);
+
+                    //Debug.LogError("asdghgh");
+
+                    /*
+                    foreach (var entry in this.tileDatabase.Entries)
+					{
+						Debug.LogError("asd: "+JToken.FromObject(tile.name).ToString().ToLower());
+                        Debug.LogError("asda "+entry.Value.ToLower());
+
+                        if (JToken.FromObject(tile.name).ToString().ToLower().Contains(entry.Value.ToLower()))
+						{
+                            Debug.LogError("YES");
+                            //tile.data.Add(ac.longName, entry.Value);
+                        }
+                    }
+					*/
+                    //Debug.LogError((this.tileDatabase.AllEntries[tile.name]));
+                    //
+                    //tile.data[ac.longName].def// = this.tileDatabase.AllEntries[tile.name];//JToken.FromObject(this.tileDatabase.AllEntries[tile.name]);
+                }
             }
         }
         //Debug.LogError("J: " + JToken.FromObject(tile.data["nodPos"]).ToString());
-//
+        //
 
+        UpdateAtrributeList();
+
+    }
+
+    public void UpdateAtrributeList()
+	{
         List<object> paths2 = new List<object>();
         for (int i = 0; i < this.fuckYou.Count; i++) paths2.Add(i.ToString());
         AttributeDatabase.allAttributes["nodPos"].possibleValues = paths2.ToArray();
     }
+
 
     protected override void InitializeTiles()
     {
@@ -360,6 +415,7 @@ public class NodeMap : TilemapHandler
 	public List<DataTile> fuckYou = new List<DataTile>();
 
 
+	
 
     public override TileDatabase InitializeDatabase()
 	{

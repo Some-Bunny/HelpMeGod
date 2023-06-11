@@ -451,8 +451,6 @@ public class InputHandler : MonoBehaviour
                 renderer.positionCount = inst.GetMap(inst.EnemyMapIndex).fuckYou.Count;
                 var localScale = this.grid.transform.localScale;
                 Vector2 localposition = this.grid.transform.position;
-                Vector2 offset = new Vector2(0.5f, 0.5f);
-
                 List<int> H = new List<int>();
                 List<string> cum = new List<string>()
                 {
@@ -655,7 +653,7 @@ public class InputHandler : MonoBehaviour
 			Manager.Instance.environment.GetComponent<Tilemap>().color = new Color(1f, 1f, 1f, 0.5f);
 			Manager.Instance.exits.GetComponent<Tilemap>().color = new Color(1f, 1f, 1f, 0.5f);
 			Manager.Instance.placeables.GetComponent<Tilemap>().color = new Color(1f, 1f, 1f, 0.5f);
-			EnemyLayerHandler.Instance.enemyMaps.ForEach(x => x.GetComponent<Tilemap>().color = new Color(1f, 1f, 1f, 0.5f));
+			EnemyLayerHandler.Instance.DoTransparency();//.enemyMaps.ForEach(x => x.GetComponent<Tilemap>().color = new Color(1f, 1f, 1f, 0.5f));
 			NodePathLayerHandler.Instance.nodeMaps.ForEach(x => x.GetComponent<Tilemap>().color = Color.white);
 
 			//ReturnButtons
@@ -709,11 +707,10 @@ public class InputHandler : MonoBehaviour
 			Manager.Instance.environment.GetComponent<Tilemap>().color = Color.white;
 			Manager.Instance.exits.GetComponent<Tilemap>().color = Color.white;
 			Manager.Instance.placeables.GetComponent<Tilemap>().color = Color.white;
-			EnemyLayerHandler.Instance.enemyMaps.ForEach(x => x.GetComponent<Tilemap>().color = Color.white);
-			NodePathLayerHandler.Instance.nodeMaps.ForEach(x => x.GetComponent<Tilemap>().color = new Color(1f, 1f, 1f, 0.5f));
+			EnemyLayerHandler.Instance.SetSelectedLayer(EnemyLayerHandler.Instance.ReturnButtons()[EnemyLayerHandler.Instance.EnemyMapIndex]);
+            NodePathLayerHandler.Instance.nodeMaps.ForEach(x => x.GetComponent<Tilemap>().color = new Color(1f, 1f, 1f, 0.5f));
 
         }
-
 	}
 
 	

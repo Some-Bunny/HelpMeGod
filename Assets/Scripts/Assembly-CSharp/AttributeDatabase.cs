@@ -214,6 +214,10 @@ public static class AttributeDatabase
             "nodPos",
             new AC("Node Order", "nodPos", "0", new object[]{ "0" })
         },
+        {
+            "nodType",
+            new AC("Node Type", "nodType", "Center", new object[]{ "Center", "North", "NorthEast", "East", "SouthEast", "South", "SouthWest", "West", "NorthWest"})
+        },
     };
 
 	
@@ -245,7 +249,8 @@ public static class AttributeDatabase
             (string name) => name == "all_nodes",
             new string[]
             {
-                "nodPos"
+                "nodPos",
+                "nodType"
             }
         },
         {
