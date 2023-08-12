@@ -414,7 +414,7 @@ public static class ImportExport
 
 	private static Tile TileFromNumber(int type, TilemapHandler tilemapHandler)
 	{
-		Dictionary<int, string> types = new Dictionary<int, string> { { 1, "floor" }, { 2, "wall" }, { 3, "pit" } };
+		Dictionary<int, string> types = new Dictionary<int, string> { { 1, "floor" }, { 2, "wall" }, { 3, "pit" }, { 4, "ice" } , { 5, "effecthazard" } };
 
 		return type > 0 ? tilemapHandler.palette[types[type]] : null;
 	}
@@ -586,7 +586,7 @@ public static class ImportExport
 				else
 				{
 					DataTile tile = TilemapHandler.Clone(mapHandler.palette[id]);
-					tile.placmentOrder = stupidJankyPieceOfShit[i].Item1;
+					//tile.placmentOrder = stupidJankyPieceOfShit[i].Item1;
                     //Debug.Log($"{(int)position.x}, {(int)position.y} --- {Manager.roomSize.x}, {Manager.roomSize.y} --- {data.nodePositions[j]}");
 
                     //tileArrays[layer][(int)position.x, (int)position.y] = tile;
@@ -608,7 +608,7 @@ public static class ImportExport
 
                     NodePathLayerHandler.Instance.GetMap(k).map.SetTile(TilemapHandler.GameToLocalPosition(tileShit.Key), tileShit.Value);
 
-					(NodePathLayerHandler.Instance.GetMap(k) as NodeMap).AddNewNodeTile(tileShit.Value as DataTile, TilemapHandler.GameToLocalPosition(tileShit.Key), (tileShit.Value as DataTile).placmentOrder);
+					(NodePathLayerHandler.Instance.GetMap(k) as NodeMap).AddNewNodeTile(tileShit.Value as DataTile, TilemapHandler.GameToLocalPosition(tileShit.Key));
 				}
 				//NodePathLayerHandler.Instance.GetMap(k).BuildFromTileArray(tileArrays[k]);
 			}
@@ -656,10 +656,13 @@ public static class ImportExport
 			{
                 Debug.LogError("dadsaklokjioojuik " + k);
 
-                EnemyLayerHandler.Instance.ReturnButtons()[k].triggerCondition = ReturnTrigger(bastard[k]);
-                EnemyLayerHandler.Instance.ReturnButtons()[k].triggerDropdown.value = (int)ReturnTrigger(bastard[k]);
+				if (bastard.ContainsKey(k))
+				{
+                    EnemyLayerHandler.Instance.ReturnButtons()[k].triggerCondition = ReturnTrigger(bastard[k]);
+                    EnemyLayerHandler.Instance.ReturnButtons()[k].triggerDropdown.value = (int)ReturnTrigger(bastard[k]);
 
-                EnemyLayerHandler.Instance.GetMap(k).BuildFromTileArray(tileArrays[k]);
+                    EnemyLayerHandler.Instance.GetMap(k).BuildFromTileArray(tileArrays[k]);
+                }
 			}
 		}
 	}
@@ -752,7 +755,7 @@ public static class ImportExport
 
 		if (data.nodeTypes.Length != data.nodePaths.Length || data.nodeTypes.Length != data.nodePositions.Length || data.nodeTypes.Length != data.nodeWrapModes.Length)
 		{
-			Debug.LogError($"Uneven enemy data array length: {data.nodeTypes.Length} != {data.nodePositions.Length} != {data.nodePaths.Length} != {data.nodeWrapModes.Length}");
+			Debug.LogError($"Uneven Node data array length: {data.nodeTypes.Length} != {data.nodePositions.Length} != {data.nodePaths.Length} != {data.nodeWrapModes.Length}");
 			//return;
 		}
 		int numLayers = 0;

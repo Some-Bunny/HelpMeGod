@@ -64,9 +64,7 @@ public abstract class TilemapHandler : MonoBehaviour
 				if (TilemapHandler.InBounds(t))
 				{
 					map.SetTile(t, newTile);
-				}
-
-                
+				}           
                 this.FillLine(this.grid.CellToWorld(t), this.grid.CellToWorld(tiles[(i + 1) % tiles.Length]), newTile, 1);
 			}
 		}
@@ -354,8 +352,15 @@ public abstract class TilemapHandler : MonoBehaviour
 		this.map.ResizeBounds();
 	}
 
-	
-	public void BuildFromTileArray(Tile[,] tiles, int overrideNodeOrder = -1)
+    public void SpecialResizeBounds()
+    {
+        this.map.origin = new Vector3Int(TilemapHandler.Bounds.x, TilemapHandler.Bounds.y, 0);
+        this.map.size = new Vector3Int(TilemapHandler.Bounds.size.x, TilemapHandler.Bounds.size.y, 0);
+        this.map.ResizeBounds();
+    }
+
+
+    public void BuildFromTileArray(Tile[,] tiles, int overrideNodeOrder = -1)
 	{
 		for (int i = 0; i < tiles.GetLength(0); i++)
 		{
@@ -369,7 +374,7 @@ public abstract class TilemapHandler : MonoBehaviour
 
 					this.map.SetTile(TilemapHandler.GameToLocalPosition(i, j), tile);
 
-					(this as NodeMap).AddNewNodeTile(tile as DataTile, TilemapHandler.GameToLocalPosition(i, j), overrideNodeOrder);
+					(this as NodeMap).AddNewNodeTile(tile as DataTile, TilemapHandler.GameToLocalPosition(i, j));
 				}
 				else
                 {
@@ -379,8 +384,10 @@ public abstract class TilemapHandler : MonoBehaviour
 		}
 	}
 
-	
-	protected virtual void GeneratePalette()
+
+
+
+    protected virtual void GeneratePalette()
 	{
 		if (!this.m_initializedTiles)
 		{
@@ -468,7 +475,8 @@ public abstract class TilemapHandler : MonoBehaviour
 		{
 			foreach (AC ac in aCs)
 			{
-				tile.data.Add(ac.longName, JToken.FromObject(ac.defaultValue));
+                var values = AttributeDatabase.TryGetSpecialDefaults(name, ac.shortName);
+                tile.data.Add(ac.longName, JToken.FromObject(values ?? ac.defaultValue));
 			}
 		}
 		spriteSwitch.Add(name, sprite);
@@ -494,9 +502,17 @@ public abstract class TilemapHandler : MonoBehaviour
 			tile.flags = other.flags;
 			tile.hideFlags = other.hideFlags;
 			tile.transform = other.transform;
-			DataTile dataTile;
+            DataTile dataTile;
 			tile.data = (((dataTile = (other as DataTile)) != null) ? JObject.Parse(dataTile.data.ToString()) : new JObject());
-			return tile;
+			if (tile is DataTile data)
+			{
+                tile.PositionInTileMap = data.PositionInTileMap;
+                tile.worldIntPosition = data.worldIntPosition;
+
+                tile.position = data.position;
+
+            }
+            return tile;
 		}
 	}
 

@@ -24,16 +24,25 @@ public class ExitMap : TilemapHandler
 					Tile tile = tiles[x, y];
 					string name = tile.name.ToLower();
 					Vector2 position = new Vector2((float)(x + 1), (float)(y + 1));
-					foreach (string dir in this.Directions)
-					{
-						bool flag2 = name.Contains(dir);
-						if (flag2)
-						{
-							directions.Add(dir.ToUpper());
-							positions.Add(position);
-						}
-					}
-				}
+                    foreach (string dir in this.Directions)
+                    {
+                        if (name.Contains(dir) && name.Contains("entryonly"))
+                        {
+                            directions.Add(name.ToUpper());
+                            positions.Add(position);
+                        }
+                        else if (name.Contains(dir) && name.Contains("exitonly"))
+                        {
+                            directions.Add(name.ToUpper());
+                            positions.Add(position);
+                        }
+                        else if (name.Contains(dir) && !name.Contains("exitonly") && !name.Contains("entryonly"))
+                        {
+                            directions.Add(dir.ToUpper());
+                            positions.Add(position);
+                        }
+                    }
+                }
 			}
 		}
 		data.exitDirections = data.exitDirections.Concat(directions.ToArray()).ToArray<string>();
@@ -58,13 +67,23 @@ public class ExitMap : TilemapHandler
 					Vector2 position = new Vector2((float)(x + 1), (float)(y + 1));
 					foreach (string dir in this.Directions)
 					{
-						bool flag2 = name.Contains(dir);
-						if (flag2)
+                        Debug.LogError(name.ToUpper());
+                        if (name.Contains(dir) && name.Contains("entryonly"))
 						{
-							directions.Add(dir.ToUpper());
+							directions.Add(name.ToUpper());
 							positions.Add(position);
 						}
-					}
+                        else if (name.Contains(dir) && name.Contains("exitonly"))
+                        {
+                            directions.Add(name.ToUpper());
+                            positions.Add(position);
+                        }
+						else if (name.Contains(dir) && !name.Contains("exitonly") && !name.Contains("entryonly"))
+						{
+                            directions.Add(dir.ToUpper());
+                            positions.Add(position);
+                        }
+                    }
 				}
 			}
 		}
@@ -77,13 +96,30 @@ public class ExitMap : TilemapHandler
 	{
 		foreach (Tile tile in this.tiles)
 		{
-			bool flag = tile.name.ToLower().Contains(direction.ToLower());
+			bool flag = tile.name.ToLower() == direction.ToLower();
 			if (flag)
 			{
 				return tile;
 			}
 		}
-		return null;
+		if (direction.ToLower() == "west")
+		{
+            return this.tiles.Where(self => self.name == "door_west").First();
+        }
+        if (direction.ToLower() == "north")
+        {
+            return this.tiles.Where(self => self.name == "door_north").First();
+        }
+        if (direction.ToLower() == "south")
+        {
+            return this.tiles.Where(self => self.name == "door_south").First();
+        }
+        if (direction.ToLower() == "east")
+        {
+            return this.tiles.Where(self => self.name == "door_east").First();
+        }
+
+        return this.tiles.Where(self => self.name == "door_west").First();
 	}
 
 	 
@@ -93,7 +129,7 @@ public class ExitMap : TilemapHandler
 		this.tileDatabase.Entries = new Dictionary<string, string>
 		{
 			{
-				"Doors",
+				"Doors [Exit And Entrance]",
 				Manager.paletteDividerGuid
 			},
 			{
@@ -111,8 +147,48 @@ public class ExitMap : TilemapHandler
 			{
 				"door_east",
 				null
-			}
-		};
+			},
+            {
+                "Doors [Exit Only]",
+                Manager.paletteDividerGuid
+            },
+            {
+                "door_westExitOnly",
+                null
+            },
+            {
+                "doornorthExitOnly",
+                null
+            },
+            {
+                "door_southExitOnly",
+                null
+            },
+            {
+                "door_eastExitOnly",
+                null
+            },
+            {
+                "Doors [Entry Only]",
+                Manager.paletteDividerGuid
+            },
+            {
+                "door_westEntryOnly",
+                null
+            },
+            {
+                "doornorthEntryOnly",
+                null
+            },
+            {
+                "door_southEntryOnly",
+                null
+            },
+            {
+                "door_eastEntryOnly",
+                null
+            },
+        };
 		this.tileDatabase.SubEntries = new Dictionary<string, Dictionary<string, string>>();
 		this.tileDatabase.spriteDirectory = "sprites/doors";
 		return this.tileDatabase;

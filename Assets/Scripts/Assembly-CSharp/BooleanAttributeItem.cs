@@ -3,10 +3,7 @@ using UnityEngine.UI;
 
 
 public class BooleanAttributeItem : AttributeItem
-{
-	
-	
-	 
+{	 
 	public override object Value
 	{
 		get

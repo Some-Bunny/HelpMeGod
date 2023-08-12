@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json.Linq;
-
+using UnityEngine;
 
 public static class AttributeDatabase
 {
@@ -24,9 +24,21 @@ public static class AttributeDatabase
 		}
 		return false;
 	}
+    public static object TryGetSpecialDefaults(string name, string longName)
+    {
+        foreach (var entry in AttributeDatabase.specialDefaultValueListings)
+        {
 
-	
-	public static string LongToShortName(string longName)
+            bool flag = entry.MatchingValue(longName, name);
+            if (flag)
+            {
+                return entry.SpecialDefault;
+            }
+        }
+        return null;
+    }
+
+    public static string LongToShortName(string longName)
 	{
 		return (from kvp in AttributeDatabase.allAttributes
 		where kvp.Value.longName == longName
@@ -55,7 +67,7 @@ public static class AttributeDatabase
 		return ret;
 	}
 
-	
+
 	public static Dictionary<string, AC> allAttributes = new Dictionary<string, AC>
 	{
 		{
@@ -203,6 +215,10 @@ public static class AttributeDatabase
 			new AC("assignedPath", "tSP", "0", new object[] { "0" })
 		},
 		{
+			"nSP_O",
+			new AC("Start At Node:", "nSP_O", "0", new object[] { "0" })
+		},
+		{
 			"mS",
 			new AC("maxSpeed", "mS", 9, new object[0])
 		},
@@ -210,18 +226,73 @@ public static class AttributeDatabase
 			"tTMS",
 			new AC("timeToMaxSpeed", "tTMS", 1.5f, new object[0])
 		},
-        {
-            "nodPos",
-            new AC("Node Order", "nodPos", "0", new object[]{ "0" })
-        },
-        {
-            "nodType",
-            new AC("Node Type", "nodType", "Center", new object[]{ "Center", "North", "NorthEast", "East", "SouthEast", "South", "SouthWest", "West", "NorthWest"})
-        },
-    };
+		{
+			"storedBodyMC",
+			new AC("Stored Body", "storedBodyMC", "None", new object[] {"None", "ExplosiveBarrel", "Turret" })
+		},
+		{
+			"storedenemyBodyMC",
+			new AC("Enemy GUID In Cart", "storedenemyBodyMC", "None", new object[0])
+		},
+		{
+			"nodPos",
+			new AC("Node Order", "nodPos", "0", new object[]{ "0" })
+		},
+		{
+			"nodType",
+			new AC("Node Type", "nodType", "Center", new object[]{ "Center", "North", "NorthEast", "East", "SouthEast", "South", "SouthWest", "West", "NorthWest"})
+		},
+		{
+			"lightRad",
+			new AC("Light Radius", "lightRad", 2f, new object[0])
+		},
+		{
+			"lightInt",
+			new AC("Light Intensity", "lightInt", 2f, new object[0])
+		},
+		{
+			"lightColorR",
+			new AC("[Red]", "lightColorR", 1f, new object[0])
+		},
+		{
+			"lightColorG",
+			new AC("[Green]", "lightColorG", 1f, new object[0])
+		},
+		{
+			"lightColorB",
+			new AC("[Blue]", "lightColorB", 1f, new object[0])
+		},
 
-	
-	public static Dictionary<AttributeDatabase.ValidAttribute, string[]> attributeListings = new Dictionary<AttributeDatabase.ValidAttribute, string[]>
+		{
+			"bossPdstlItmID",
+			new AC("Item ID", "bossPdstlItmID", -1, new object[0])
+		},
+		{
+			"bossPdstlItmStringID",
+			new AC("Item Tag", "bossPdstlItmStringID", "None.", new object[0])
+		},//TRAPS only
+        {
+			"TrapTriggerMethod",
+			new AC("Trap Trigger", "TrapTriggerMethod", "Timer", new object[] {"Timer", "PlaceableFootprint", "SpecRigidbody", "Script", })
+		},
+		{
+			"TrapTriggerDelay",
+			new AC("Cooldown", "TrapTriggerDelay", 1f, new object[0])
+		},
+		{
+			"InitialtrapDelay",
+			new AC("Initial Delay", "InitialtrapDelay", 1f, new object[0])
+		},
+		{
+			"attackDelatTrap",
+			new AC("Attack Delay", "attackDelatTrap", 0.5f, new object[0])
+		},
+		{
+			"trapTriggerOnBlank",
+			new AC("Attacks On Blank", "trapTriggerOnBlank", false, new object[]{false , true})
+        },//TRAP END HERE
+    };
+    public static Dictionary<AttributeDatabase.ValidAttribute, string[]> attributeListings = new Dictionary<AttributeDatabase.ValidAttribute, string[]>
 	{
 		{
 			(string name) => name == "every_single_enemy_ever",
@@ -274,25 +345,56 @@ public static class AttributeDatabase
 		},
 
 		{
-			(string name) => name == "sawblade",
+			(string name) => name == "lost_adventurer_idle_left_001",
 			new string[]
 			{
-				"tSP"
-			}
+				"tSP",
+                "nSP_O"
+            }
 		},
-
-		{
+        {
+            (string name) => name == "sawblade",
+            new string[]
+            {
+                "tSP",
+                "nSP_O"
+            }
+        },
+        {
 			(string name) => name == "minecart",
 			new string[]
 			{
 				"tSP",
-				"mS",
-				"tTMS"
-			}
+                "nSP_O",
+                "mS",
+				"tTMS",
+                "storedBodyMC",
+                "storedenemyBodyMC",
+            }
 		},
-
+		
+        {
+            (string name) => name == "minecartturret",
+            new string[]
+            {
+                "tSP",
+                "nSP_O",
+                "mS",
+                "tTMS",
+            }
+        },
+        {
+            (string name) => name == "minecartboomer",
+            new string[]
+            {
+                "tSP",
+                "nSP_O",
+                "mS",
+                "tTMS",
+            }
+        },
 		{
-			(string name) => name == "custom_barrel",
+            (string name) => name == "custom_barrel",
 			new string[]
 			{
 				"bB",
@@ -305,10 +407,72 @@ public static class AttributeDatabase
 				"pGW",
 				"dBPR"
 			}
-		}
-	};
+		},
+        {
+            (string name) => name == "lightbulbThankYouNevernamed",
+            new string[]
+            {
+                "lightRad",
+                "lightInt",
+                "lightColorR",
+                "lightColorG",
+                "lightColorB",
+            }
+        },
+        {
+            (string name) => name == "Boss_Pedestal",
+            new string[]
+            {
+                "bossPdstlItmID",
+                "bossPdstlItmStringID"
+            }
+        },
+        {
+            (string name) => name == "floor_spikes",
+            new string[]
+            {
+                "TrapTriggerMethod",
+            }
+        },
+        {
+            (string name) => name == "flame_trap",
+            new string[]
+            {
+                "TrapTriggerMethod",
+            }
+        },
+        {
+            (string name) => name == "pitfall_trap",
+            new string[]
+            {
+                "TrapTriggerMethod",
+            }
+        },
+    };
+    public delegate bool ValidAttribute(string name);
+	public static List<SpecialDefaultValue> specialDefaultValueListings = new List<SpecialDefaultValue>
+	{
+		new SpecialDefaultValue("TrapTriggerMethod", "flame_trap", "Timer" ){ },
+        new SpecialDefaultValue("TrapTriggerMethod", "pitfall_trap", "PlaceableFootprint" ){ },
+        new SpecialDefaultValue("TrapTriggerMethod", "floor_spikes", "PlaceableFootprint" ){ },
+    };
 
-	
-	
-	public delegate bool ValidAttribute(string name);
+	public class SpecialDefaultValue
+	{
+		public SpecialDefaultValue(string attribute, string ObjectName, object newDefaultValue)
+		{
+			validAttribute = attribute;
+			objectName = ObjectName;
+			SpecialDefault = newDefaultValue;
+        }
+
+        public string validAttribute;
+		public string objectName;
+		public object SpecialDefault;
+
+		public bool MatchingValue(string attribute, string ObjectName)
+		{
+			return validAttribute == attribute && objectName == ObjectName;
+        }
+    }
 }

@@ -5,6 +5,7 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.UI;
+using Tile = UnityEngine.Tilemaps.Tile;
 
 public class InputHandler : MonoBehaviour
 {
@@ -436,7 +437,8 @@ public class InputHandler : MonoBehaviour
     }
 
 
-	public void UpdateNodeLines()
+
+    public void UpdateNodeLines()
 	{
         if (LineRenderer_Instance)
         {
@@ -448,32 +450,86 @@ public class InputHandler : MonoBehaviour
 			renderer.enabled = NodesVisualEnabled;
 			if (NodesVisualEnabled == true)
 			{
-                renderer.positionCount = inst.GetMap(inst.EnemyMapIndex).fuckYou.Count;
-                var localScale = this.grid.transform.localScale;
-                Vector2 localposition = this.grid.transform.position;
-                List<int> H = new List<int>();
-                List<string> cum = new List<string>()
-                {
-                };
 
-                var Mapping = inst.GetMap(inst.EnemyMapIndex);
 
+				List<string> cum = new List<string>()
+				{
+				};
+                List<Vector2?> p = new List<Vector2?>();
+
+
+				var Mapping = inst.GetMap(inst.EnemyMapIndex);
+
+				//int center = TilemapHandler.Bounds.center;
+				if (Mapping.fuckYou == null || Mapping.fuckYou.Count == 0)
+				{
+					renderer.positionCount = 0;
+					renderer.enabled = false;
+
+                }
                 for (int e = 0; e < Mapping.fuckYou.Count; e++)
                 {
                     var t = Mapping.fuckYou[e];
-                    H.Add(t.placmentOrder);
-                    cum.Add(Mapping.tileDatabase.AllEntries[t.name]);
-                }
 
+                    //H.Add(t.placmentOrder);
+                    //cum.Add();
+
+
+
+                    var nodeMap = inst.GetMap(inst.EnemyMapIndex);
+					Vector2 pos = nodeMap.map.CellToWorld(t.worldIntPosition);
+                    //p.Add);
+
+                    //if (c != null && pos != null)
+                    {
+                        var scaler = new Vector2(0f, 0f);
+                        var localScale = this.grid.transform.localScale;
+                        var calc = (pos + (scaler)); //(pos + localScale) * localposition;
+                        Vector3 peepee = new Vector3((calc).x, (calc).y, 20);
+                        renderer.positionCount = Mapping.fuckYou.Count;
+                        var g = ReturnOffset(Mapping.tileDatabase.AllEntries[t.name]);
+                        renderer.SetPosition(e, peepee + new Vector3(g.x * localScale.x, g.y * localScale.y));
+                    }
+
+
+                    /*
+                    Tile[,] tiles = nodeMap.AllTiles();
+                    for (int x = 0; x < tiles.GetLength(0); x++)
+                    {
+                        for (int y = 0; y < tiles.GetLength(1); y++)
+                        {
+                            if (!tiles[x, y]) continue;
+                            DataTile tile = tiles[x, y] as DataTile;
+                            if (tile.isNode && tile == Mapping.fuckYou[e])
+                            {
+                                p.Add(nodeMap.map.CellToWorld(tile.worldIntPosition));
+                            }
+                        }
+                    }
+                    */
+                }
+                //H.Sort();
+				/*
                 for (int e = 0; e < H.Count; e++)
                 {
-                    var pos = inst.GetMap(inst.EnemyMapIndex).fuckYou[H[e]].position;
-                    pos += ReturnOffset(cum[H[e]]);
-                    var calc = (pos * localScale) + localposition; //(pos + localScale) * localposition;
-                    Vector3 peepee = new Vector3((calc).x, (calc).y, 20);
-                    renderer.SetPosition(e, peepee);
-                }
+                    Vector2? pos = null;
+                    string c = null;
+                    p.TryGetValue(H[e], out pos);
+                    cum.TryGetValue(H[e], out c);
 
+                }
+				*/
+                /*
+                renderer.positionCount = inst.GetMap(inst.EnemyMapIndex).fuckYou.Count;
+                
+				var localScale = this.grid.transform.localScale;
+				var hhh = Manager.Instance.GetTilemap(TilemapHandler.MapType.Environment).map.cellBounds.position;
+
+                Vector2 localposition = Manager.Instance.GetTilemap(TilemapHandler.MapType.Environment).map.transform.position + new Vector3(hhh.x, hhh.y);
+
+
+                
+				*/
             }
 
             LineRenderer_Instance.transform.parent = NodePathLayerHandler.Instance.gameObject.transform;

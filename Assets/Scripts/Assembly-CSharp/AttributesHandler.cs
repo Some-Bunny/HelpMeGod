@@ -148,7 +148,7 @@ public class AttributesHandler : MonoBehaviour
         AttributeItem att = UnityEngine.Object.Instantiate<GameObject>(prefab, this.content.transform).GetComponent<AttributeItem>();
         att.propertyName = attributeName;
         att.text.text = attributeName.SplitCamelCase().UppercaseFirst();
-		att.Value = tile.placmentOrder;
+		att.Value = tile.TryGetPositionInNodeMap();
         this.attributes.Add(att);
         this.PositionAttribute(this.attributes.Count - 1);
     }

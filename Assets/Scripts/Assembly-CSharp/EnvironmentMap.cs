@@ -9,24 +9,33 @@ public class EnvironmentMap : TilemapHandler
 	 
 	public void DrawBorder()
 	{
-		Vector2Int pos = Vector2Int.zero;
-		int xmin = TilemapHandler.Bounds.xMin;
-		int ymin = TilemapHandler.Bounds.yMin;
-		int xmax = TilemapHandler.Bounds.xMax;
-		int ymax = TilemapHandler.Bounds.yMax;
-		for (int x = xmin; x < xmax; x++)
-		{
-			for (int y = ymin; y < ymax; y++)
-			{
-				if (x == xmin && y == ymin && x == xmax - 1 && y == ymax - 1)
-				{
-					this.map.SetTile(new Vector3Int(x, y, 0), this.palette["wall"]);
-				}
-			}
-		}
-	}
+        Vector3Int pos = Vector3Int.zero;
+        pos.z = this.map.origin.z;
+        int xmin = TilemapHandler.Bounds.xMin;
+        int ymin = TilemapHandler.Bounds.yMin;
+        int xmax = TilemapHandler.Bounds.xMax;
+        int ymax = TilemapHandler.Bounds.yMax;
+        for (int x = xmin; x < xmax; x++)
+        {
+            pos.x = x;
 
-	public void CreatRodentRoom()
+            pos.y = ymax - 1;
+            this.map.SetTile(pos, this.palette["wall"]);
+            pos.y = ymin;
+            this.map.SetTile(pos, this.palette["wall"]);
+        }
+        for (int y = ymin; y < ymax; y++)
+        {
+            pos.y = y;
+
+            pos.x = xmax - 1;
+            this.map.SetTile(pos, this.palette["wall"]);
+            pos.x = xmin;
+            this.map.SetTile(pos, this.palette["wall"]);
+        }
+    }
+
+    public void CreatRodentRoom()
 	{
 		Vector2Int pos = Vector2Int.zero;
 		int xmin = TilemapHandler.Bounds.xMin;
@@ -167,7 +176,15 @@ public class EnvironmentMap : TilemapHandler
 					{
 						tileData += 3;
 					}	
-					else
+					else if (name.Contains("ice"))
+					{
+						tileData += 4;
+					}
+					else if (name.Contains("effecthazard"))
+					{
+                        tileData += 5;
+                    }
+                    else
                     {
 						tileData += 2;
 					}
@@ -200,8 +217,24 @@ public class EnvironmentMap : TilemapHandler
 			{
 				"pit",
 				null
-			}
-		};
+			},
+            {
+                "Ice [Hollow Only]",
+                Manager.paletteDividerGuid
+            },
+            {
+                "ice",
+                null
+            },
+            {
+                "Effect Hazard [Mines / Forge Only]",
+                Manager.paletteDividerGuid
+            },
+            {
+                "effecthazard",
+                null
+            },
+        };
 		this.tileDatabase.SubEntries = new Dictionary<string, Dictionary<string, string>>();
 		this.tileDatabase.spriteDirectory = "sprites/environment";
 		return this.tileDatabase;

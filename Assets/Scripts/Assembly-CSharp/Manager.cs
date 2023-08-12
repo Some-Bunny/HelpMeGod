@@ -118,7 +118,7 @@ public class Manager : MonoBehaviour
 			}
 		}
 		this.LateStartCompleted = true;
-		yield break;
+        yield break;
 	}
 
 	

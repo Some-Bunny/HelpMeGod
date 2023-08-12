@@ -42,21 +42,26 @@ public abstract class AttributeItem : MonoBehaviour
 					{
                         foreach (var entry in list)
                         {
-                            if (entry.placmentOrder == H2)
+                            if (entry.PositionInNodeMap(nodeMap) == H2)
                             {
-                                Debug.LogError("Plac Pre entry: " + entry.placmentOrder);
-                                Debug.LogError("Plac Pre dataTile: " + dataTile.placmentOrder);
+                                //Debug.LogError("Plac Pre entry: " + entry.placmentOrder);
+                                //Debug.LogError("Plac Pre dataTile: " + dataTile.placmentOrder);
 
-                                entry.placmentOrder = H;
-                                dataTile.placmentOrder = H2;
+                                var entry1 = nodeMap.fuckYou[H2];
+                                nodeMap.fuckYou[H2] = nodeMap.fuckYou[H];
+                                nodeMap.fuckYou[H] = entry1;
 
-                                Debug.LogError("Plac Post entry: " + entry.placmentOrder);
-                                Debug.LogError("Plac Post dataTile: " + dataTile.placmentOrder);
+                                //entry.placmentOrder = H;
+                                //dataTile.placmentOrder = H2;
+
+                                //Debug.LogError("Plac Post entry: " + entry.placmentOrder);
+                                //Debug.LogError("Plac Post dataTile: " + dataTile.placmentOrder);
 
 
                                 entry.data[this.propertyName] = JToken.FromObject(H.ToString());
-
+                                nodeMap.UpdateAtrributeList();
                                 InputHandler.Instance.UpdateNodeLines();
+
                                 //var allTiles = nodeMap.AllTiles();
 
                                 //var pos1 = nodeMap.GetComponent<Tilemap>().LocalToCell(dataTile.position);

@@ -50,7 +50,8 @@ public class NodePathLayerHandler : MonoBehaviour
 		int count = this.nodeMaps.Count;
 		for (int i = 0; i < count; i++)
 		{
-			this.nodeMaps[i].CollectDataForExport2(ref data, i, buttons[i].WrapMode);
+			Debug.LogError("startIndex" + i);
+			this.nodeMaps[i].CollectDataForExport2(ref data, i, buttons[i].WrapMode, this.nodeMaps[i].fuckYou);
 		}
 	}
 
@@ -154,6 +155,7 @@ public class NodePathLayerHandler : MonoBehaviour
         if (paths2.Count > 0)
 		{
             AttributeDatabase.allAttributes["nodPos"].possibleValues = paths2.ToArray();
+            AttributeDatabase.allAttributes["nSP_O"].possibleValues = paths2.ToArray();
         }
     }
 
@@ -253,6 +255,7 @@ public class NodePathLayerHandler : MonoBehaviour
 		if (paths2.Count > 0)
 		{
             AttributeDatabase.allAttributes["nodPos"].possibleValues = paths2.ToArray();
+            AttributeDatabase.allAttributes["nSP_O"].possibleValues = paths2.ToArray();
         }
 
 

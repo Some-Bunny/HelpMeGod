@@ -3,10 +3,7 @@ using System.Collections.Generic;
 
 
 public class PlaceableDatabase : TileDatabase
-{
-	
-	
-	 
+{ 
 	public override Dictionary<string, Dictionary<string, string>> SubEntries { get; set; } = new Dictionary<string, Dictionary<string, string>>
 	{
 		{
@@ -25,7 +22,11 @@ public class PlaceableDatabase : TileDatabase
 					"blue_pot",
 					"Default Pot Blue"
 				},
-				{
+                {
+                    "tan_pot_idle_001",
+                    "tanPotAbbey"
+                },
+                {
 					"tall_pot",
 					"Tall Pot"
 				},
@@ -129,7 +130,11 @@ public class PlaceableDatabase : TileDatabase
 					"bush",
 					"bush"
 				},
-				{
+                {
+                    "flowers",
+                    "FlowerTile"
+                },
+                {
 					"bush_flowers",
 					"bush flowers"
 				},
@@ -310,7 +315,7 @@ public class PlaceableDatabase : TileDatabase
 					"gargoyle_statue"
 				},
 				{
-					"Furniture",
+                    "Furniture",
 					Manager.paletteDividerGuid
 				},
 				{
@@ -453,7 +458,11 @@ public class PlaceableDatabase : TileDatabase
 					"pillory",
 					"pillory"
 				},
-				{
+                {
+                    "medieval_crate_idle_001",
+                    "medievalCrate"
+                },
+                {
 					"shabby_shelf_1",
 					"shabby_shelf_1"
 				},
@@ -513,8 +522,16 @@ public class PlaceableDatabase : TileDatabase
 					"ash_shotgun_man",
 					"ash_shotgunman"
 				},
-				{
-					"Torches and Lights",
+                {
+                    "stone_bulletman_A_001",
+                    "GorgunStatueBulletKin"
+                },
+                {
+                    "stone_shotgunman_A_001",
+                    "GorgunStatueShotgunKin"
+                },			
+                {
+                    "Torches and Lights",
 					Manager.paletteDividerGuid
 				},
 				{
@@ -541,7 +558,64 @@ public class PlaceableDatabase : TileDatabase
 					"floating_magic_orb",
 					"floating_magic_orb"
 				},
-				{
+                {
+                    "sconce_wall_002",
+                    "sconce_horizontal"
+                },
+                {
+                    "sconce_side_001",
+                    "sconce_left_"
+                },
+                {
+                    "sconce_side_002",
+                    "sconce_right_"
+                },
+                {
+                    "torch_wall_001",
+                    "basictorch_h"
+                },
+                {
+                    "torch_side_001",
+                    "basictorch_l"
+                },
+                {
+                    "torch_side_002",
+                    "basictorch_r"
+                },
+                {
+                    "candleabra_vertical_001",
+                    "candlabra_horiz"
+                },
+                {
+                    "candleabra_horizontal_001",
+                    "candlabra_left"
+                },
+                {
+                    "candleabra_horizontal_002",
+                    "candlabra_right"
+                },
+
+                {
+                    "minelantern_top",
+                    "candlabra_horiz"
+                },
+                {
+                    "minelantern_side_001",
+                    "minelantern_left"
+                },
+                {
+                    "minelantern_side_002",
+                    "minelantern_right"
+                },
+                {
+                    "Custom Lights",
+                    Manager.paletteDividerGuid
+                },
+                {
+                    "lightbulbThankYouNevernamed",
+                    "CustomlightSource"
+                },
+                {
 					"People",
 					Manager.paletteDividerGuid
 				},
@@ -769,7 +843,16 @@ public class PlaceableDatabase : TileDatabase
 					"hologram_wall_horizontal",
 					"hologram_wall_horizontal"
 				},
-				{
+
+                {
+                    "mine_column_idle_001",
+                    "breakablePillarTreadnought"
+                },
+                {
+                    "mine_column_break_003",
+                    "brokenPillarTreadnought"
+                },
+                {
 					"Miscellaneous Decoration",
 					Manager.paletteDividerGuid
 				},
@@ -777,7 +860,11 @@ public class PlaceableDatabase : TileDatabase
 					"suit_of_armour",
 					"suitofarmor"
 				},
-				{
+                {
+                    "gold_armor_idle_001",
+                    "suitofarmorGold"
+                },
+                {
 					"globe",
 					"Table_Globe"
 				},
@@ -928,8 +1015,12 @@ public class PlaceableDatabase : TileDatabase
 				{
 					"machine_frame_ring",
 					"machine_frame_ring"
-				}
-			}
+				},
+                {
+                    "blobulord_sewer_grate_001",
+                    "BlobulordGrateFloorDecal"
+                },
+            }
 		},
 		{
 			"Loot",
@@ -1036,7 +1127,7 @@ public class PlaceableDatabase : TileDatabase
 					"chest_synergy"
 				},
 				{
-					"random_chest",
+                    "random_locked_chest",
 					"aaa_floorchestplacer"
 				},
 				{
@@ -1050,8 +1141,12 @@ public class PlaceableDatabase : TileDatabase
 				{
 					"high_dragunfire_chest",
 					"highdragunfire_chest_red"
-				}
-			}
+				},
+                {
+                    "Boss_Pedestal",
+                    "bossPedestal"
+                },
+            }
 		},
 		{
 			"Traps",
@@ -1145,7 +1240,15 @@ public class PlaceableDatabase : TileDatabase
 					"minecart",
 					"minecart_pathing"
 				},
-			}
+                {
+                    "minecartturret",
+                    "turretminecart_pathing"
+                },
+                {
+                    "minecartboomer",
+                    "explosivebarrelminecart_pathing"
+                },
+            }
 		},
 		{
 			"NPCs",
@@ -1254,8 +1357,16 @@ public class PlaceableDatabase : TileDatabase
 				{
 					"npc_dyingscientist",
 					"npc_dyingscientist"
-				}
-			}
+				},
+                {
+                    "Lost Adventurer [Uses Node Paths]",
+                    Manager.paletteDividerGuid
+                },
+                {
+                    "lost_adventurer_idle_left_001",
+                    "lonk_NPC_pathing"
+                },
+            }
 		}
 	};
 
@@ -1420,7 +1531,11 @@ public class PlaceableDatabase : TileDatabase
 			"yv_shrine",
 			"Shrine_YV"
 		},
-		{
+        {
+            "challengeShrine",
+            "ChallengeShrine"
+        },
+        {
 			"Doors",
 			Manager.paletteDividerGuid
 		},
