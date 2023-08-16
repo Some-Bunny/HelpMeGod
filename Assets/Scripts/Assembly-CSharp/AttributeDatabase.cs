@@ -216,7 +216,7 @@ public static class AttributeDatabase
 		},
 		{
 			"nSP_O",
-			new AC("Start At Node:", "nSP_O", "0", new object[] { "0" })
+			new AC("Start At Node:", "nSP_O", 0, new object[0])
 		},
 		{
 			"mS",
@@ -227,13 +227,10 @@ public static class AttributeDatabase
 			new AC("timeToMaxSpeed", "tTMS", 1.5f, new object[0])
 		},
 		{
-			"storedBodyMC",
-			new AC("Stored Body", "storedBodyMC", "None", new object[] {"None", "ExplosiveBarrel", "Turret" })
-		},
-		{
 			"storedenemyBodyMC",
-			new AC("Enemy GUID In Cart", "storedenemyBodyMC", "None", new object[0])
+			new AC("Nearet Enemy Will Ride", "storedenemyBodyMC", false, new object[0])
 		},
+
 		{
 			"nodPos",
 			new AC("Node Order", "nodPos", "0", new object[]{ "0" })
@@ -273,7 +270,7 @@ public static class AttributeDatabase
 		},//TRAPS only
         {
 			"TrapTriggerMethod",
-			new AC("Trap Trigger", "TrapTriggerMethod", "Timer", new object[] {"Timer", "PlaceableFootprint", "SpecRigidbody", "Script", })
+			new AC("Trap Trigger", "TrapTriggerMethod", "Timer", new object[] {"Timer", "Stepped On", "Collisions", "Script", })
 		},
 		{
 			"TrapTriggerDelay",
@@ -283,7 +280,7 @@ public static class AttributeDatabase
 			"InitialtrapDelay",
 			new AC("Initial Delay", "InitialtrapDelay", 1f, new object[0])
 		},
-		{
+        {
 			"attackDelatTrap",
 			new AC("Attack Delay", "attackDelatTrap", 0.5f, new object[0])
 		},
@@ -291,10 +288,250 @@ public static class AttributeDatabase
 			"trapTriggerOnBlank",
 			new AC("Attacks On Blank", "trapTriggerOnBlank", false, new object[]{false , true})
         },//TRAP END HERE
+		{
+            "WinchesterBounceCount",
+            new AC("Amount Of Bounces", "WinchesterBounceCount", 1, new object[0])
+        },
+        {
+            "WinCameraZoomOut",
+            new AC("Zoom Scale", "WinCameraZoomOut", 0.75f, new object[0])
+        },
+        {
+            "WinchestMoveXTele",
+            new AC("Movement X:", "WinchestMoveXTele", 0f, new object[0])
+        },
+        {
+            "WinchestMoveYTele",
+            new AC("Movement Y:", "WinchestMoveYTele", 0f, new object[0])
+        },
+        {
+            "WinchestGoneTime",
+            new AC("Gone Time:", "WinchestGoneTime", 1f, new object[0])
+        },
+        {
+            "WinchestTargetSpeed",
+            new AC("Speed", "WinchestTargetSpeed", 6f, new object[0])
+        },
+        {
+            "TileSizeX_",
+            new AC("Tile Size X", "TileSizeX_", 4, new object[0])
+        },
+        {
+            "TileSizeY_",
+            new AC("Tile Size Y", "TileSizeY_", 4, new object[0])
+        },
+        {
+            "ConveyorHorizontalVelocity",
+            new AC("Horizontal Velocity", "ConveyorHorizontalVelocity", 4f, new object[0])
+        },
+        {
+            "ConveyorVerticalVelocity",
+            new AC("Vertical Velocity", "ConveyorVerticalVelocity", 4f, new object[0])
+        },
+        {
+            "ConveyorReversed",
+            new AC("Reversed", "ConveyorReversed", false, new object[0])
+        },
+        {
+            "customNoteText",
+            new AC("Custom Text", "customNoteText", "None.", new object[0])
+        },
+        {
+            "customNoteTextIsStringKey",
+            new AC("Text Is String Key", "customNoteTextIsStringKey", false, new object[0])
+        },
+
+        {
+            "triggerEventValue",
+            new AC("Trigger On Event:", "triggerEventValue", 0, new object[0])
+        },
+        {
+            "triggeredEventValue",
+            new AC("Set To Event:", "triggeredEventValue", 0, new object[0])
+        },
+
+        {
+            "trapProjSpeed",
+            new AC("Projectile Speed", "trapProjSpeed", 5f, new object[0])
+        },
+        {
+            "trapProjRange",
+            new AC("Projectile Range", "trapProjRange", 1000f, new object[0])
+        },
+        {
+            "DirectionShoot",
+            new AC("Shoot Direction", "DirectionShoot", "NORTH", new object[] { "NORTH", "NORTHEAST", "EAST", "SOUTHEAST", "SOUTH", "SOUTHWEST", "WEST", "NORTHWEST", })
+        },
+        {
+            "projectileTypeTurret",
+            new AC("Projectile Type", "projectileTypeTurret", "None.", new object[] { "None.","Bouncy.", "Explosive.","Tank Shell.", "Bouncy Bullet Kin.", "Grenade.", "Molotov.","Goblet." })
+        },
+
+        {
+            "pewLength",
+            new AC("Pew Length", "pewLength", 4, new object[0])
+        },
+
+        {
+            "logLength",
+            new AC("Length", "logLength", 4, new object[0])
+        },
+        {
+            "logHeight",
+            new AC("Height", "logHeight", 4, new object[0])
+        },
     };
+
+
     public static Dictionary<AttributeDatabase.ValidAttribute, string[]> attributeListings = new Dictionary<AttributeDatabase.ValidAttribute, string[]>
 	{
-		{
+
+        {
+            (string name) => name == "spinning_log_spike_vertical_001"| name == "spinning_ice_log_spike_vertical_001",
+            new string[]
+            {
+                "tSP",
+                "nSP_O",
+                "logLength"
+            }
+        },
+        {
+            (string name) => name == "spinning_log_spike_horizontal_001" | name == "spinning_ice_log_spike_horizontal_001",
+            new string[]
+            {
+                "tSP",
+                "nSP_O",
+                "logHeight"
+            }
+        },
+
+       {
+            (string name) => name == "mouse_trap_west" | name == "mouse_trap_east" |name == "mouse_trap_north",
+            new string[]
+            {
+                "trapTriggerOnBlank"
+            }
+       },
+
+       {
+            (string name) => name == "pew",
+            new string[]
+            {
+                "pewLength"
+            }
+       },
+       {
+            (string name) => name == "forge_shoot_face_north",
+            new string[]
+            {
+                "TrapTriggerDelay",
+                "trapProjSpeed",
+                "trapProjRange",
+                "DirectionShoot",
+                "projectileTypeTurret"
+            }
+       },
+       {
+            (string name) => name == "forge_shoot_face_west",
+            new string[]
+            {
+                "TrapTriggerDelay",
+                "trapProjSpeed",
+                "trapProjRange",
+                "DirectionShoot",
+                "projectileTypeTurret"
+            }
+       },
+       {
+            (string name) => name == "forge_shoot_face_east",
+            new string[]
+            {
+                "TrapTriggerDelay",
+                "trapProjSpeed",
+                "trapProjRange",
+                "DirectionShoot",
+                "projectileTypeTurret"
+            }
+       },
+
+       {
+            (string name) => name == "chandelier_trap",
+            new string[]
+            {
+                "triggerEventValue",
+            }
+       },
+       {
+            (string name) => name == "chandelier_switch",
+            new string[]
+            {
+                "triggeredEventValue",
+            }
+       },
+
+       {
+            (string name) => name == "floor_note",
+            new string[]
+            {
+                "customNoteText",
+                "customNoteTextIsStringKey"
+            }
+       },
+       {
+            (string name) => name == "conveyor_belt_right",
+            new string[]
+            {
+                "TileSizeX_",
+                "TileSizeY_",
+                "ConveyorHorizontalVelocity",
+                "ConveyorVerticalVelocity",
+                "ConveyorReversed"
+            }
+       },
+       {
+            (string name) => name == "conveyor_belt_up",
+            new string[]
+            {
+                "TileSizeX_",
+                "TileSizeY_",
+                "ConveyorHorizontalVelocity",
+                "ConveyorVerticalVelocity",
+                "ConveyorReversed"
+            }
+       },
+
+       {
+            (string name) => name == "winchesterCameraPanPlacer",
+            new string[]
+            {
+                "TileSizeX_",
+                "TileSizeY_"
+            }
+       },
+       {
+            (string name) => name == "artfull_dodger_talk_002",
+            new string[]
+            {
+                "WinchestMoveXTele",
+                "WinchestMoveYTele",
+                "WinchestGoneTime"
+            }
+        },
+        {
+            (string name) => name == "winchesterController",
+            new string[]
+            {
+                "WinchesterBounceCount"
+            }
+        },
+        {
+            (string name) => name == "winchesterCamera",
+            new string[]
+            {
+                "WinCameraZoomOut"
+            }
+        },
+        {
 			(string name) => name == "every_single_enemy_ever",
 			new string[]
 			{
@@ -353,6 +590,33 @@ public static class AttributeDatabase
             }
 		},
         {
+            (string name) => name == "winchester_target_001",
+            new string[]
+            {
+                "tSP",
+                "nSP_O",
+                "WinchestTargetSpeed"
+            }
+        },
+		{ 
+            (string name) => name == "winchestermovingBumper1x3",
+            new string[]
+            {
+                "tSP",
+                "nSP_O",
+                "WinchestTargetSpeed"
+            }
+        },
+        {
+            (string name) => name == "winchestermovingBumper2x2",
+            new string[]
+            {
+                "tSP",
+                "nSP_O",
+                "WinchestTargetSpeed"
+            }
+        },
+        {
             (string name) => name == "sawblade",
             new string[]
             {
@@ -368,7 +632,6 @@ public static class AttributeDatabase
                 "nSP_O",
                 "mS",
 				"tTMS",
-                "storedBodyMC",
                 "storedenemyBodyMC",
             }
 		},
@@ -381,6 +644,8 @@ public static class AttributeDatabase
                 "nSP_O",
                 "mS",
                 "tTMS",
+                "InitialtrapDelay",
+                "TrapTriggerDelay"
             }
         },
         {
@@ -432,6 +697,10 @@ public static class AttributeDatabase
             new string[]
             {
                 "TrapTriggerMethod",
+                "TrapTriggerDelay",
+                "InitialtrapDelay",
+                "attackDelatTrap",
+                "trapTriggerOnBlank"
             }
         },
         {
@@ -439,25 +708,97 @@ public static class AttributeDatabase
             new string[]
             {
                 "TrapTriggerMethod",
-            }
+                "TrapTriggerDelay",
+                "InitialtrapDelay",
+                "attackDelatTrap",
+                "trapTriggerOnBlank"         
+			}
         },
         {
             (string name) => name == "pitfall_trap",
             new string[]
             {
                 "TrapTriggerMethod",
-            }
+                "TrapTriggerDelay",
+                "InitialtrapDelay",
+                "attackDelatTrap",
+                "trapTriggerOnBlank"            
+			}
         },
+        {
+            (string name) => name == "gungon_lair_trap",
+            new string[]
+            {
+                "attackDelatTrap",
+                "trapTriggerOnBlank"
+            }
+       },
     };
+
     public delegate bool ValidAttribute(string name);
 	public static List<SpecialDefaultValue> specialDefaultValueListings = new List<SpecialDefaultValue>
 	{
-		new SpecialDefaultValue("TrapTriggerMethod", "flame_trap", "Timer" ){ },
-        new SpecialDefaultValue("TrapTriggerMethod", "pitfall_trap", "PlaceableFootprint" ){ },
-        new SpecialDefaultValue("TrapTriggerMethod", "floor_spikes", "PlaceableFootprint" ){ },
+
+        new SpecialDefaultValue("attackDelatTrap", "gungon_lair_trap", 3f ){ },
+
+
+        new SpecialDefaultValue("TrapTriggerMethod", "flame_trap", "Timer" ){ },
+
+
+        new SpecialDefaultValue("TrapTriggerMethod", "flame_trap", "Timer" ){ },
+        new SpecialDefaultValue("TrapTriggerMethod", "pitfall_trap", "Stepped On" ){ },
+        new SpecialDefaultValue("TrapTriggerMethod", "floor_spikes", "Stepped On" ){ },
+
+        new SpecialDefaultValue("TrapTriggerDelay", "flame_trap", 3f ){ },
+        new SpecialDefaultValue("TrapTriggerDelay", "pitfall_trap", 1f ){ },
+        new SpecialDefaultValue("TrapTriggerDelay", "floor_spikes", 1f ){ },
+
+        new SpecialDefaultValue("InitialtrapDelay", "flame_trap", 1f ){ },
+        new SpecialDefaultValue("InitialtrapDelay", "pitfall_trap", 1f ){ },
+        new SpecialDefaultValue("InitialtrapDelay", "floor_spikes", 1f ){ },
+
+        new SpecialDefaultValue("attackDelatTrap", "flame_trap", 1f ){ },
+        new SpecialDefaultValue("attackDelatTrap", "pitfall_trap", 0.5f ){ },
+        new SpecialDefaultValue("attackDelatTrap", "floor_spikes", 0.5f ){ },
+
+        new SpecialDefaultValue("TileSizeY_", "conveyor_belt_right", 3 ){ },
+        new SpecialDefaultValue("TileSizeX_", "conveyor_belt_up", 3 ){ },
+
+        new SpecialDefaultValue("ConveyorHorizontalVelocity", "conveyor_belt_up", 0f ){ },
+        new SpecialDefaultValue("ConveyorVerticalVelocity", "conveyor_belt_right", 0f ){ },
+
+
+        new SpecialDefaultValue("InitialtrapDelay", "forge_shoot_face_west", 1f ){ },
+        new SpecialDefaultValue("DirectionShoot", "forge_shoot_face_west", "SOUTH" ){ },
+        new SpecialDefaultValue("TrapTriggerDelay", "forge_shoot_face_west", 1 ){ },
+
+        new SpecialDefaultValue("InitialtrapDelay", "forge_shoot_face_west", 1f ){ },
+        new SpecialDefaultValue("DirectionShoot", "forge_shoot_face_west", "SOUTH" ){ },
+        new SpecialDefaultValue("TrapTriggerDelay", "forge_shoot_face_west", 1 ){ },
+
+
+
+
+        new SpecialDefaultValue("DirectionShoot", "forge_shoot_face_north", "SOUTH" ){ },
+        new SpecialDefaultValue("TrapTriggerDelay", "forge_shoot_face_north", 1f ){ },
+
+        new SpecialDefaultValue("DirectionShoot", "forge_shoot_face_west", "EAST" ){ },
+        new SpecialDefaultValue("TrapTriggerDelay", "forge_shoot_face_west", 1f ){ },
+
+        new SpecialDefaultValue("DirectionShoot", "forge_shoot_face_east", "WEST" ){ },
+        new SpecialDefaultValue("TrapTriggerDelay", "forge_shoot_face_east", 1f ){ },
+
+        new SpecialDefaultValue("InitialtrapDelay", "minecartturret", 3f ){ },
+        new SpecialDefaultValue("TrapTriggerDelay", "minecartturret", 0.2f ){ },
+
+         new SpecialDefaultValue("trapTriggerOnBlank", "mouse_trap_west", true ){ },
+         new SpecialDefaultValue("trapTriggerOnBlank", "mouse_trap_east", true ){ },
+         new SpecialDefaultValue("trapTriggerOnBlank", "mouse_trap_north", true ){ },
+
     };
 
-	public class SpecialDefaultValue
+
+    public class SpecialDefaultValue
 	{
 		public SpecialDefaultValue(string attribute, string ObjectName, object newDefaultValue)
 		{

@@ -18,4 +18,8 @@ public class CategoryDropdownOption : MonoBehaviour
 
 	
 	public Enums.RoomSpecialSubCategory specialSubCategory;
+
+
+    public Enums.BossRoomPools bossRoomPools;
+
 }

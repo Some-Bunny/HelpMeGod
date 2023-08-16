@@ -48,7 +48,14 @@ public abstract class TilemapHandler : MonoBehaviour
 
 	public void SetTileWithThickness(Tilemap map, Vector3Int position, Tile tile, int thickness)
 	{
-		DataTile newTile = TilemapHandler.Clone(tile);
+		if (tile as DataTile)
+		{
+            if ((tile as DataTile).controllerDummy)
+			{
+				Destroy((tile as DataTile).controllerDummy);
+			}
+        }
+        DataTile newTile =  CopiedTile != null  && tile != null && !(this as NodeMap)? TilemapHandler.Clone(CopiedTile) : TilemapHandler.Clone(tile);
        
 
         if (InputHandler.Instance.nodeMode && InputHandler.Instance.isDrawing) (NodePathLayerHandler.Instance.GetActiveTilemap() as NodeMap).AddNewNodeTile(newTile, position);
@@ -68,10 +75,11 @@ public abstract class TilemapHandler : MonoBehaviour
                 this.FillLine(this.grid.CellToWorld(t), this.grid.CellToWorld(tiles[(i + 1) % tiles.Length]), newTile, 1);
 			}
 		}
-
-
-
 	}
+
+
+
+    public Tile CopiedTile;
 
 	public void FillLine(Vector2 start, Vector2 end, Tile tile, int thickness)
 	{

@@ -1,10 +1,12 @@
 ﻿using Assets.Scripts.Assembly_CSharp;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.UI;
+using static DataTile;
 using Tile = UnityEngine.Tilemaps.Tile;
 
 public class InputHandler : MonoBehaviour
@@ -77,11 +79,14 @@ public class InputHandler : MonoBehaviour
 		{
 			this.BrushType = BrushButton.BrushType.BRUSH;
 		}
-		this.m_selectedTile = tile;
-		this.lastTiles[type] = tile;
+
+        var t = Manager.Instance.GetTilemap(this.activeTilemap);
+
+
+        this.m_selectedTile = t.CopiedTile != null ? t.CopiedTile : tile;
+		this.lastTiles[type] = t.CopiedTile != null ? t.CopiedTile : tile;
 
 		//selectedThingIsCustom = ;
-
 		ToggleDeleteButton(tile.name.Contains("customEnemyAsset-") || tile.name.Contains("customPlaceableAsset-"));
 	}
 
@@ -99,10 +104,50 @@ public class InputHandler : MonoBehaviour
 			this.lastTiles.Add((TilemapHandler.MapType)type, null);
 		}
 		ToggleDeleteButton(false);
+
+		this.StartCoroutine(Delay());
+
+    }
+
+	private IEnumerator Delay()
+	{
+		yield return null;
+        if (LineRenderer_Dynamic_Instance == null) LineRenderer_Dynamic_Instance = new GameObject("Line Renderer");
+
+        //if (LineRenderer != null) { Debug.LogError("NOT NULL"); }
+        var renderer = LineRenderer_Dynamic_Instance.gameObject.GetOrAddComponent<LineRenderer>();
+        renderer.enabled = true;//(i == index);
+        renderer.material = new Material(Shader.Find("Sprites/Default"));
+        renderer.startColor = Color.yellow;
+        renderer.endColor = Color.yellow;
+		renderer.renderingLayerMask = 1;
+		var tt = renderer.transform.localPosition;
+		tt.z = -10;
+        renderer.colorGradient = new Gradient()
+        {
+            mode = GradientMode.Fixed,
+            colorKeys = new GradientColorKey[]
+            {
+                    new GradientColorKey() { color = Color.yellow * 2, time = 0},
+            },
+            alphaKeys = new GradientAlphaKey[]
+            {
+                    new GradientAlphaKey() { alpha =1, time = 1},
+            }
+        };
+        renderer.startWidth = 0.1f * this.grid.transform.localScale.x;
+        renderer.loop = true;
+        renderer.positionCount = 0;//inst.GetMap(inst.EnemyMapIndex).fuckYou.Count;
+
+
+
+        LineRenderer_Instance.transform.parent = this.grid.gameObject.transform;
+        LineRenderer_Instance.transform.position = this.grid.gameObject.transform.position;
+        yield break;
 	}
 
-	 
-	private void Start()
+	
+    private void Start()
 	{
 		this.uiMap = UnityEngine.Object.FindObjectOfType<UIMap>();
 		BrushButton.UpdateAppearances();
@@ -130,8 +175,56 @@ public class InputHandler : MonoBehaviour
 		this.HandleMouseInput();
 		this.HandleTileSelectionColor();
         UpdateNodeLines();
+
+		if (selectedTile != null && dynamicVisualsComponents.ContainsKey(selectedTile.name))
+		{
+			Action<DataTile, LineRenderer> a;
+            dynamicVisualsComponents.TryGetValue(selectedTile.name, out a);
+            if (a != null && LineRenderer_Dynamic_Instance != null)
+			{
+                Tilemap map = Manager.Instance.GetTilemap(this.activeTilemap).map;
+                a(selectedTile as DataTile, LineRenderer_Dynamic_Instance.gameObject.GetOrAddComponent<LineRenderer>());
+                Manager.Instance.environment.GetComponent<Tilemap>().color = map == Manager.Instance.environment.GetComponent<Tilemap>() ? new Color(1f, 1f, 1f, 0.65f) : new Color(1f, 1f, 1f, 0.3f);
+                Manager.Instance.exits.GetComponent<Tilemap>().color = map == Manager.Instance.exits.GetComponent<Tilemap>() ? new Color(1f, 1f, 1f, 0.65f) : new Color(1f, 1f, 1f, 0.3f);
+                Manager.Instance.placeables.GetComponent<Tilemap>().color = map == Manager.Instance.placeables.GetComponent<Tilemap>() ? new Color(1f, 1f, 1f, 0.65f) : new Color(1f, 1f, 1f, 0.3f);
+                EnemyLayerHandler.Instance.DoTransparency();//.enemyMaps.ForEach(x => x.GetComponent<Tilemap>().color = new Color(1f, 1f, 1f, 0.5f));
+                NodePathLayerHandler.Instance.nodeMaps.ForEach(x => x.GetComponent<Tilemap>().color = new Color(1f, 1f, 1f, 0.1f));
+            }
+        }
+		else
+		{
+            if (LineRenderer_Dynamic_Instance != null)
+            {
+                var t = LineRenderer_Dynamic_Instance.gameObject.GetOrAddComponent<LineRenderer>();
+                t.positionCount = 0;
+            }
+			if (!InputHandler.Instance.nodeMode)
+			{
+                Manager.Instance.environment.GetComponent<Tilemap>().color = Color.white;
+                Manager.Instance.exits.GetComponent<Tilemap>().color = Color.white;
+                Manager.Instance.placeables.GetComponent<Tilemap>().color = Color.white;
+                EnemyLayerHandler.Instance.SetSelectedLayer(EnemyLayerHandler.Instance.ReturnButtons()[EnemyLayerHandler.Instance.EnemyMapIndex]);
+                NodePathLayerHandler.Instance.nodeMaps.ForEach(x => x.GetComponent<Tilemap>().color = new Color(1f, 1f, 1f, 0.5f));
+            }
+        }
     }
 
+
+
+    public static Dictionary<string, Action<DataTile, LineRenderer>> dynamicVisualsComponents = new Dictionary<string, Action<DataTile, LineRenderer>>()
+    {
+        {"winchesterCameraPanPlacer",  DynamicTileMethods.DynamicWinchester },
+        {"conveyor_belt_up",  DynamicTileMethods.DynamicConveyors },
+        {"conveyor_belt_right",  DynamicTileMethods.DynamicConveyors },
+        {"pew",  DynamicTileMethods.DynamicPews },
+
+        {"spinning_log_spike_horizontal_001",  DynamicTileMethods.DynamicRollersHeight },
+        {"spinning_ice_log_spike_horizontal_001",  DynamicTileMethods.DynamicRollersHeight },
+        {"spinning_log_spike_vertical_001",  DynamicTileMethods.DynamicRollersLength },
+
+        {"spinning_ice_log_spike_vertical_001",  DynamicTileMethods.DynamicRollersLength },
+
+    };
 
     private void HandleShortcuts()
 	{
@@ -224,7 +317,6 @@ public class InputHandler : MonoBehaviour
 			}
 		}
 	}
-
 	 
 	public void SelectTile(Vector3Int tilePosition)
 	{
@@ -235,23 +327,43 @@ public class InputHandler : MonoBehaviour
 
 		this.selectedTile = (map.GetTile(tilePosition) as Tile);
 		this.selectedTilePosition = tilePosition;
+
 		if (this.selectedTile)
 		{
 			map.SetTileFlags(tilePosition, TileFlags.None);
 			this.attributesWindow.Repopulate();
 		}
-
-
 	}
 
-	 
-	public void DeselectTile()
+
+    public void CopyTile(Vector3Int tilePosition)
+    {
+        this.DeselectTile();
+		var t = Manager.Instance.GetTilemap(this.activeTilemap);
+        Tilemap map = t.map;
+
+        tilePosition = new Vector3Int(tilePosition.x, tilePosition.y, 0);
+
+        this.selectedTile = (map.GetTile(tilePosition) as Tile);
+        this.selectedTilePosition = tilePosition;
+        if (this.selectedTile)
+        {
+            NotificationHandler.Instance.Notify("Copied Tile:" + this.selectedTile.name);
+            map.SetTileFlags(tilePosition, TileFlags.None);
+            this.attributesWindow.Repopulate();
+            t.CopiedTile = this.selectedTile;
+        }
+    }
+
+
+
+    public void DeselectTile()
 	{
 		Tilemap map = Manager.Instance.GetTilemap(this.activeTilemap).map;
 		bool flag = this.selectedTile;
 		if (flag)
 		{
-			map.SetColor(this.selectedTilePosition, Color.white);
+            map.SetColor(this.selectedTilePosition, Color.white);
 			this.selectedTile = null;
 			this.attributesWindow.Repopulate();
 		}
@@ -261,7 +373,6 @@ public class InputHandler : MonoBehaviour
 	public void ToggleDeleteButton(bool enabled)
 	{
 		deleteButton.interactable = enabled;
-
 		deleteButton.GetComponentInChildren<Text>().color = (enabled ? Color.white : Color.gray);
 	}
 
@@ -303,7 +414,11 @@ public class InputHandler : MonoBehaviour
 				{
 					this.SelectTile(this.MouseToGridPosition());
 				}
-				else
+				if (m_brushType == BrushButton.BrushType.COPY)
+				{
+                    CopyTile(this.MouseToGridPosition());
+                }
+                else
 				{
 					this.undoRedo.RegisterState(Manager.Instance.GetTilemap(this.activeTilemap), this.BrushType.ToString());
 				}
@@ -354,7 +469,20 @@ public class InputHandler : MonoBehaviour
 				this.Pan();
 			}
 		}
-		if (this.EditorPanel.Hovered)
+        if (Input.GetKey(KeyCode.Mouse1))
+        {
+			if (this.m_brushType == BrushButton.BrushType.COPY)
+			{
+				var tileMap = Manager.Instance.GetTilemap(this.activeTilemap);
+
+                if (tileMap.CopiedTile != null)
+				{
+                    NotificationHandler.Instance.Notify("Deselected Tile:" + tileMap.CopiedTile.name);
+                    tileMap.CopiedTile = null;
+                }
+            }
+        }
+        if (this.EditorPanel.Hovered)
 		{
 			this.HandleScroll(Input.mouseScrollDelta.y);
 		}
@@ -482,10 +610,10 @@ public class InputHandler : MonoBehaviour
 
                     //if (c != null && pos != null)
                     {
-                        var scaler = new Vector2(0f, 0f);
+                        //var scaler = new Vector2(0f, 0f);
                         var localScale = this.grid.transform.localScale;
-                        var calc = (pos + (scaler)); //(pos + localScale) * localposition;
-                        Vector3 peepee = new Vector3((calc).x, (calc).y, 20);
+                        //var calc = (pos + (scaler)); //(pos + localScale) * localposition;
+                        Vector3 peepee = new Vector3((pos).x, (pos).y, 20);
                         renderer.positionCount = Mapping.fuckYou.Count;
                         var g = ReturnOffset(Mapping.tileDatabase.AllEntries[t.name]);
                         renderer.SetPosition(e, peepee + new Vector3(g.x * localScale.x, g.y * localScale.y));
@@ -744,6 +872,8 @@ public class InputHandler : MonoBehaviour
             renderer.loop = true;
             renderer.positionCount = inst.GetMap(inst.EnemyMapIndex).fuckYou.Count;
 
+
+
             var localScale = this.grid.transform.localScale;
             for (int e = 0; e < inst.GetMap(inst.EnemyMapIndex).fuckYou.Count; e++)
             {
@@ -769,8 +899,13 @@ public class InputHandler : MonoBehaviour
         }
 	}
 
-	
-	public static InputHandler Instance;
+
+    public GameObject LineRenderer_Dynamic_Instance;
+
+
+
+
+    public static InputHandler Instance;
 
 	
 	public MouseListener EditorPanel;
@@ -833,7 +968,7 @@ public class InputHandler : MonoBehaviour
 	public int brushMode = 0;
 
 	
-	private Dictionary<TilemapHandler.MapType, Tile> lastTiles;
+	public Dictionary<TilemapHandler.MapType, Tile> lastTiles;
 
 	
 	private Tile m_selectedTile;

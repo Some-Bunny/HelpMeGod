@@ -450,7 +450,7 @@ public class NodeMap : TilemapHandler
         //Debug.LogError(1);
 
         AttributeDatabase.allAttributes["nodPos"].possibleValues = paths2.ToArray();
-        AttributeDatabase.allAttributes["nSP_O"].possibleValues = paths2.ToArray();
+        //AttributeDatabase.allAttributes["nSP_O"].possibleValues = paths2.ToArray();
 
 
         foreach (var entry in fuckYou)

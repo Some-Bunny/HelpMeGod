@@ -25,7 +25,10 @@ public class RoomProperties
 		data.doFloorDecoration = this.doFloorDecoration;
 		data.doWallDecoration = this.doWallDecoration;
 		data.doLighting = this.doLighting;
-		List<string> floors = new List<string>();
+		data.isWinchester = this.isWinchester;
+        data.bossPool = this.bossPool.ToString();
+
+        List<string> floors = new List<string>();
 		foreach (KeyValuePair<string, bool> floor in this.validTilesets)
 		{
 			bool value = floor.Value;
@@ -35,10 +38,17 @@ public class RoomProperties
 			}
 		}
 		data.floors = floors.ToArray();
-	}
+		data.visualSubtype = this.visualSubtype;
+		data.isWinchester = this.isWinchester;
+		data.AmbientLight_R = this.AmbientLight_R;
+        data.AmbientLight_G = this.AmbientLight_G;
+        data.AmbientLight_B = this.AmbientLight_B;
 
 
-	public void CollectRoomProperties(ref ImportExport.RoomData data)
+    }
+
+
+    public void CollectRoomProperties(ref ImportExport.RoomData data)
 	{
 		data.category = this.category.ToString();
 		data.normalSubCategory = this.normalSubCategory.ToString();
@@ -50,6 +60,7 @@ public class RoomProperties
 		data.doFloorDecoration = this.doFloorDecoration;
 		data.doWallDecoration = this.doWallDecoration;
 		data.doLighting = this.doLighting;
+
 		List<string> floors = new List<string>();
 		foreach (KeyValuePair<string, bool> floor in this.validTilesets)
 		{
@@ -84,7 +95,12 @@ public class RoomProperties
 		{
 			this.bossSubCategory = Enums.GetEnumValue<Enums.RoomBossSubCategory>(data.bossSubCategory);
 		}
-		bool flag5 = data.floors != null;
+        bool flaga = !string.IsNullOrEmpty(data.bossPool);
+        if (flaga)
+        {
+            this.bossPool = Enums.GetEnumValueBase<Enums.BossRoomPools>(data.bossPool);
+        }
+        bool flag5 = data.floors != null;
 		if (flag5)
 		{
 			foreach (string floor in data.floors)
@@ -102,9 +118,15 @@ public class RoomProperties
 		this.doFloorDecoration = data.doFloorDecoration;
 		this.doWallDecoration = data.doWallDecoration;
 		this.doLighting = data.doLighting;
-	}
+        this.visualSubtype = data.visualSubtype;
+        this.isWinchester = data.isWinchester;
+        this.AmbientLight_R = data.AmbientLight_R;
+        this.AmbientLight_G = data.AmbientLight_G;
+        this.AmbientLight_B = data.AmbientLight_B;
 
-	public void ImportRoomProperties(ImportExport.RoomData data)
+    }
+
+    public void ImportRoomProperties(ImportExport.RoomData data)
 	{
 		bool flag = !string.IsNullOrEmpty(data.category);
 		if (flag)
@@ -176,6 +198,17 @@ public class RoomProperties
 	
 	public float weight = 1f;
 
-	
-	public Dictionary<string, bool> validTilesets = new Dictionary<string, bool>();
+    public int visualSubtype = -1;
+
+	public bool isWinchester = false;
+
+    public Enums.BossRoomPools bossPool;
+
+    public Dictionary<string, bool> validTilesets = new Dictionary<string, bool>();
+
+	public float AmbientLight_R = 1;
+    public float AmbientLight_G = 1;
+    public float AmbientLight_B = 1;
+
+
 }

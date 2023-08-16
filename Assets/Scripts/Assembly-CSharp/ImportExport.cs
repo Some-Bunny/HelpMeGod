@@ -46,8 +46,15 @@ public static class ImportExport
 			placeablePositions = new Vector2[0],
 			placeableGUIDs = new string[0],
 			placeableAttributes = new string[0],
-			weight = 1f
-		};
+			visualSubtype = -1,
+            weight = 1f,
+			bossPool = null,
+			isWinchester = false,
+			AmbientLight_R = 1f,
+            AmbientLight_G = 1f,
+            AmbientLight_B = 1f,
+            usesAmbientLight = false
+        };
 		
 		Manager i = Manager.Instance;
 
@@ -374,7 +381,7 @@ public static class ImportExport
 			{
 				for (int x = 0; x < width; x++)
 				{
-					tiles[x, y] = ImportExport.TileFromNumber(int.Parse(data.tileInfo[x + (y * width)].ToString()), tilemapHandler);
+					tiles[x, y] = ImportExport.TileFromNumber(data.tileInfo[x + (y * width)].ToString(), tilemapHandler);
 				}
 			}
 	
@@ -412,15 +419,15 @@ public static class ImportExport
 		}
 	}
 
-	private static Tile TileFromNumber(int type, TilemapHandler tilemapHandler)
+	private static Tile TileFromNumber(string type, TilemapHandler tilemapHandler)
 	{
-		Dictionary<int, string> types = new Dictionary<int, string> { { 1, "floor" }, { 2, "wall" }, { 3, "pit" }, { 4, "ice" } , { 5, "effecthazard" } };
+		Dictionary<string, string> types = new Dictionary<string, string> { { "1", "floor" }, { "2", "wall" }, { "3", "pit" }, { "4", "ice" } , { "5", "effecthazard" }, { "6", "diagonal_NE" }, { "7", "diagonal_NW" }, { "8", "diagonal_SE" }, { "9", "diagonal_SW" } };
 
-		return type > 0 ? tilemapHandler.palette[types[type]] : null;
+		return type != null ? tilemapHandler.palette[types[type]] : null;
 	}
 
 
-	private static Tile TileFromColor(Color color, TilemapHandler tilemapHandler)
+    private static Tile TileFromColor(Color color, TilemapHandler tilemapHandler)
 	{
 		Tile result;
 		if (color == Color.black)
@@ -885,9 +892,20 @@ public static class ImportExport
 		public bool doFloorDecoration;
 		public bool doWallDecoration;
 		public bool doLighting;
-	}
 
-	public struct RoomData
+		public int visualSubtype;
+        public string bossPool;
+        public bool isWinchester;
+
+        public float AmbientLight_R;
+        public float AmbientLight_G;
+        public float AmbientLight_B;
+
+        public bool usesAmbientLight;
+
+    }
+
+    public struct RoomData
 	{
 
 		public string category;
@@ -957,5 +975,7 @@ public static class ImportExport
 
 		
 		public bool doLighting;
+
+
 	}
 }

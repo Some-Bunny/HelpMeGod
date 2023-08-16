@@ -96,16 +96,59 @@ public class RoomPropertiesMenu : MonoBehaviour
 		properties.normalSubCategory = this.GetCategory<Enums.RoomNormalSubCategory>(this.normalDropdown);
 		properties.specialSubCategory = this.GetCategory<Enums.RoomSpecialSubCategory>(this.specialDropdown);
 		properties.bossSubCategory = this.GetCategory<Enums.RoomBossSubCategory>(this.bossDropdown);
-		properties.weight = float.Parse(this.weightField.text);
-		properties.shuffleReinforcementPositions = this.shuffleReinforcementPositionsButton.Toggled;
+        properties.bossPool = this.GetCategoryBase<Enums.BossRoomPools>(this.BossRoomPool);
+
+        properties.weight = float.Parse(this.weightField.text);
+        properties.visualSubtype = int.Parse(this.visualSubtypeField.text);
+
+        properties.shuffleReinforcementPositions = this.shuffleReinforcementPositionsButton.Toggled;
 		properties.darkRoom = this.darkRoomButton.Toggled;
 		properties.doFloorDecoration = this.floorDecoButton.Toggled;
 		properties.doWallDecoration = this.wallDecoButton.Toggled;
 		properties.doLighting = this.lightingButton.Toggled;
-	}
+		properties.visualSubtype = int.Parse(this.visualSubtypeField.text);
+        properties.isWinchester = this.isWinchesterRoom.Toggled;
 
-	
-	public void OnWeightChanged()
+        properties.AmbientLight_R = int.Parse(this.AmbientColor_R.text);
+        properties.AmbientLight_G = int.Parse(this.AmbientColor_G.text);
+        properties.AmbientLight_B = int.Parse(this.AmbientColor_B.text);
+
+    }
+
+    public void AmbientColorChanged_R()
+    {
+        float val;
+        bool success = float.TryParse(this.AmbientColor_R.text, out val);
+        bool flag = !success;
+        if (flag)
+        {
+            this.AmbientColor_R.text = "1";
+        }
+    }
+
+    public void AmbientColorChanged_G()
+    {
+        float val;
+        bool success = float.TryParse(this.AmbientColor_G.text, out val);
+        bool flag = !success;
+        if (flag)
+        {
+            this.AmbientColor_R.text = "1";
+        }
+    }
+
+    public void AmbientColorChanged_B()
+    {
+        float val;
+        bool success = float.TryParse(this.AmbientColor_B.text, out val);
+        bool flag = !success;
+        if (flag)
+        {
+            this.AmbientColor_R.text = "1";
+        }
+    }
+
+    public void OnWeightChanged()
 	{
 		float val;
 		bool success = float.TryParse(this.weightField.text, out val);
@@ -116,15 +159,31 @@ public class RoomPropertiesMenu : MonoBehaviour
 		}
 	}
 
-	
-	private T GetCategory<T>(Dropdown dropdown) where T : Enum
+    public void OnSubtypeChanged()
+    {
+        int val;
+        bool success = int.TryParse(this.visualSubtypeField.text, out val);
+        bool flag = !success;
+        if (flag)
+        {
+            this.visualSubtypeField.text = "0";
+        }
+		if (subtypeChanged != null) { subtypeChanged(); }
+    }
+	public Action subtypeChanged;
+
+    private T GetCategory<T>(Dropdown dropdown) where T : Enum
 	{
 		string val = dropdown.options[dropdown.value].text;
 		return Enums.GetEnumValue<T>(val);
 	}
+    private T GetCategoryBase<T>(Dropdown dropdown) where T : Enum
+    {
+        string val = dropdown.options[dropdown.value].text;
+        return Enums.GetEnumValueBase<T>(val);
+    }
 
-	
-	private T GetChild<T>(string name)
+    private T GetChild<T>(string name)
 	{
 		return base.transform.Find(name).GetComponent<T>();
 	}
@@ -145,11 +204,19 @@ public class RoomPropertiesMenu : MonoBehaviour
 				}
 			}
 			this.weightField.text = properties.weight.ToString();
-			this.shuffleReinforcementPositionsButton.Toggled = properties.shuffleReinforcementPositions;
+            this.visualSubtypeField.text = properties.visualSubtype.ToString();
+
+            this.shuffleReinforcementPositionsButton.Toggled = properties.shuffleReinforcementPositions;
 			this.floorDecoButton.Toggled = properties.doFloorDecoration;
 			this.wallDecoButton.Toggled = properties.doWallDecoration;
 			this.lightingButton.Toggled = properties.doLighting;
-			this.InitializeDropdowns();
+			this.isWinchesterRoom.Toggled = properties.isWinchester;
+
+            this.AmbientColor_R.text = properties.AmbientLight_R.ToString();
+            this.AmbientColor_G.text = properties.AmbientLight_G.ToString();
+            this.AmbientColor_B.text = properties.AmbientLight_B.ToString();
+
+            this.InitializeDropdowns();
 		}
 	}
 
@@ -165,7 +232,10 @@ public class RoomPropertiesMenu : MonoBehaviour
 		this.specialDropdown.RefreshShownValue();
 		this.bossDropdown.value = (int)props.bossSubCategory;
 		this.bossDropdown.RefreshShownValue();
-	}
+
+        this.BossRoomPool.value = (int)props.bossPool;
+        this.BossRoomPool.RefreshShownValue();
+    }
 
 	
 	private void SetupCategoryDropdowns()
@@ -175,7 +245,9 @@ public class RoomPropertiesMenu : MonoBehaviour
 		this.SetupDropdown<Enums.RoomNormalSubCategory>(this.normalDropdown);
 		this.SetupDropdown<Enums.RoomSpecialSubCategory>(this.specialDropdown);
 		this.SetupDropdown<Enums.RoomBossSubCategory>(this.bossDropdown);
-		this.subCategoryDropdowns.Add(this.normalDropdown.transform);
+        this.SetupDropdown<Enums.BossRoomPools>(this.BossRoomPool);
+
+        this.subCategoryDropdowns.Add(this.normalDropdown.transform);
 		this.subCategoryDropdowns.Add(this.specialDropdown.transform);
 		this.subCategoryDropdowns.Add(this.bossDropdown.transform);
 		this.subCategoryDropdowns.Add(this.secretDropdownDummy);
@@ -196,7 +268,7 @@ public class RoomPropertiesMenu : MonoBehaviour
 	public static RoomPropertiesMenu Instance;
 
 	
-	private Dictionary<string, ChamberButton> chamberButtons;
+	public Dictionary<string, ChamberButton> chamberButtons;
 
 	
 	private bool dirty;
@@ -222,8 +294,8 @@ public class RoomPropertiesMenu : MonoBehaviour
 	
 	public ToggleButton lightingButton;
 
-	
-	public Dropdown categoryDropdown;
+
+    public Dropdown categoryDropdown;
 
 	
 	public Dropdown normalDropdown;
@@ -237,12 +309,26 @@ public class RoomPropertiesMenu : MonoBehaviour
 	
 	public InputField weightField;
 
-	
-	public Transform secretDropdownDummy;
+
+    public InputField visualSubtypeField;
+
+
+    public ToggleButton isWinchesterRoom;
+
+
+    public Dropdown BossRoomPool;
+
+
+    public Transform secretDropdownDummy;
 
 	
 	public List<Transform> subCategoryDropdowns;
 
 	
 	private HideableObject m_hideable;
+
+    public InputField AmbientColor_R;
+    public InputField AmbientColor_G;
+    public InputField AmbientColor_B;
+
 }

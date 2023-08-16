@@ -70,6 +70,7 @@ public class PlaceableMap : TilemapHandler
 	}
 
 	
+
 	public override TileDatabase InitializeDatabase()
 	{
 		this.tileDatabase = new PlaceableDatabase();

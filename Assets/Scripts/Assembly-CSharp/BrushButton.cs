@@ -66,6 +66,8 @@ public class BrushButton : MonoBehaviour
 		
 		ELLIPSE,
 		
-		SELECT
+		SELECT,
+
+		COPY
 	}
 }

@@ -41,10 +41,12 @@ public class ToggleButton : MonoBehaviour
 			this.checkMark = base.transform.Find("Check mark");
 		}
 		this.checkMark.gameObject.SetActive(this.Toggled);
+		if (OnToggle != null) { OnToggle(); }
 	}
 
+	public Action OnToggle;
 	
-	private bool m_toggled = false;
+	public bool m_toggled = false;
 
 	
 	private Transform checkMark;

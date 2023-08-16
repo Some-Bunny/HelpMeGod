@@ -180,9 +180,25 @@ public class EnvironmentMap : TilemapHandler
 					{
 						tileData += 4;
 					}
-					else if (name.Contains("effecthazard"))
-					{
+                    else if (name.Contains("effecthazard"))
+                    {
                         tileData += 5;
+                    }
+                    else if (name.Contains("diagonal_ne"))
+					{
+                        tileData += 6;
+                    }
+                    else if (name.Contains("diagonal_nw"))
+                    {
+                        tileData += 7;
+                    }
+                    else if (name.Contains("diagonal_se"))
+                    {
+                        tileData += 8;
+                    }
+                    else if (name.Contains("diagonal_sw"))
+                    {
+                        tileData += 9;
                     }
                     else
                     {
@@ -227,11 +243,31 @@ public class EnvironmentMap : TilemapHandler
                 null
             },
             {
-                "Effect Hazard [Mines / Forge Only]",
+                "Effect Hazard [Mines / Forge]",
                 Manager.paletteDividerGuid
             },
             {
                 "effecthazard",
+                null
+            },
+            {
+                "Diag0nal Tiles [Keep / Proper / Hollow]",
+                Manager.paletteDividerGuid
+            },
+            {
+                "diagonal_NE",
+                null
+            },
+            {
+                "diagonal_NW",
+                null
+            },
+            {
+                "diagonal_SE",
+                null
+            },
+            {
+                "diagonal_SW",
                 null
             },
         };

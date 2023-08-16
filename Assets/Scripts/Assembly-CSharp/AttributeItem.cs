@@ -6,13 +6,11 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
+using static UnityEngine.EventSystems.EventTrigger;
 
 
 public abstract class AttributeItem : MonoBehaviour
 {
-	
-	
-	
 	public abstract object Value { get; set; }
 
 	
@@ -24,7 +22,25 @@ public abstract class AttributeItem : MonoBehaviour
 		{
             var Obj = JToken.FromObject(dataTile.data[this.propertyName]).ToString();
             dataTile.data[this.propertyName] = JToken.FromObject(this.Value);
-			if (dataTile.isNode == true && this.propertyName == "Node Order")
+
+            if (this.propertyName == "Start At Node:")
+            {
+                var value = dataTile.data["assignedPath"];
+                if (value != null)
+                {
+                    var node = NodePathLayerHandler.Instance.GetMap(int.Parse(JToken.FromObject(value).ToString()));
+                    if (node)
+                    {
+                        if (node.fuckYou.Count >= int.Parse(JToken.FromObject(Obj).ToString()))
+                        {
+                            dataTile.data[this.propertyName] = JToken.FromObject(node.fuckYou.Count -1);
+                        }
+                    }
+                }
+            }
+
+            
+            if (dataTile.isNode == true && this.propertyName == "Node Order")
 			{
 
                 int H = int.Parse(Obj);
@@ -40,8 +56,9 @@ public abstract class AttributeItem : MonoBehaviour
                     var list = nodeMap.fuckYou;
 					if (list.Contains(dataTile))
 					{
-                        foreach (var entry in list)
+                        for (int i = nodeMap.fuckYou.Count - 1; i > -1; i--)
                         {
+                            var entry = nodeMap.fuckYou[i];
                             if (entry.PositionInNodeMap(nodeMap) == H2)
                             {
                                 //Debug.LogError("Plac Pre entry: " + entry.placmentOrder);
@@ -74,7 +91,7 @@ public abstract class AttributeItem : MonoBehaviour
                                 //nodeMap.tileDatabase.AllEntries[dataTile.name] = nodeMap.tileDatabase.AllEntries[entry.name];
                                 //nodeMap.tileDatabase.AllEntries[entry.name] = tmp;
 
-                                return;
+                                // return;
                             }
                         }
                     }              

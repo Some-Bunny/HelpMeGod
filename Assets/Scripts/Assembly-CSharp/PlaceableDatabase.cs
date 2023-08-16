@@ -506,8 +506,42 @@ public class PlaceableDatabase : TileDatabase
 					"sitting_skeleton_right",
 					"skeleton_right_sit_corner"
 				},
-				{
-					"Bullet Kin",
+
+                {
+                    "skeleton_left",
+                    "basicSkeletonStandingLeft"
+                },
+                {
+                    "skeleton_right",
+                    "basicSkeletonStandingRight"
+                },
+                {
+                    "skeleton_hanging_left_001",
+                    "basicSkeletonHangingLeft"
+                },
+                {
+                    "skeleton_hanging_right_001",
+                    "basicSkeletonHangingRight"
+                },
+                {
+                    "floor_skeleton",
+                    "FloorSkeleton_Flop"
+                },
+                {
+                    "floor_note",
+                    "FloorSkeleton_Note"
+                },
+
+                {
+                    "head_skull_001",
+                    "DragunSkull"
+                },
+                {
+                    "neck_bone_front_001",
+                    "DraunVertabrae"
+                },
+                {
+                    "Bullet Kin",
 					Manager.paletteDividerGuid
 				},
 				{
@@ -607,6 +641,57 @@ public class PlaceableDatabase : TileDatabase
                     "minelantern_side_002",
                     "minelantern_right"
                 },
+                {
+                    "burningSkeleton_Front",
+                    "BurningSkeletonLight_Front"
+                },     
+				{
+                    "burningSkeleton_Side_001",
+                    "BurningSkeletonLight_Left"
+                },               
+				{
+                    "burningSkeleton_Side_002",
+                    "BurningSkeletonLight_Right"
+                },
+
+                {
+                    "forgeLight_Front",
+                    "LavaLight_Front"
+                },
+                {
+                    "forgeLight_Side_001",
+                    "LavaLight_Left"
+                },
+                {
+                    "forgeLight_Side_002",
+                    "LavaLight_Right"
+                },
+                {
+                    "office_light_front_001",
+                    "OfficeLight_Front"
+                },
+                {
+                    "office_light_side_001",
+                    "OfficeLight_Left"
+                },
+                {
+                    "office_light_side_002",
+                    "OfficeLight_Right"
+                },
+
+                {
+                    "weirdGreenlight__Front",
+                    "weirdGreenLight_Front"
+                },
+                {
+                    "weirdGreenlight_Side_001",
+                    "weirdGreenLight_left"
+                },
+                {
+                    "weirdGreenlight_Side_002",
+                    "weirdGreenLight_right"
+                },
+
                 {
                     "Custom Lights",
                     Manager.paletteDividerGuid
@@ -1020,6 +1105,53 @@ public class PlaceableDatabase : TileDatabase
                     "blobulord_sewer_grate_001",
                     "BlobulordGrateFloorDecal"
                 },
+
+                {
+                    "tombstone_upper_front_001",
+                    "TombStone_N"
+                },
+                {
+                    "tombstone_upper_right_001",
+                    "TombStone_NW"
+                },
+                {
+                    "tombstone_upper_left_001",
+                    "TombStone_NE"
+                },
+                {
+                    "tombstone_right_001",
+                    "TombStone_W"
+                },
+                {
+                    "tombstone_left_001",
+                    "TombStone_E"
+                },
+                {
+                    "tombstone_lower_left_001",
+                    "TombStone_SW"
+                },
+                {
+                    "tombstone_lower_front_001",
+                    "TombStone_S"
+                },
+                {
+                    "tombstone_lower_right_001",
+                    "TombStone_SE"
+                },
+
+
+                {
+                    "Boss Room Floors",
+                    Manager.paletteDividerGuid
+                },
+                {
+                    "cathedral_high_priest_floor_001",
+                    "HighPriestBossRoomFloorDecal"
+                },
+                {
+                    "lich_gunfight_floor_001",
+                    "LichBossRoomFloorDecal"
+                },
             }
 		},
 		{
@@ -1168,7 +1300,11 @@ public class PlaceableDatabase : TileDatabase
 					"pitfall_trap",
 					"trap_pit_gungeon_trigger_2x2"
 				},
-				{
+                {
+                    "gungon_lair_trap",
+                    "bulletPastPitfalltrap"
+                },
+                {
 					"web_circle",
 					"webplaceable"
 				},
@@ -1228,8 +1364,29 @@ public class PlaceableDatabase : TileDatabase
 					"dead_blow",
 					"customsetupdeadblow"
 				},
-				{
-					"Pathing Traps",
+                {
+                    "conveyor_belt_right",
+                    "ConveyorHorizontal"
+                },
+                {
+                    "conveyor_belt_up",
+                    "ConveyorVertical"
+                },
+
+                {
+                    "mouse_trap_north",
+                    "MouseTrap_North"
+                },
+                {
+                    "mouse_trap_east",
+                    "MouseTrap_East"
+                },
+                {
+                    "mouse_trap_west",
+                    "MouseTrap_West"
+                },
+                {
+                    "Pathing Traps",
 					Manager.paletteDividerGuid
 				},
 				{
@@ -1248,9 +1405,48 @@ public class PlaceableDatabase : TileDatabase
                     "minecartboomer",
                     "explosivebarrelminecart_pathing"
                 },
+
+                {
+                    "spinning_log_spike_horizontal_001",
+                    "rollingLogHorizontal_pathing"
+                },
+                {
+                    "spinning_log_spike_vertical_001",
+                    "rollingLogVertical_pathing"
+                },
+
+                {
+                    "spinning_ice_log_spike_horizontal_001001",
+                    "rollingIceLogHorizontal_pathing"
+                },
+                {
+                    "spinning_ice_log_spike_vertical_001",
+                    "rollingIceLogVertical_pathing"
+                },
+
+                {
+                    "Drop Traps",
+                    Manager.paletteDividerGuid
+                },
+                {
+                    "chandelier_trap",
+                    "chandelierDropTrap_DropDowntrap"
+                },
+                {
+                    "chandelier_switch",
+                    "chandelierSwitch_trigger_DropDownswitch"
+                },
+                {
+                    "tnt_drop",
+                    "caveInTrap_DropDowntrap"
+                },
+                {
+                    "tnt_plunger_idle_001",
+                    "caveInTrap_DropDownswitch"
+                },
             }
 		},
-		{
+        {
 			"NPCs",
 			new Dictionary<string, string>
 			{
@@ -1338,7 +1534,16 @@ public class PlaceableDatabase : TileDatabase
 					"baby_dragun",
 					"babydragunjail"
 				},
-				{
+
+                {
+                    "gunsling_king_idle_001",
+                    "GunslingKingNPC"
+                },
+                {
+                    "toadie_idle_001",
+                    "ManservantesNPC"
+                },
+                {
 					"Decorative NPCs",
 					Manager.paletteDividerGuid
 				},
@@ -1365,6 +1570,74 @@ public class PlaceableDatabase : TileDatabase
                 {
                     "lost_adventurer_idle_left_001",
                     "lonk_NPC_pathing"
+                },
+                {
+                    "Winchester Assets",
+                    Manager.paletteDividerGuid
+                },
+                {
+                    "artfull_dodger_talk_002",
+                    "WinchesterNPC"
+                },
+                {
+                    "winchester_bumper_blue_bump_004",
+                    "WinchesterBlueBumper"
+                },
+                {
+                    "winchester_bumper_greed_001",
+                    "WinchesterGreenBumper"
+                },
+                {
+                    "winchester_bumper_red_001",
+                    "WinchesterRedBumper"
+                },
+                {
+                    "winchester_bump_blue_LL_001",
+                    "WinchesterBlueBumperDiagonal_BL"
+                },
+                {
+                    "winchester_bump_blue_LL_002",
+                    "WinchesterBlueBumperDiagonal_BR"
+                },
+                {
+                    "winchester_bump_blue_LL_003",
+                    "WinchesterBlueBumperDiagonal_TL"
+                },
+                {
+                    "winchester_bump_blue_LL_004",
+                    "WinchesterBlueBumperDiagonal_TR"
+                },
+                {
+                    "winchester_neon",
+                    "WinchesterNeonSign"
+                },
+                {
+                    "winchesterController",
+                    "WinchesterRoomController"
+                },
+                {
+                    "winchesterCamera",
+                    "WinchesterCameraController"
+                },
+                {
+                    "winchesterCameraPanPlacer",
+                    "winchesterCameraPanPlacer"
+                },
+                {
+                    "Winchester Assets [Uses Node Paths]",
+                    Manager.paletteDividerGuid
+                },
+                {
+                    "winchester_target_001",
+                    "winchesterShootyTarget_pathing"
+                },
+                {
+                    "winchestermovingBumper1x3",
+                    "WinchesterMovingBumper1x3_pathing"
+                },      
+				{
+                    "winchestermovingBumper2x2",
+                    "WinchesterMovingBumper2x2_pathing"
                 },
             }
 		}

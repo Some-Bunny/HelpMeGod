@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -12,6 +13,7 @@ public class DataTile : Tile/*, IEquatable<DataTile>, IComparable<DataTile>*/
 	//public int placmentOrder = -1;
 	public Vector2 position;
 
+    public GameObject controllerDummy;
 
     public override bool StartUp(Vector3Int position, ITilemap tilemap, GameObject go)
     {
@@ -19,6 +21,7 @@ public class DataTile : Tile/*, IEquatable<DataTile>, IComparable<DataTile>*/
         return base.StartUp(position, tilemap, go);
     }
 
+    
 
     public override void RefreshTile(Vector3Int position, ITilemap tilemap)
     {
@@ -61,6 +64,8 @@ public class DataTile : Tile/*, IEquatable<DataTile>, IComparable<DataTile>*/
     {
         return map.fuckYou.FindIndex(map2 => map2 == this);
     }
+
+
 
 
     /*public override bool Equals(object obj)

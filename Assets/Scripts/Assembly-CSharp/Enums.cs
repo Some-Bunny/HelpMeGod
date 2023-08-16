@@ -8,8 +8,11 @@ public static class Enums
 	{
 		return (T)((object)Enum.Parse(typeof(T), val.ToUpper()));
 	}
-
-	[Serializable]
+    public static T GetEnumValueBase<T>(string val) where T : Enum
+    {
+        return (T)((object)Enum.Parse(typeof(T), val));
+    }
+    [Serializable]
 	public enum SerializedPathWrapMode
 	{
 		PINGPONG,
@@ -111,7 +114,7 @@ public static class Enums
 		
 		NPC_STORY,
 		
-		CATACOMBS_BRIDGE_ROOM
+		CATACOMBS_BRIDGE_ROOM,
 	}
 
 	
@@ -163,4 +166,40 @@ public static class Enums
 		
 		Secret
 	}
+
+    public enum BossRoomPools
+    {
+		None,
+
+        Gatling_Gull,
+
+        Bullet_King,
+
+        Trigger_Twins,
+
+        Blobulord,
+
+        Gorgun,
+
+        Beholster,
+
+        Ammoconda,
+
+        Old_King,
+
+        Cannonbalrog,
+
+        Mine_Flayer,
+
+        Treadnaught,
+
+        High_Priest,
+
+        Kill_Pillars,
+
+        Wallmonger,
+
+        Door_Lord,
+
+    }
 }
