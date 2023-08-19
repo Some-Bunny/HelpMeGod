@@ -48,8 +48,8 @@ public static class ImportExport
 			placeableAttributes = new string[0],
 			visualSubtype = -1,
             weight = 1f,
-			bossPool = null,
-			isWinchester = false,
+			superSpecialRoomType = null,
+
 			AmbientLight_R = 1f,
             AmbientLight_G = 1f,
             AmbientLight_B = 1f,
@@ -894,8 +894,7 @@ public static class ImportExport
 		public bool doLighting;
 
 		public int visualSubtype;
-        public string bossPool;
-        public bool isWinchester;
+        public string superSpecialRoomType;
 
         public float AmbientLight_R;
         public float AmbientLight_G;

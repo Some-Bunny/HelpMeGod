@@ -167,9 +167,31 @@ public static class Enums
 		Secret
 	}
 
-    public enum BossRoomPools
+    public enum SuperSpecialRooms
     {
 		None,
+
+        Misc_Reward,
+
+        Winchester,
+
+        Fireplace,
+
+		Sewer_Entrance,
+
+		Crest_Room,
+
+		Abbey_Entrance,
+		
+		Abbey_Extra_Secret,
+
+		Hollow_Sell_Creep,
+
+		Bullet_Hell_Secret,
+
+		Blockner_Miniboss,
+
+		Shadow_Magician,
 
         Gatling_Gull,
 

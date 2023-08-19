@@ -96,7 +96,7 @@ public class RoomPropertiesMenu : MonoBehaviour
 		properties.normalSubCategory = this.GetCategory<Enums.RoomNormalSubCategory>(this.normalDropdown);
 		properties.specialSubCategory = this.GetCategory<Enums.RoomSpecialSubCategory>(this.specialDropdown);
 		properties.bossSubCategory = this.GetCategory<Enums.RoomBossSubCategory>(this.bossDropdown);
-        properties.bossPool = this.GetCategoryBase<Enums.BossRoomPools>(this.BossRoomPool);
+        properties.superSpecialRooms = this.GetCategoryBase<Enums.SuperSpecialRooms>(this.BossRoomPool);
 
         properties.weight = float.Parse(this.weightField.text);
         properties.visualSubtype = int.Parse(this.visualSubtypeField.text);
@@ -107,11 +107,11 @@ public class RoomPropertiesMenu : MonoBehaviour
 		properties.doWallDecoration = this.wallDecoButton.Toggled;
 		properties.doLighting = this.lightingButton.Toggled;
 		properties.visualSubtype = int.Parse(this.visualSubtypeField.text);
-        properties.isWinchester = this.isWinchesterRoom.Toggled;
 
         properties.AmbientLight_R = int.Parse(this.AmbientColor_R.text);
         properties.AmbientLight_G = int.Parse(this.AmbientColor_G.text);
         properties.AmbientLight_B = int.Parse(this.AmbientColor_B.text);
+        properties.usesAmbientLight = this.usesAmbientLighting.Toggled;
 
     }
 
@@ -210,11 +210,11 @@ public class RoomPropertiesMenu : MonoBehaviour
 			this.floorDecoButton.Toggled = properties.doFloorDecoration;
 			this.wallDecoButton.Toggled = properties.doWallDecoration;
 			this.lightingButton.Toggled = properties.doLighting;
-			this.isWinchesterRoom.Toggled = properties.isWinchester;
 
             this.AmbientColor_R.text = properties.AmbientLight_R.ToString();
             this.AmbientColor_G.text = properties.AmbientLight_G.ToString();
             this.AmbientColor_B.text = properties.AmbientLight_B.ToString();
+			this.usesAmbientLighting.Toggled = properties.usesAmbientLight;
 
             this.InitializeDropdowns();
 		}
@@ -233,7 +233,7 @@ public class RoomPropertiesMenu : MonoBehaviour
 		this.bossDropdown.value = (int)props.bossSubCategory;
 		this.bossDropdown.RefreshShownValue();
 
-        this.BossRoomPool.value = (int)props.bossPool;
+        this.BossRoomPool.value = (int)props.superSpecialRooms;
         this.BossRoomPool.RefreshShownValue();
     }
 
@@ -245,7 +245,7 @@ public class RoomPropertiesMenu : MonoBehaviour
 		this.SetupDropdown<Enums.RoomNormalSubCategory>(this.normalDropdown);
 		this.SetupDropdown<Enums.RoomSpecialSubCategory>(this.specialDropdown);
 		this.SetupDropdown<Enums.RoomBossSubCategory>(this.bossDropdown);
-        this.SetupDropdown<Enums.BossRoomPools>(this.BossRoomPool);
+        this.SetupDropdown<Enums.SuperSpecialRooms>(this.BossRoomPool);
 
         this.subCategoryDropdowns.Add(this.normalDropdown.transform);
 		this.subCategoryDropdowns.Add(this.specialDropdown.transform);
@@ -313,8 +313,6 @@ public class RoomPropertiesMenu : MonoBehaviour
     public InputField visualSubtypeField;
 
 
-    public ToggleButton isWinchesterRoom;
-
 
     public Dropdown BossRoomPool;
 
@@ -330,5 +328,7 @@ public class RoomPropertiesMenu : MonoBehaviour
     public InputField AmbientColor_R;
     public InputField AmbientColor_G;
     public InputField AmbientColor_B;
+
+    public ToggleButton usesAmbientLighting;
 
 }

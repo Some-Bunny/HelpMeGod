@@ -1141,13 +1141,54 @@ public class PlaceableDatabase : TileDatabase
 
 
                 {
-                    "Boss Room Floors",
+                    "Boss Room Arema Parts",
                     Manager.paletteDividerGuid
                 },
+                {
+                    "throne_room_dais_001",
+                    "Bullet_King_Arena_Floor"
+                },
+                {
+                    "throne_room_wall__003",
+                    "Bullet_King_Arena_MainWall"
+                },
+                {
+                    "throne_room_wall__001",
+                    "Bullet_King_Arena_SideWall_1"
+                },
+                {
+                    "throne_room_wall__002",
+                    "Bullet_King_Arena_SideWall_2"
+                },
+
+                {
+                    "cathrone_room_dais_001",
+                    "Old_King_Arena_Floor"
+                },
+                {
+                    "cathrone_room_wall_003",
+                    "Old_King_Arena_MainWall"
+                },
+                {
+                    "cathrone_room_wall_001",
+                    "Old_King_Arena_SideWall_1"
+                },
+                {
+                    "cathrone_room_wall_002",
+                    "Old_King_Arena_SideWall_2"
+                },
+
+
                 {
                     "cathedral_high_priest_floor_001",
                     "HighPriestBossRoomFloorDecal"
                 },
+
+                {
+                    "demonwall_floor_001",
+                    "Wallmonger_Arena_Floor"
+                },
+
                 {
                     "lich_gunfight_floor_001",
                     "LichBossRoomFloorDecal"
@@ -1425,6 +1466,27 @@ public class PlaceableDatabase : TileDatabase
                 },
 
                 {
+                    "sewer_platform_moving_001",
+                    "OmniMovingPlatformSewer_pathing"
+                },
+                {
+                    "gungeon_platform_moving_001",
+                    "OmniMovingPlatform_pathing"
+                },
+                {
+                    "mines_platform_moving_001",
+                    "OmniMovingPlatformMines_pathing"
+                },
+                {
+                    "catacombs_platform_moving_001",
+                    "OmniMovingPlatformHollow_pathing"
+                },
+                {
+                    "forge_platform_moving_001",
+                    "OmniMovingPlatformForge_pathing"
+                },
+
+                {
                     "Drop Traps",
                     Manager.paletteDividerGuid
                 },
@@ -1444,6 +1506,7 @@ public class PlaceableDatabase : TileDatabase
                     "tnt_plunger_idle_001",
                     "caveInTrap_DropDownswitch"
                 },
+
             }
 		},
         {
@@ -1640,8 +1703,10 @@ public class PlaceableDatabase : TileDatabase
                     "WinchesterMovingBumper2x2_pathing"
                 },
             }
-		}
-	};
+
+		},
+       
+    };
 
 	
 	
@@ -1829,7 +1894,7 @@ public class PlaceableDatabase : TileDatabase
 			"jaildoor"
 		},
 		{
-			"Misc",
+			"Misc / Special",
 			Manager.paletteDividerGuid
 		},
 		{
@@ -1852,7 +1917,20 @@ public class PlaceableDatabase : TileDatabase
 			"abbey_entrance_altar",
 			"gungeoncreststairs"
 		},
-		{
+        {
+             "firePlace",
+             "Keep_Fireplace"
+        },
+        {
+             "sewerGrate",
+             "Sewer_Entrance"
+        },
+        {
+             "redButton_sewer",
+             "Sewer_Entrace_Angry_Button"
+        },
+
+        {
 			"Random Enemy Selectors",
 			Manager.paletteDividerGuid
 		},

@@ -224,7 +224,13 @@ public class InputHandler : MonoBehaviour
 
         {"spinning_ice_log_spike_vertical_001",  DynamicTileMethods.DynamicRollersLength },
 
+        {"sewer_platform_moving_001",  DynamicTileMethods.DynamicMovingTiles },
+        {"gungeon_platform_moving_001",  DynamicTileMethods.DynamicMovingTiles },
+        {"mines_platform_moving_001",  DynamicTileMethods.DynamicMovingTiles },
+        {"catacombs_platform_moving_001",  DynamicTileMethods.DynamicMovingTiles },
+        {"forge_platform_moving_001",  DynamicTileMethods.DynamicMovingTiles },
     };
+
 
     private void HandleShortcuts()
 	{

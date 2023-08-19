@@ -220,7 +220,7 @@ public static class AttributeDatabase
 		},
 		{
 			"mS",
-			new AC("maxSpeed", "mS", 9, new object[0])
+			new AC("Max Speed", "mS", 9f, new object[0])
 		},
 		{
 			"tTMS",
@@ -380,19 +380,42 @@ public static class AttributeDatabase
             "logHeight",
             new AC("Height", "logHeight", 4, new object[0])
         },
+        {
+            "lf_pipe",
+            new AC("Lifetime", "lf_pipe", 10f, new object[0])
+        },
     };
+
 
 
     public static Dictionary<AttributeDatabase.ValidAttribute, string[]> attributeListings = new Dictionary<AttributeDatabase.ValidAttribute, string[]>
 	{
-
+        {
+            (string name) => name == "sewer_platform_moving_001" |name == "gungeon_platform_moving_001" |name == "mines_platform_moving_001" |name == "catacombs_platform_moving_001" |name == "forge_platform_moving_001",
+            new string[]
+            {
+                "tSP",
+                "nSP_O",
+                "mS",
+                "TileSizeX_",
+                "TileSizeY_",
+            }
+        },
+        {
+            (string name) => name == "flame_pipe_north"| name == "flame_pipe_west"| name == "flame_pipe_east",
+            new string[]
+            {
+                "lf_pipe"
+            }
+        },
         {
             (string name) => name == "spinning_log_spike_vertical_001"| name == "spinning_ice_log_spike_vertical_001",
             new string[]
             {
                 "tSP",
                 "nSP_O",
-                "logLength"
+                "logLength",
+                "mS"
             }
         },
         {
@@ -401,7 +424,8 @@ public static class AttributeDatabase
             {
                 "tSP",
                 "nSP_O",
-                "logHeight"
+                "logHeight",
+                "mS"
             }
         },
 
@@ -586,7 +610,8 @@ public static class AttributeDatabase
 			new string[]
 			{
 				"tSP",
-                "nSP_O"
+                "nSP_O",
+                "mS"
             }
 		},
         {
@@ -607,6 +632,7 @@ public static class AttributeDatabase
                 "WinchestTargetSpeed"
             }
         },
+
         {
             (string name) => name == "winchestermovingBumper2x2",
             new string[]
@@ -621,7 +647,8 @@ public static class AttributeDatabase
             new string[]
             {
                 "tSP",
-                "nSP_O"
+                "nSP_O",
+                "mS"
             }
         },
         {
@@ -776,9 +803,6 @@ public static class AttributeDatabase
         new SpecialDefaultValue("DirectionShoot", "forge_shoot_face_west", "SOUTH" ){ },
         new SpecialDefaultValue("TrapTriggerDelay", "forge_shoot_face_west", 1 ){ },
 
-
-
-
         new SpecialDefaultValue("DirectionShoot", "forge_shoot_face_north", "SOUTH" ){ },
         new SpecialDefaultValue("TrapTriggerDelay", "forge_shoot_face_north", 1f ){ },
 
@@ -795,8 +819,34 @@ public static class AttributeDatabase
          new SpecialDefaultValue("trapTriggerOnBlank", "mouse_trap_east", true ){ },
          new SpecialDefaultValue("trapTriggerOnBlank", "mouse_trap_north", true ){ },
 
-    };
 
+        new SpecialDefaultValue("mS", "lost_adventurer_idle_left_001", 0.1f ){ },
+        new SpecialDefaultValue("mS", "spinning_log_spike_horizontal_001", 3f ){ },
+        new SpecialDefaultValue("mS", "spinning_ice_log_spike_horizontal_001", 3f ){ },
+        new SpecialDefaultValue("mS", "spinning_log_spike_vertical_001", 3f ){ },
+        new SpecialDefaultValue("mS", "spinning_ice_log_spike_vertical_001", 3f ){ },
+
+        new SpecialDefaultValue("TileSizeX_", "sewer_platform_moving_001", 3 ){ },
+        new SpecialDefaultValue("TileSizeY_", "sewer_platform_moving_001", 3 ){ },
+        new SpecialDefaultValue("mS", "sewer_platform_moving_001", 3f ){ },
+
+        new SpecialDefaultValue("TileSizeX_", "gungeon_platform_moving_001", 3 ){ },
+        new SpecialDefaultValue("TileSizeY_", "gungeon_platform_moving_001", 3 ){ },
+        new SpecialDefaultValue("mS", "gungeon_platform_moving_001", 3f ){ },
+
+        new SpecialDefaultValue("TileSizeX_", "mines_platform_moving_001", 3 ){ },
+        new SpecialDefaultValue("TileSizeY_", "mines_platform_moving_001", 3 ){ },
+        new SpecialDefaultValue("mS", "mines_platform_moving_001", 3f ){ },
+
+        new SpecialDefaultValue("TileSizeX_", "catacombs_platform_moving_001", 3 ){ },
+        new SpecialDefaultValue("TileSizeY_", "catacombs_platform_moving_001", 3 ){ },
+        new SpecialDefaultValue("mS", "catacombs_platform_moving_001", 3f ){ },
+
+        new SpecialDefaultValue("TileSizeX_", "forge_platform_moving_001", 3 ){ },
+        new SpecialDefaultValue("TileSizeY_", "forge_platform_moving_001", 3 ){ },
+        new SpecialDefaultValue("mS", "forge_platform_moving_001", 3f ){ },
+
+    };
 
     public class SpecialDefaultValue
 	{

@@ -1,0 +1,377 @@
+fileFormatVersion: 2
+guid: ec9c6142ee56f114096a904335142afa
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 6525439673342253715
+    second: sliced_rounded_box_0
+  - first:
+      213: 1564283459552299696
+    second: sliced_rounded_box_1
+  - first:
+      213: 8035734762502309219
+    second: sliced_rounded_box_2
+  - first:
+      213: 4787654040174918788
+    second: sliced_rounded_box_3
+  - first:
+      213: 6421613630492615202
+    second: sliced_rounded_box_4
+  - first:
+      213: 1361352081761582084
+    second: sliced_rounded_box_5
+  - first:
+      213: 3290847542334090017
+    second: sliced_rounded_box_6
+  - first:
+      213: -8635668622982238747
+    second: sliced_rounded_box_7
+  - first:
+      213: -5856276016724611783
+    second: sliced_rounded_box_8
+  externalObjects: {}
+  serializedVersion: 10
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 1
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: -1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 1
+  spriteExtrude: 12
+  spriteMeshType: 1
+  alignment: 9
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 500, y: 500, z: 500, w: 500}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: sliced_rounded_box_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 667
+        width: 333
+        height: 333
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 1, y: 0, z: 0, w: 1}
+      outline:
+      - - {x: -38, y: 166.66667}
+        - {x: -53, y: 165.66663}
+        - {x: -106, y: 138.66663}
+        - {x: -127, y: 117.666626}
+        - {x: -157, y: 73.666626}
+        - {x: -166.66667, y: 38.666626}
+        - {x: -166.66667, y: -166.33337}
+        - {x: 166.66667, y: -166.33337}
+        - {x: 166.66667, y: 166.66667}
+      physicsShape: []
+      tessellationDetail: 0.2
+      bones: []
+      spriteID: 0b5ae099431c5d5419ccf5c6094ce58c
+      internalID: 6525439673342253715
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sliced_rounded_box_1
+      rect:
+        serializedVersion: 2
+        x: 333
+        y: 666.6666
+        width: 333.33334
+        height: 333.33334
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 1}
+      outline:
+      - - {x: -166.66667, y: 166.66667}
+        - {x: -166.66667, y: -166.33337}
+        - {x: 166.66667, y: -166.33337}
+        - {x: 166.66667, y: 166.66667}
+      physicsShape: []
+      tessellationDetail: 0.2
+      bones: []
+      spriteID: f2719eb3bbdf7704288a49b298d63db7
+      internalID: 1564283459552299696
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sliced_rounded_box_2
+      rect:
+        serializedVersion: 2
+        x: 666
+        y: 666.6666
+        width: 333.33334
+        height: 333.33334
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 1, w: 1}
+      outline:
+      - - {x: 142, y: 96.666626}
+        - {x: 116, y: 126.666626}
+        - {x: 82, y: 153.66663}
+        - {x: 41, y: 166.66667}
+        - {x: -166.66667, y: 166.66667}
+        - {x: -166.66667, y: -166.33337}
+        - {x: 166.66667, y: -166.33337}
+        - {x: 166.66667, y: 38.666626}
+        - {x: 155, y: 73.666626}
+      physicsShape: []
+      tessellationDetail: 0.2
+      bones: []
+      spriteID: 11cf3ea7be1ffd7439047ebdafb6140f
+      internalID: 8035734762502309219
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sliced_rounded_box_3
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 333.66666
+        width: 333.33334
+        height: 333.33334
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 1, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -166.66667, y: 166.66667}
+        - {x: -166.66667, y: -166.33334}
+        - {x: 166.66667, y: -166.33334}
+        - {x: 166.66667, y: 166.66667}
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f1989b5843291564c8e99946326d2b91
+      internalID: 4787654040174918788
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sliced_rounded_box_4
+      rect:
+        serializedVersion: 2
+        x: 333
+        y: 333.66666
+        width: 333.33334
+        height: 333.33334
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -166.66667, y: 166.66667}
+        - {x: -166.66667, y: -166.33334}
+        - {x: 166.66667, y: -166.33334}
+        - {x: 166.66667, y: 166.66667}
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 652af9a90377f8248afebd6a5b5887ca
+      internalID: 6421613630492615202
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sliced_rounded_box_5
+      rect:
+        serializedVersion: 2
+        x: 666
+        y: 333.66666
+        width: 333.33334
+        height: 333.33334
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 1, w: 0}
+      outline:
+      - - {x: -166.66667, y: 166.66667}
+        - {x: -166.66667, y: -166.33334}
+        - {x: 166.66667, y: -166.33334}
+        - {x: 166.66667, y: 166.66667}
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c06c480a97f3e9641936ed2cb1ec55e9
+      internalID: 1361352081761582084
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sliced_rounded_box_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0.6666565
+        width: 333.33334
+        height: 333.33334
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 1, y: 1, z: 0, w: 0}
+      outline:
+      - - {x: -166.66667, y: 166.66667}
+        - {x: -166.66667, y: -36.333344}
+        - {x: -159, y: -65.33334}
+        - {x: -151, y: -80.33334}
+        - {x: -126, y: -118.33334}
+        - {x: -96, y: -141.33334}
+        - {x: -73, y: -155.33334}
+        - {x: -40, y: -166.33334}
+        - {x: 166.66667, y: -166.33334}
+        - {x: 166.66667, y: 166.66667}
+      physicsShape: []
+      tessellationDetail: 0.2
+      bones: []
+      spriteID: 4fa368a6e74dd4a40a1ef981fb6afd0e
+      internalID: 3290847542334090017
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sliced_rounded_box_7
+      rect:
+        serializedVersion: 2
+        x: 333
+        y: 0.6666565
+        width: 333.33334
+        height: 333.33334
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 1, z: 0, w: 0}
+      outline:
+      - - {x: -166.66667, y: 166.66667}
+        - {x: -166.66667, y: -166.33334}
+        - {x: 166.66667, y: -166.33334}
+        - {x: 166.66667, y: 166.66667}
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 43abfac5d127c9144a17fce8ed59e87c
+      internalID: -8635668622982238747
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sliced_rounded_box_8
+      rect:
+        serializedVersion: 2
+        x: 666
+        y: 0.6666565
+        width: 333.33334
+        height: 333.33334
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 1, z: 1, w: 0}
+      outline:
+      - - {x: 126, y: -115.33334}
+        - {x: 149, y: -88.33334}
+        - {x: 166.66667, y: -43.333344}
+        - {x: 166.66667, y: 166.66667}
+        - {x: -166.66667, y: 166.66667}
+        - {x: -166.66667, y: -166.33334}
+        - {x: 36, y: -166.33334}
+        - {x: 66, y: -158.33334}
+        - {x: 96, y: -140.33334}
+        - {x: 104, y: -134.33334}
+      physicsShape: []
+      tessellationDetail: 0.2
+      bones: []
+      spriteID: dc94235ac99071e4591a0e743065854e
+      internalID: -5856276016724611783
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

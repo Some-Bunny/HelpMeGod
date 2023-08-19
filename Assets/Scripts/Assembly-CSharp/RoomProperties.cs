@@ -25,8 +25,7 @@ public class RoomProperties
 		data.doFloorDecoration = this.doFloorDecoration;
 		data.doWallDecoration = this.doWallDecoration;
 		data.doLighting = this.doLighting;
-		data.isWinchester = this.isWinchester;
-        data.bossPool = this.bossPool.ToString();
+        data.superSpecialRoomType = this.superSpecialRooms.ToString();
 
         List<string> floors = new List<string>();
 		foreach (KeyValuePair<string, bool> floor in this.validTilesets)
@@ -39,11 +38,11 @@ public class RoomProperties
 		}
 		data.floors = floors.ToArray();
 		data.visualSubtype = this.visualSubtype;
-		data.isWinchester = this.isWinchester;
+
 		data.AmbientLight_R = this.AmbientLight_R;
         data.AmbientLight_G = this.AmbientLight_G;
         data.AmbientLight_B = this.AmbientLight_B;
-
+		data.usesAmbientLight = this.usesAmbientLight;
 
     }
 
@@ -95,10 +94,10 @@ public class RoomProperties
 		{
 			this.bossSubCategory = Enums.GetEnumValue<Enums.RoomBossSubCategory>(data.bossSubCategory);
 		}
-        bool flaga = !string.IsNullOrEmpty(data.bossPool);
+        bool flaga = !string.IsNullOrEmpty(data.superSpecialRoomType);
         if (flaga)
         {
-            this.bossPool = Enums.GetEnumValueBase<Enums.BossRoomPools>(data.bossPool);
+            this.superSpecialRooms = Enums.GetEnumValueBase<Enums.SuperSpecialRooms>(data.superSpecialRoomType);
         }
         bool flag5 = data.floors != null;
 		if (flag5)
@@ -119,11 +118,10 @@ public class RoomProperties
 		this.doWallDecoration = data.doWallDecoration;
 		this.doLighting = data.doLighting;
         this.visualSubtype = data.visualSubtype;
-        this.isWinchester = data.isWinchester;
         this.AmbientLight_R = data.AmbientLight_R;
         this.AmbientLight_G = data.AmbientLight_G;
         this.AmbientLight_B = data.AmbientLight_B;
-
+		this.usesAmbientLight = data.usesAmbientLight;
     }
 
     public void ImportRoomProperties(ImportExport.RoomData data)
@@ -202,13 +200,14 @@ public class RoomProperties
 
 	public bool isWinchester = false;
 
-    public Enums.BossRoomPools bossPool;
+    public Enums.SuperSpecialRooms superSpecialRooms;
 
     public Dictionary<string, bool> validTilesets = new Dictionary<string, bool>();
 
 	public float AmbientLight_R = 1;
     public float AmbientLight_G = 1;
     public float AmbientLight_B = 1;
+	public bool usesAmbientLight;
 
 
 }
