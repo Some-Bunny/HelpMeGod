@@ -17,11 +17,12 @@ public class DataTile : Tile/*, IEquatable<DataTile>, IComparable<DataTile>*/
 
     public override bool StartUp(Vector3Int position, ITilemap tilemap, GameObject go)
     {
+
         worldIntPosition = position;
         return base.StartUp(position, tilemap, go);
     }
 
-    
+    public int StoreOrder = -1;
 
     public override void RefreshTile(Vector3Int position, ITilemap tilemap)
     {
@@ -64,6 +65,8 @@ public class DataTile : Tile/*, IEquatable<DataTile>, IComparable<DataTile>*/
     {
         return map.fuckYou.FindIndex(map2 => map2 == this);
     }
+
+    public Vector3Int positionFromZeroZero;  
 
 
 

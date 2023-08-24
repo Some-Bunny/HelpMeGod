@@ -145,7 +145,12 @@ public static class AttributeDatabase
 			"pV",
 			new AC("forceNoFuse", "pV", false, new object[0])
 		},
-		{
+        {
+            "isGlitched",
+            new AC("Is Glitched", "isGlitched", false, new object[0])
+        },
+
+        {
 			"bB",
 			new AC("barrelSprite", "bB", "water_drum", new object[]
 			{
@@ -269,6 +274,11 @@ public static class AttributeDatabase
 			new AC("Item Tag", "bossPdstlItmStringID", "None.", new object[0])
 		},//TRAPS only
         {
+            "bossPdstOverrideLootType",
+            new AC("Loot Type", "bossPdstOverrideLootType", "N/A", new object[] { "N/A", "Fully Random","Random Gun", "Random Item", "Set ID / Tag", "Crest" })
+        },
+
+        {
 			"TrapTriggerMethod",
 			new AC("Trap Trigger", "TrapTriggerMethod", "Timer", new object[] {"Timer", "Stepped On", "Collisions", "Script", })
 		},
@@ -384,12 +394,56 @@ public static class AttributeDatabase
             "lf_pipe",
             new AC("Lifetime", "lf_pipe", 10f, new object[0])
         },
+
+        {
+            "mCSpawner_amount",
+            new AC("Maximum Carts", "mCSpawner_amount", 5, new object[0])
+        },
+        {
+            "mCSpawner_cartDelay",
+            new AC("Delay Between Carts", "mCSpawner_cartDelay", 3f, new object[0])
+        },
+        {
+            "mCSpawner_destroyDelay",
+            new AC("Cooldown On Cart Destruction", "mCSpawner_destroyDelay", 1f, new object[0])
+        },
+        {
+            "cartActive",
+            new AC("Force Cart Active", "cartActive", true, new object[0])
+        },
+        {
+            "mCSpawner_cartType",
+            new AC("Cart Type", "mCSpawner_cartType", "Explosive Barrel", new object[]{"Explosive Barrel", "Default", "Turret"})
+        },
+        {
+            "mCSpawner_cartCopy",
+            new AC("Copy Nearest Cart", "mCSpawner_cartCopy", false, new object[0])
+        },
+        {
+            "mCSpawner_cartDestroyCopy",
+            new AC("Destroy Copied Cart", "mCSpawner_cartDestroyCopy", true, new object[0])
+        },
     };
 
 
 
     public static Dictionary<AttributeDatabase.ValidAttribute, string[]> attributeListings = new Dictionary<AttributeDatabase.ValidAttribute, string[]>
 	{
+        {
+            (string name) => name == "minecart_spawner",
+            new string[]
+            {
+                "mCSpawner_amount",
+                "tSP",
+                "nSP_O",
+                "mCSpawner_cartDelay",
+                "mCSpawner_destroyDelay",
+                "cartActive",
+                "mCSpawner_cartType",
+                "mCSpawner_cartCopy",
+                "mCSpawner_cartDestroyCopy"
+            }
+        },
         {
             (string name) => name == "sewer_platform_moving_001" |name == "gungeon_platform_moving_001" |name == "mines_platform_moving_001" |name == "catacombs_platform_moving_001" |name == "forge_platform_moving_001",
             new string[]
@@ -409,7 +463,7 @@ public static class AttributeDatabase
             }
         },
         {
-            (string name) => name == "spinning_log_spike_vertical_001"| name == "spinning_ice_log_spike_vertical_001",
+            (string name) => name == "spinning_log_spike_vertical_001" | name == "spinning_ice_log_spike_vertical_001",
             new string[]
             {
                 "tSP",
@@ -419,7 +473,7 @@ public static class AttributeDatabase
             }
         },
         {
-            (string name) => name == "spinning_log_spike_horizontal_001" | name == "spinning_ice_log_spike_horizontal_001",
+            (string name) => name == "spinning_log_spike_horizontal_001" | name == "spinning_ice_log_spike_horizontal_001001",
             new string[]
             {
                 "tSP",
@@ -445,7 +499,10 @@ public static class AttributeDatabase
             }
        },
        {
-            (string name) => name == "forge_shoot_face_north",
+            (string name) => 
+            name == "forge_shoot_face_north" |name == "forge_shoot_face_west"|name == "forge_shoot_face_east"|
+            name == "mine_skull_face_left_004"|name == "mine_skull_face_004"|name == "mine_skull_face_right_004"|
+            name == "ice_skull_face_left_004"|name == "ice_skull_face_004"|name == "ice_skull_face_right_004",
             new string[]
             {
                 "TrapTriggerDelay",
@@ -455,38 +512,17 @@ public static class AttributeDatabase
                 "projectileTypeTurret"
             }
        },
-       {
-            (string name) => name == "forge_shoot_face_west",
-            new string[]
-            {
-                "TrapTriggerDelay",
-                "trapProjSpeed",
-                "trapProjRange",
-                "DirectionShoot",
-                "projectileTypeTurret"
-            }
-       },
-       {
-            (string name) => name == "forge_shoot_face_east",
-            new string[]
-            {
-                "TrapTriggerDelay",
-                "trapProjSpeed",
-                "trapProjRange",
-                "DirectionShoot",
-                "projectileTypeTurret"
-            }
-       },
+       
 
        {
-            (string name) => name == "chandelier_trap",
+            (string name) => name == "chandelier_trap" | name == "tnt_drop",
             new string[]
             {
                 "triggerEventValue",
             }
        },
        {
-            (string name) => name == "chandelier_switch",
+            (string name) => name == "chandelier_switch" | name == "tnt_plunger_idle_001",
             new string[]
             {
                 "triggeredEventValue",
@@ -585,14 +621,16 @@ public static class AttributeDatabase
                 "nodType"
             }
         },
+        /*
         {
 			(string name) => name == "floor",
 			new string[]
 			{
 				"pls"
 			}
-		},
 
+		},
+        */
 		{
 			(string name) => name.Contains("_chest") && !name.Contains("random"),
 			new string[]
@@ -601,11 +639,12 @@ public static class AttributeDatabase
 				"jI",
 				"mC",
 				"cL",
-				"pV"
-			}
+				"pV",
+                "isGlitched"
+            }
 		},
 
-		{
+        {
 			(string name) => name == "lost_adventurer_idle_left_001",
 			new string[]
 			{
@@ -660,6 +699,7 @@ public static class AttributeDatabase
                 "mS",
 				"tTMS",
                 "storedenemyBodyMC",
+                "cartActive"
             }
 		},
 		
@@ -672,7 +712,8 @@ public static class AttributeDatabase
                 "mS",
                 "tTMS",
                 "InitialtrapDelay",
-                "TrapTriggerDelay"
+                "TrapTriggerDelay",
+                "cartActive"
             }
         },
         {
@@ -683,6 +724,7 @@ public static class AttributeDatabase
                 "nSP_O",
                 "mS",
                 "tTMS",
+                "cartActive"
             }
         },
 		{
@@ -716,7 +758,8 @@ public static class AttributeDatabase
             new string[]
             {
                 "bossPdstlItmID",
-                "bossPdstlItmStringID"
+                "bossPdstlItmStringID",
+                "bossPdstOverrideLootType"
             }
         },
         {
@@ -796,21 +839,33 @@ public static class AttributeDatabase
 
 
         new SpecialDefaultValue("InitialtrapDelay", "forge_shoot_face_west", 1f ){ },
-        new SpecialDefaultValue("DirectionShoot", "forge_shoot_face_west", "SOUTH" ){ },
         new SpecialDefaultValue("TrapTriggerDelay", "forge_shoot_face_west", 1 ){ },
 
         new SpecialDefaultValue("InitialtrapDelay", "forge_shoot_face_west", 1f ){ },
-        new SpecialDefaultValue("DirectionShoot", "forge_shoot_face_west", "SOUTH" ){ },
-        new SpecialDefaultValue("TrapTriggerDelay", "forge_shoot_face_west", 1 ){ },
+        new SpecialDefaultValue("TrapTriggerDelay", "forge_shoot_face_west", 1f ){ },
 
         new SpecialDefaultValue("DirectionShoot", "forge_shoot_face_north", "SOUTH" ){ },
         new SpecialDefaultValue("TrapTriggerDelay", "forge_shoot_face_north", 1f ){ },
+        new SpecialDefaultValue("DirectionShoot", "mine_skull_face_004", "SOUTH" ){ },
+        new SpecialDefaultValue("TrapTriggerDelay", "mine_skull_face_004", 1f ){ },
+        new SpecialDefaultValue("DirectionShoot", "ice_skull_face_004", "SOUTH" ){ },
+        new SpecialDefaultValue("TrapTriggerDelay", "ice_skull_face_004", 1f ){ },
 
         new SpecialDefaultValue("DirectionShoot", "forge_shoot_face_west", "EAST" ){ },
         new SpecialDefaultValue("TrapTriggerDelay", "forge_shoot_face_west", 1f ){ },
+        new SpecialDefaultValue("DirectionShoot", "mine_skull_face_right_004", "EAST" ){ },
+        new SpecialDefaultValue("TrapTriggerDelay", "mine_skull_face_right_004", 1f ){ },
+        new SpecialDefaultValue("DirectionShoot", "ice_skull_face_right_004", "EAST" ){ },
+        new SpecialDefaultValue("TrapTriggerDelay", "ice_skull_face_right_004", 1f ){ },
+
 
         new SpecialDefaultValue("DirectionShoot", "forge_shoot_face_east", "WEST" ){ },
         new SpecialDefaultValue("TrapTriggerDelay", "forge_shoot_face_east", 1f ){ },
+        new SpecialDefaultValue("DirectionShoot", "mine_skull_face_left_004", "WEST" ){ },
+        new SpecialDefaultValue("TrapTriggerDelay", "mine_skull_face_left_004", 1f ){ },
+        new SpecialDefaultValue("DirectionShoot", "ice_skull_face_left_004", "WEST" ){ },
+        new SpecialDefaultValue("TrapTriggerDelay", "ice_skull_face_left_004", 1f ){ },
+
 
         new SpecialDefaultValue("InitialtrapDelay", "minecartturret", 3f ){ },
         new SpecialDefaultValue("TrapTriggerDelay", "minecartturret", 0.2f ){ },

@@ -251,7 +251,7 @@ public class EnvironmentMap : TilemapHandler
                 null
             },
             {
-                "Diag0nal Tiles [Keep / Proper / Hollow]",
+                "Diagonal Tiles [Keep / Proper / Hollow]",
                 Manager.paletteDividerGuid
             },
             {

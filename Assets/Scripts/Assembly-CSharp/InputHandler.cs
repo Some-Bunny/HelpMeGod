@@ -1,12 +1,15 @@
 ﻿using Assets.Scripts.Assembly_CSharp;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.UI;
 using static DataTile;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Button;
 using Tile = UnityEngine.Tilemaps.Tile;
 
 public class InputHandler : MonoBehaviour
@@ -26,17 +29,22 @@ public class InputHandler : MonoBehaviour
 			{
 				this.m_selectedTile = null;
 				this.attributesWindow.gameObject.SetActive(true);
+				
 				this.palettesWindow.SetActive(false);
 			}
 			else
 			{
 				this.attributesWindow.gameObject.SetActive(false);
-				this.palettesWindow.SetActive(true);
-			}
+				if (this.activeTilemap != TilemapHandler.MapType.Nodes)
+				{
+                    this.palettesWindow.SetActive(true);
+                }
+            }
 			this.m_brushType = value;
 			BrushButton.UpdateAppearances();
-		}
-	}
+            BrushSizeButton.UpdateAppearances();
+        }
+    }
 
 	
 	
@@ -141,8 +149,8 @@ public class InputHandler : MonoBehaviour
 
 
 
-        LineRenderer_Instance.transform.parent = this.grid.gameObject.transform;
-        LineRenderer_Instance.transform.position = this.grid.gameObject.transform.position;
+        LineRenderer_Dynamic_Instance.transform.parent = this.grid.gameObject.transform;
+        LineRenderer_Dynamic_Instance.transform.position = this.grid.gameObject.transform.position;
         yield break;
 	}
 
@@ -151,7 +159,9 @@ public class InputHandler : MonoBehaviour
 	{
 		this.uiMap = UnityEngine.Object.FindObjectOfType<UIMap>();
 		BrushButton.UpdateAppearances();
-		this.undoRedo = new UndoRedo();
+        BrushSizeButton.UpdateAppearances();
+
+        this.undoRedo = new UndoRedo();
 
 		EnemyLayer.SetActive(!nodeMode);
 		//NodeLayer.SetActive(nodeMode);
@@ -163,10 +173,12 @@ public class InputHandler : MonoBehaviour
 		this.DeselectTile();
 		this.activeTilemap = mapType;
 		this.m_selectedTile = this.lastTiles[mapType];
-	}
+		BrushButton.UpdateAppearances();
+        BrushSizeButton.UpdateAppearances();
+    }
 
-	 
-	private void Update()
+
+    private void Update()
 	{
 		this.m_mouseLastPosition = this.m_mousePosition;
 		this.m_mousePosition = Input.mousePosition;
@@ -182,13 +194,18 @@ public class InputHandler : MonoBehaviour
             dynamicVisualsComponents.TryGetValue(selectedTile.name, out a);
             if (a != null && LineRenderer_Dynamic_Instance != null)
 			{
-                Tilemap map = Manager.Instance.GetTilemap(this.activeTilemap).map;
                 a(selectedTile as DataTile, LineRenderer_Dynamic_Instance.gameObject.GetOrAddComponent<LineRenderer>());
-                Manager.Instance.environment.GetComponent<Tilemap>().color = map == Manager.Instance.environment.GetComponent<Tilemap>() ? new Color(1f, 1f, 1f, 0.65f) : new Color(1f, 1f, 1f, 0.3f);
-                Manager.Instance.exits.GetComponent<Tilemap>().color = map == Manager.Instance.exits.GetComponent<Tilemap>() ? new Color(1f, 1f, 1f, 0.65f) : new Color(1f, 1f, 1f, 0.3f);
-                Manager.Instance.placeables.GetComponent<Tilemap>().color = map == Manager.Instance.placeables.GetComponent<Tilemap>() ? new Color(1f, 1f, 1f, 0.65f) : new Color(1f, 1f, 1f, 0.3f);
-                EnemyLayerHandler.Instance.DoTransparency();//.enemyMaps.ForEach(x => x.GetComponent<Tilemap>().color = new Color(1f, 1f, 1f, 0.5f));
-                NodePathLayerHandler.Instance.nodeMaps.ForEach(x => x.GetComponent<Tilemap>().color = new Color(1f, 1f, 1f, 0.1f));
+
+                if (p != false)
+				{
+                    p = false;
+                    Tilemap map = Manager.Instance.GetTilemap(this.activeTilemap).map;
+                    Manager.Instance.environment.GetComponent<Tilemap>().color = map == Manager.Instance.environment.GetComponent<Tilemap>() ? new Color(1f, 1f, 1f, 0.65f) : new Color(1f, 1f, 1f, 0.3f);
+                    Manager.Instance.exits.GetComponent<Tilemap>().color = map == Manager.Instance.exits.GetComponent<Tilemap>() ? new Color(1f, 1f, 1f, 0.65f) : new Color(1f, 1f, 1f, 0.3f);
+                    Manager.Instance.placeables.GetComponent<Tilemap>().color = map == Manager.Instance.placeables.GetComponent<Tilemap>() ? new Color(1f, 1f, 1f, 0.65f) : new Color(1f, 1f, 1f, 0.3f);
+                    EnemyLayerHandler.Instance.DoTransparency();//.enemyMaps.ForEach(x => x.GetComponent<Tilemap>().color = new Color(1f, 1f, 1f, 0.5f));
+                    NodePathLayerHandler.Instance.nodeMaps.ForEach(x => x.GetComponent<Tilemap>().color = new Color(1f, 1f, 1f, 0.1f));
+                }
             }
         }
 		else
@@ -198,8 +215,11 @@ public class InputHandler : MonoBehaviour
                 var t = LineRenderer_Dynamic_Instance.gameObject.GetOrAddComponent<LineRenderer>();
                 t.positionCount = 0;
             }
-			if (!InputHandler.Instance.nodeMode)
+			if (!InputHandler.Instance.nodeMode && p != true)
 			{
+                Debug.LogError("A + " + p.ToString());
+                p = true;
+				Debug.LogError("A + " + p.ToString());
                 Manager.Instance.environment.GetComponent<Tilemap>().color = Color.white;
                 Manager.Instance.exits.GetComponent<Tilemap>().color = Color.white;
                 Manager.Instance.placeables.GetComponent<Tilemap>().color = Color.white;
@@ -209,6 +229,7 @@ public class InputHandler : MonoBehaviour
         }
     }
 
+	private bool p;
 
 
     public static Dictionary<string, Action<DataTile, LineRenderer>> dynamicVisualsComponents = new Dictionary<string, Action<DataTile, LineRenderer>>()
@@ -219,7 +240,7 @@ public class InputHandler : MonoBehaviour
         {"pew",  DynamicTileMethods.DynamicPews },
 
         {"spinning_log_spike_horizontal_001",  DynamicTileMethods.DynamicRollersHeight },
-        {"spinning_ice_log_spike_horizontal_001",  DynamicTileMethods.DynamicRollersHeight },
+        {"spinning_ice_log_spike_horizontal_001001",  DynamicTileMethods.DynamicRollersHeight },
         {"spinning_log_spike_vertical_001",  DynamicTileMethods.DynamicRollersLength },
 
         {"spinning_ice_log_spike_vertical_001",  DynamicTileMethods.DynamicRollersLength },
@@ -369,8 +390,22 @@ public class InputHandler : MonoBehaviour
 		bool flag = this.selectedTile;
 		if (flag)
 		{
-            map.SetColor(this.selectedTilePosition, Color.white);
-			this.selectedTile = null;
+            var p = Manager.Instance.GetTilemap(this.activeTilemap);
+            var tiles = p.AllTiles();
+            foreach (var tile in tiles)
+            {
+                if (tile is DataTile)
+                {
+                    var data = (tile as DataTile);
+                    if (tile == selectedTile)
+                    {
+                        data.color = Color.white;
+                        RefreshTilesUniversal();
+
+                    }
+                }
+            }
+            this.selectedTile = null;
 			this.attributesWindow.Repopulate();
 		}
 	}
@@ -384,17 +419,122 @@ public class InputHandler : MonoBehaviour
 
 	public Button deleteButton;
 
+
+
 	public void HandleTileSelectionColor()
 	{
-		bool flag = this.selectedTile;
-		if (flag)
-		{
-			Manager.Instance.GetTilemap(this.activeTilemap).map.SetColor(this.selectedTilePosition, Color.Lerp(Color.white, new Color(0f, 1f, 0.5f), (float)(Math.Sin((double)(Time.realtimeSinceStartup * 5f)) * 0.5) + 0.5f));
-		}
-	}
 
-	 
-	private void HandleMouseInput()
+        if (this.selectedTile == null && BrushType == BrushButton.BrushType.SELECT)
+        {
+            p2 = true;
+            var map = Manager.Instance.GetTilemap(this.activeTilemap);
+
+            var tiles = map.AllTiles();
+            foreach (var tile in tiles)
+            {
+                if (tile is DataTile)
+                {
+                    var data = (tile as DataTile);
+                    int count = 0;
+                    foreach (KeyValuePair<string, JToken> att in data.data)
+                    {
+                        count++;
+                    }
+                    if (count > 0)
+                    {
+                        data.color = Color.Lerp(Color.white, new Color(1f, 0.2f, 0f), (float)(Math.Sin((double)(Time.realtimeSinceStartup * 5f)) * 0.5) + 0.5f);
+                    }
+                }
+            }
+            RefreshTilesUniversal();
+        }
+		else if (this.selectedTile == null)
+        {
+			if (p2 == true)
+			{
+                p2 = false;
+                var map = Manager.Instance.GetTilemap(this.activeTilemap);
+                var tiles = map.AllTiles();
+                foreach (var tile in tiles)
+                {
+                    if (tile is DataTile)
+                    {
+                        var data = (tile as DataTile);
+                        int count = 0;
+                        foreach (KeyValuePair<string, JToken> att in data.data)
+                        {
+                            count++;
+                        }
+                        if (count > 0)
+                        {
+                            data.color = Color.white;
+                        }
+                    }
+                }
+                RefreshTilesUniversal();
+            }
+		}
+        bool flag = this.selectedTile;
+        if (flag)
+        {
+            if (p2 == true)
+            {
+                p2 = false;
+                var amap = Manager.Instance.GetTilemap(this.activeTilemap);
+                var atiles = amap.AllTiles();
+                foreach (var tile in atiles)
+                {
+                    if (tile is DataTile)
+                    {
+                        var data = (tile as DataTile);
+                        int count = 0;
+                        foreach (KeyValuePair<string, JToken> att in data.data)
+                        {
+                            count++;
+                        }
+                        if (count > 0)
+                        {
+                            data.color = Color.white;
+                            RefreshTilesUniversal();
+                        }
+                    }
+                }
+            }
+
+            var map = Manager.Instance.GetTilemap(this.activeTilemap);
+            var tiles = map.AllTiles();
+            foreach (var tile in tiles)
+            {
+                if (tile is DataTile)
+                {
+                    var data = (tile as DataTile);
+					if (tile == selectedTile)
+					{
+                        data.color = Color.Lerp(Color.white, new Color(0f, 1f, 0.5f), (float)(Math.Sin((double)(Time.realtimeSinceStartup * 5f)) * 0.5) + 0.5f);
+                        RefreshTilesUniversal();
+
+                    }
+                }
+            }
+        }
+    }
+
+
+
+	private bool p2;
+
+
+
+	public static void RefreshTilesUniversal()
+	{
+        var fuckYou = FindObjectsOfType<Tilemap>();
+        foreach (var pieceoffuckingshit in fuckYou)
+        {
+            pieceoffuckingshit.RefreshAllTiles();
+        }
+    }
+
+    private void HandleMouseInput()
 	{
 		this.controlHeld = Input.GetKey(KeyCode.LeftControl);
 		if (Input.GetKeyDown(KeyCode.Mouse0))
@@ -619,6 +759,7 @@ public class InputHandler : MonoBehaviour
                         //var scaler = new Vector2(0f, 0f);
                         var localScale = this.grid.transform.localScale;
                         //var calc = (pos + (scaler)); //(pos + localScale) * localposition;
+
                         Vector3 peepee = new Vector3((pos).x, (pos).y, 20);
                         renderer.positionCount = Mapping.fuckYou.Count;
                         var g = ReturnOffset(Mapping.tileDatabase.AllEntries[t.name]);
@@ -893,14 +1034,21 @@ public class InputHandler : MonoBehaviour
 
         }
         else
-		{			
+		{
 			PaletteDropdown.Instance.SetValue(TilemapHandler.MapType.Environment);
 
 			Manager.Instance.environment.GetComponent<Tilemap>().color = Color.white;
 			Manager.Instance.exits.GetComponent<Tilemap>().color = Color.white;
 			Manager.Instance.placeables.GetComponent<Tilemap>().color = Color.white;
-			EnemyLayerHandler.Instance.SetSelectedLayer(EnemyLayerHandler.Instance.ReturnButtons()[EnemyLayerHandler.Instance.EnemyMapIndex]);
-            NodePathLayerHandler.Instance.nodeMaps.ForEach(x => x.GetComponent<Tilemap>().color = new Color(1f, 1f, 1f, 0.5f));
+            if (EnemyLayerHandler.Instance.EnemyMapIndex > 0)
+			{
+                EnemyLayerHandler.Instance.SetSelectedLayer(EnemyLayerHandler.Instance.ReturnButtons()[EnemyLayerHandler.Instance.EnemyMapIndex]);
+
+            }
+            if (NodePathLayerHandler.Instance.nodeMaps.Count > 0)
+			{
+                NodePathLayerHandler.Instance.nodeMaps.ForEach(x => x.GetComponent<Tilemap>().color = new Color(1f, 1f, 1f, 0.5f));
+            }
 
         }
 	}
@@ -1010,23 +1158,6 @@ public class InputHandler : MonoBehaviour
 
 
 
-    /*
-	 *   var renderer = InputHandler.Instance.grid.gameObject.GetOrAddComponent<LineRenderer>();
-            renderer.enabled = true;//(i == index);
-                                    //renderer.material = new Material(Shader.Find("Legacy Shaders/Particles/Alpha Blended Premultiply"));
-            renderer.startColor = Color.green;
-            renderer.endColor = Color.green;
-            renderer.startWidth = 0.1f;
-			renderer.loop = true;
-            renderer.positionCount = GetMap(m_nodeLayer).fuckYou.Count;
-			renderer.transform.parent = InputHandler.Instance.grid.gameObject.transform;
-			var z = renderer.transform.localPosition;//.z += 100;
-			z.z += 100;
-            for (int e = 0; e < GetMap(m_nodeLayer).fuckYou.Count; e++)
-            {
 
-                renderer.SetPosition(e, GetMap(m_nodeLayer).fuckYou[e].position);
 
-            }
-	*/
 }

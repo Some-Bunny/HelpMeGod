@@ -631,7 +631,7 @@ public class PlaceableDatabase : TileDatabase
 
                 {
                     "minelantern_top",
-                    "candlabra_horiz"
+                    "minelantern_horiz"
                 },
                 {
                     "minelantern_side_001",
@@ -1041,22 +1041,7 @@ public class PlaceableDatabase : TileDatabase
 					"molten_metal_wall_bowl",
 					"molten_metal_wall_bowl"
 				},
-				{
-					"cartstub_east",
-					"cartstub_east"
-				},
-				{
-					"cartstub_west",
-					"cartstub_west"
-				},
-				{
-					"cartstub_north",
-					"cartstub_north"
-				},
-				{
-					"cartstub_south",
-					"cartstub_south"
-				},
+
 				{
 					"techno_floor_cell_empty",
 					"techno_floor_cell_empty"
@@ -1138,7 +1123,22 @@ public class PlaceableDatabase : TileDatabase
                     "tombstone_lower_right_001",
                     "TombStone_SE"
                 },
-
+                {
+                    "cartstub_east",
+                    "cartstub_east"
+                },
+                {
+                    "cartstub_west",
+                    "cartstub_west"
+                },
+                {
+                    "cartstub_north",
+                    "cartstub_north"
+                },
+                {
+                    "cartstub_south",
+                    "cartstub_south"
+                },
 
                 {
                     "Boss Room Arema Parts",
@@ -1365,8 +1365,35 @@ public class PlaceableDatabase : TileDatabase
 					"forge_shoot_face_east",
 					"forge_face_shootswest"
 				},
-				{
-					"flameburst_trap",
+
+                {
+                    "ice_skull_face_right_004",
+                    "hollow_face_shootssouth"
+                },
+                {
+                    "ice_skull_face_004",
+                    "hollow_face_shootssouth"
+                },
+                {
+                    "ice_skull_face_left_004",
+                    "hollow__face_shootswest"
+                },
+
+                {
+                    "mine_skull_face_right_004",
+                    "mines_face_shootseast"
+                },
+                {
+                    "mine_skull_face_004",
+                    "mines_face_shootssouth"
+                },
+                {
+                    "mine_skull_face_left_004",
+                    "mines_face_shootswest"
+                },
+				
+                {
+                    "flameburst_trap",
 					"flameburst_trap"
 				},
 				{
@@ -1446,6 +1473,11 @@ public class PlaceableDatabase : TileDatabase
                     "minecartboomer",
                     "explosivebarrelminecart_pathing"
                 },
+                {
+                    "minecart_spawner",
+                    "minecartFactory"
+                },
+
 
                 {
                     "spinning_log_spike_horizontal_001",

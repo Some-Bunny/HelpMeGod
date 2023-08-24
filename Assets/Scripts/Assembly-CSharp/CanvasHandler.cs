@@ -37,35 +37,33 @@ public class CanvasHandler : MonoBehaviour
 		{
             if (map is NodeMap pain)
             {
-                TileBase[] tiles = map.map.GetTilesBlock(bounds);
 
-                Dictionary<int, DataTile> v = new Dictionary<int, DataTile>();
-                List<int> P = new List<int>();
+                int c = pain.fuckYou.Count;
+                TileBase[] tiles = pain.map.GetTilesBlock(bounds);
+                Dictionary<int, DataTile> peepee = new Dictionary<int, DataTile>();
                 foreach (var tile in tiles)
                 {
-                    if (tile is DataTile data)
+                    if ((tile is DataTile))
                     {
-                        if (data.isNode == true)
-                        {
-                            v.Add(data.PositionInNodeMap(pain), data);
-                            P.Add(data.PositionInNodeMap(pain));
-                        }
+                        peepee.Add((tile as DataTile).PositionInNodeMap(pain), (tile as DataTile));
                     }
                 }
-                pain.fuckYou.Clear();
                 map.map.ClearAllTiles();
+                pain.fuckYou.Clear();
                 map.ResizeBounds();
-                P.Sort();
-
-                foreach (var pnis in P)
+                map.map.SetTilesBlock(newBounds, tiles);
+                for (int i = 0; i < c; i++)
                 {
-                    DataTile h;
-                    v.TryGetValue(pnis, out h);
-                    pain.map.SetTile(h.worldIntPosition, h);
-                    pain.fuckYou.Add(h);
-
+                    DataTile s;
+                    peepee.TryGetValue(i, out s);
+                    if (s != null)
+                    {
+                        pain.fuckYou.Add(s);
+                    }
                 }
+
                 pain.UpdateAtrributeList();
+
             }
             else
             {
@@ -105,42 +103,31 @@ public class CanvasHandler : MonoBehaviour
         {
 			if (map is NodeMap pain)
 			{
-                TileBase[] tiles = map.map.GetTilesBlock(bounds);
-          
-                Dictionary<int, DataTile> v = new Dictionary<int, DataTile>();
-                List<int> P = new List<int>();
+                int c = pain.fuckYou.Count;
+                TileBase[] tiles = pain.map.GetTilesBlock(bounds);
+                Dictionary<int, DataTile> peepee = new Dictionary<int, DataTile>();
                 foreach (var tile in tiles)
                 {
-                    if (tile is DataTile data)
+                    if ((tile is DataTile))
                     {
-                        if (data.isNode == true)
-                        {
-                            v.Add(data.PositionInNodeMap(pain), data);
-                            P.Add(data.PositionInNodeMap(pain));
-                        }
+                        peepee.Add((tile as DataTile).PositionInNodeMap(pain), (tile as DataTile));
                     }
                 }
-                pain.fuckYou.Clear();
                 map.map.ClearAllTiles();
+                pain.fuckYou.Clear();
                 map.ResizeBounds();
-                P.Sort();
-
-                foreach (var pnis in P)
+                map.map.SetTilesBlock(newBounds, tiles);
+                for (int i = 0; i < c; i++)
                 {
-                    DataTile h;
-                    v.TryGetValue(pnis, out h);
-                    pain.map.SetTile(h.worldIntPosition, h);
-                    pain.fuckYou.Add(h);
-
+                    DataTile s;
+                    peepee.TryGetValue(i, out s);
+                    if (s != null)
+                    {
+                        pain.fuckYou.Add(s);
+                    }
                 }
+
                 pain.UpdateAtrributeList();
-
-                /*
-                foreach (var enrty in v)
-                {
-                    pain.fuckYou.Add(enrty.Value);
-                }
-                */
 
             }
             else

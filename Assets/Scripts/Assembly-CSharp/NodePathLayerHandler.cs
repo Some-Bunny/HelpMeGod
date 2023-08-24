@@ -222,23 +222,26 @@ public class NodePathLayerHandler : MonoBehaviour
 		bool flag = !this.selectedButton;
 		if (!flag)
 		{
-			int index = this.buttons.IndexOf(this.selectedButton);
-			UnityEngine.Object.Destroy(this.nodeMaps[index].gameObject);
-			this.nodeMaps.RemoveAt(index);
-			UnityEngine.Object.DestroyImmediate(this.selectedButton.gameObject);
-			this.buttons.RemoveAt(index);
-			bool flag2 = this.nodeMaps.Count == 0;
-			if (flag2)
+			if (this.buttons.Count > 1)
 			{
-				PaletteDropdown.Instance.SetValue(TilemapHandler.MapType.Environment);
-			}
-			else
-			{
-				this.EnemyMapIndex = Mathf.Clamp(index, 0, this.nodeMaps.Count - 1);
-				this.SetSelectedLayer(this.buttons[this.EnemyMapIndex]);
-				this.RepositionButtons();
-			}
-			OnLayerChanged();
+                int index = this.buttons.IndexOf(this.selectedButton);
+                UnityEngine.Object.Destroy(this.nodeMaps[index].gameObject);
+                this.nodeMaps.RemoveAt(index);
+                UnityEngine.Object.DestroyImmediate(this.selectedButton.gameObject);
+                this.buttons.RemoveAt(index);
+                bool flag2 = this.nodeMaps.Count == 0;
+                if (flag2)
+                {
+                    PaletteDropdown.Instance.SetValue(TilemapHandler.MapType.Environment);
+                }
+                else
+                {
+                    this.EnemyMapIndex = Mathf.Clamp(index, 0, this.nodeMaps.Count - 1);
+                    this.SetSelectedLayer(this.buttons[this.EnemyMapIndex]);
+                    this.RepositionButtons();
+                }
+                OnLayerChanged();
+            }
 		}
 	}
 

@@ -13,9 +13,15 @@ public class BrushButton : MonoBehaviour
 		this.currentMode = 0;
 	}
 
-	
+
+	public List<TilemapHandler.MapType> disabledOnMapType = new List<TilemapHandler.MapType>()
+	{
+
+	};
+
 	public void OnClick()
 	{
+		if (disabledOnMapType.Contains(InputHandler.Instance.activeTilemap)) { return; }
 		if (InputHandler.Instance.BrushType == this.type)
 		{
 			this.currentMode = (this.currentMode + 1) % this.sprites.Count;
@@ -36,8 +42,17 @@ public class BrushButton : MonoBehaviour
 			{
 				InputHandler.Instance.DeselectTile();
 			}
-		}
-	}
+            if (button.disabledOnMapType.Contains(InputHandler.Instance.activeTilemap))
+            {
+				button.GetComponent<Image>().color = new Color(1, 1, 1, 0.1f);
+
+            }
+			else 
+			{
+                button.GetComponent<Image>().color = new Color(1, 1, 1, 1f);
+            }
+        }
+    }
 
 	
 	public BrushButton.BrushType type;
@@ -70,4 +85,7 @@ public class BrushButton : MonoBehaviour
 
 		COPY
 	}
+
+	
+
 }
