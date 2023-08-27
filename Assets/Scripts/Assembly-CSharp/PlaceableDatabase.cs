@@ -1538,7 +1538,18 @@ public class PlaceableDatabase : TileDatabase
                     "tnt_plunger_idle_001",
                     "caveInTrap_DropDownswitch"
                 },
-
+                {
+                    "Boss Arena Objects",
+                    Manager.paletteDividerGuid
+                },
+                {
+                    "gull_land_point",
+                    "gullLeapPoint"
+                },
+                {
+                    "glitch_floor_properties",
+                    "glitch_floor_properties"
+                },
             }
 		},
         {

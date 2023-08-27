@@ -33,7 +33,7 @@ public class ToggleButton : MonoBehaviour
 	}
 
 	
-	private void UpdateAppearance()
+	public void UpdateAppearance()
 	{
 		bool flag = !this.checkMark;
 		if (flag)
@@ -44,10 +44,21 @@ public class ToggleButton : MonoBehaviour
 		if (OnToggle != null) { OnToggle(); }
 	}
 
+	public void ForceState(bool b)
+	{
+        bool flag = !this.checkMark;
+        if (flag)
+        {
+            this.checkMark = base.transform.Find("Check mark");
+        }
+        this.checkMark.gameObject.SetActive(b);
+    }
+
+
 	public Action OnToggle;
 	
 	public bool m_toggled = false;
 
 	
-	private Transform checkMark;
+	public Transform checkMark;
 }

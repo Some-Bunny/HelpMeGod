@@ -397,7 +397,7 @@ public static class AttributeDatabase
 
         {
             "mCSpawner_amount",
-            new AC("Maximum Carts", "mCSpawner_amount", 5, new object[0])
+            new AC("Maximum Carts", "mCSpawner_amount", 1, new object[0])
         },
         {
             "mCSpawner_cartDelay",
@@ -405,11 +405,11 @@ public static class AttributeDatabase
         },
         {
             "mCSpawner_destroyDelay",
-            new AC("Cooldown On Cart Destruction", "mCSpawner_destroyDelay", 1f, new object[0])
+            new AC("Cart Destruction Cooldown", "mCSpawner_destroyDelay", 1f, new object[0])
         },
         {
             "cartActive",
-            new AC("Force Cart Active", "cartActive", true, new object[0])
+            new AC("Cart Moves Itself", "cartActive", false, new object[0])
         },
         {
             "mCSpawner_cartType",
@@ -423,12 +423,107 @@ public static class AttributeDatabase
             "mCSpawner_cartDestroyCopy",
             new AC("Destroy Copied Cart", "mCSpawner_cartDestroyCopy", true, new object[0])
         },
-    };
 
+        {
+            "gullleap_Missile",
+            new AC("Jump To For Missile Attack", "gullleap_Missile", true, new object[0])
+        },
+        {
+            "gullleap_Repos",
+            new AC("Jump To For Reposition", "gullleap_Repos", true, new object[0])
+        },
+        {
+            "glitchHpMult",
+            new AC("Boss Damage Multiplier", "glitchHpMult", 1.4f, new object[0])
+        },
+        {
+            "glitchtimescaleMult",
+            new AC("Boss Timescale Multiplier", "glitchtimescaleMult", 1f, new object[0])
+        },
+        {
+            "glitchspeedMult",
+            new AC("Boss Speed Multiplier", "glitchspeedMult", 1f, new object[0])
+        },
+        {
+            "forceFly",
+            new AC("Force Flight", "forceFly", false, new object[0])
+        },
+        {
+            "crushTrapDelay",
+            new AC("Crush Delay", "crushTrapDelay", 0.25f, new object[0])
+        },
+        {
+            "crushTrapCloseTime",
+            new AC("Close Time", "crushTrapCloseTime", 1f, new object[0])
+        },
+        {
+            "crushTrapEnemyDamage",
+            new AC("Enemy Damage", "crushTrapEnemyDamage", 30f, new object[0])
+        },
+
+        {
+            "crushTrapPlayerKnockbackForce",
+            new AC("Player Knockback Force", "crushTrapPlayerKnockbackForce", 50f, new object[0])
+        },
+        {
+            "crushTrapEnemyKnockbackForce",
+            new AC("Enemy Knockback Force", "crushTrapEnemyKnockbackForce", 50f, new object[0])
+        },
+    };
 
 
     public static Dictionary<AttributeDatabase.ValidAttribute, string[]> attributeListings = new Dictionary<AttributeDatabase.ValidAttribute, string[]>
 	{
+        //trapProjSpeed-trapProjRange-projectileTypeTurret
+        {
+            (string name) => name == "firebar_trap",
+            new string[]
+            {
+                "j"
+            }
+        },
+
+        {
+            (string name) => name == "flameburst_trap",
+            new string[]
+            {
+                "j",
+                "trapProjRange",
+                "projectileTypeTurret"
+            }
+        },
+        {
+            (string name) => name == "vertical_crusher" | name == "horizontal_crusher",
+            new string[]
+            {
+                "crushTrapDelay",
+                "crushTrapCloseTime",
+                "TrapTriggerDelay",
+                "crushTrapEnemyDamage",
+                "crushTrapPlayerKnockbackForce",
+                "crushTrapEnemyKnockbackForce"
+            }
+        },
+
+        {
+            (string name) => name == "glitch_floor_properties",
+            new string[]
+            {
+                "glitchHpMult",
+                "glitchtimescaleMult",
+                "glitchspeedMult",
+                "forceFly"
+            }
+        },
+
+        {
+            (string name) => name == "gull_land_point",
+            new string[]
+            {
+                "gullleap_Repos",
+                "gullleap_Missile"
+            }
+        },
         {
             (string name) => name == "minecart_spawner",
             new string[]
@@ -509,7 +604,8 @@ public static class AttributeDatabase
                 "trapProjSpeed",
                 "trapProjRange",
                 "DirectionShoot",
-                "projectileTypeTurret"
+                "projectileTypeTurret",
+                "j"
             }
        },
        
@@ -711,9 +807,13 @@ public static class AttributeDatabase
                 "nSP_O",
                 "mS",
                 "tTMS",
+                "projectileTypeTurret",
+                "trapProjSpeed",
+                "trapProjRange",
                 "InitialtrapDelay",
                 "TrapTriggerDelay",
-                "cartActive"
+                "cartActive",
+                "j"
             }
         },
         {
@@ -802,7 +902,7 @@ public static class AttributeDatabase
                 "attackDelatTrap",
                 "trapTriggerOnBlank"
             }
-       },
+        },
     };
 
     public delegate bool ValidAttribute(string name);
@@ -868,7 +968,7 @@ public static class AttributeDatabase
 
 
         new SpecialDefaultValue("InitialtrapDelay", "minecartturret", 3f ){ },
-        new SpecialDefaultValue("TrapTriggerDelay", "minecartturret", 0.2f ){ },
+        new SpecialDefaultValue("TrapTriggerDelay", "minecartturret", 0.5f ){ },
 
          new SpecialDefaultValue("trapTriggerOnBlank", "mouse_trap_west", true ){ },
          new SpecialDefaultValue("trapTriggerOnBlank", "mouse_trap_east", true ){ },
@@ -901,7 +1001,16 @@ public static class AttributeDatabase
         new SpecialDefaultValue("TileSizeY_", "forge_platform_moving_001", 3 ){ },
         new SpecialDefaultValue("mS", "forge_platform_moving_001", 3f ){ },
 
+        new SpecialDefaultValue("cartActive", "minecart_spawner", true ){ },
+
+        new SpecialDefaultValue("trapProjSpeed", "minecartturret", -1f ){ },
+
+        new SpecialDefaultValue("TrapTriggerDelay", "horizontal_crusher", 3f ){ },
+        new SpecialDefaultValue("TrapTriggerDelay", "vertical_crusher", 3f ){ },
+
     };
+
+    //TrapTriggerDelay--vertical_crusher-horizontal_crusher
 
     public class SpecialDefaultValue
 	{

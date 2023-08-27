@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using static Enums;
+using System.Collections;
 
 public class NodeLayerButton : MonoBehaviour
 {
@@ -17,19 +18,26 @@ public class NodeLayerButton : MonoBehaviour
         }
     }
 
+
+
     void Awake()
     {
         this.selectedPanel = transform.Find("Selected Panel").gameObject;
         this.textComponent = transform.Find("Text").GetComponent<Text>();
         SetupCategoryDropdowns();
+
     }
+
 
     private void SetupCategoryDropdowns()
     {
         triggerDropdowns = new List<Transform>();
         SetupDropdown<SerializedPathWrapMode>(triggerDropdown);
 
-        triggerDropdowns.Add(triggerDropdown.transform);      
+        triggerDropdowns.Add(triggerDropdown.transform);
+        toggleVisibility.UpdateAppearance();
+        Debug.LogError("FUCK_1 " + toggleVisibility.Toggled);
+
     }
 
     private void SetupDropdown<T>(Dropdown dropdown) where T : Enum
@@ -40,6 +48,13 @@ public class NodeLayerButton : MonoBehaviour
             options.Add(e.ToString());
         }
         dropdown.AddOptions(options);
+
+    }
+
+
+    public void Toggle()
+    {
+        toggleVisibility.UpdateAppearance();
 
     }
 
@@ -73,5 +88,6 @@ public class NodeLayerButton : MonoBehaviour
     public Dropdown triggerDropdown;
     public List<Transform> triggerDropdowns;
     public SerializedPathWrapMode WrapMode;
+    public ToggleButton toggleVisibility;
 
 }

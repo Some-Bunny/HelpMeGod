@@ -8364,7 +8364,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -0.00018310547, y: -0.00007491531}
+  m_AnchoredPosition: {x: -0.00036621094, y: -0.00007491531}
   m_SizeDelta: {x: 513, y: 208}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!224 &588
@@ -14816,6 +14816,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_toggled: 0
+  checkMark: {fileID: 0}
 --- !u!114 &886
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15411,6 +15412,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_toggled: 0
+  checkMark: {fileID: 0}
   tileset: 7
 --- !u!114 &904
 MonoBehaviour:
@@ -15959,6 +15961,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_toggled: 0
+  checkMark: {fileID: 0}
   tileset: 6
 --- !u!114 &923
 MonoBehaviour:
@@ -16744,6 +16747,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_toggled: 0
+  checkMark: {fileID: 0}
   tileset: 4
 --- !u!114 &950
 MonoBehaviour:
@@ -17633,6 +17637,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_toggled: 0
+  checkMark: {fileID: 0}
   tileset: 3
 --- !u!114 &977
 MonoBehaviour:
@@ -19273,6 +19278,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_toggled: 0
+  checkMark: {fileID: 0}
   tileset: 2
 --- !u!114 &1026
 MonoBehaviour:
@@ -19544,6 +19550,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_toggled: 0
+  checkMark: {fileID: 0}
 --- !u!114 &1034
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19837,6 +19844,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_toggled: 0
+  checkMark: {fileID: 0}
 --- !u!114 &1041
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20473,6 +20481,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_toggled: 0
+  checkMark: {fileID: 0}
 --- !u!114 &1060
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20963,6 +20972,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_toggled: 0
+  checkMark: {fileID: 0}
 --- !u!114 &1075
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22346,6 +22356,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_toggled: 0
+  checkMark: {fileID: 0}
   tileset: 0
 --- !u!114 &1123
 MonoBehaviour:
@@ -22564,6 +22575,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_toggled: 0
+  checkMark: {fileID: 0}
   tileset: 11
 --- !u!114 &1130
 MonoBehaviour:
@@ -23147,6 +23159,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_toggled: 0
+  checkMark: {fileID: 0}
   tileset: 1
 --- !u!114 &1145
 MonoBehaviour:
@@ -23880,6 +23893,7 @@ MonoBehaviour:
   AmbientColor_G: {fileID: 99579432}
   AmbientColor_B: {fileID: 918395116}
   usesAmbientLighting: {fileID: 672299100}
+  nodeModifyTilemap: {fileID: 0}
 --- !u!114 &1166
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25017,6 +25031,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_toggled: 0
+  checkMark: {fileID: 0}
   tileset: 5
 --- !u!114 &1204
 MonoBehaviour:
@@ -25358,6 +25373,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_toggled: 0
+  checkMark: {fileID: 0}
 --- !u!114 &1213
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26434,6 +26450,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_toggled: 0
+  checkMark: {fileID: 0}
   tileset: 15
 --- !u!114 &1240
 MonoBehaviour:
@@ -33394,7 +33411,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 118.22491, y: 4.126343}
+  m_AnchoredPosition: {x: 118.224915, y: 4.126343}
   m_SizeDelta: {x: 110, y: 24}
   m_Pivot: {x: 1, y: 0}
 --- !u!114 &571814749
@@ -33582,7 +33599,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0.00018310547, y: -0.00007491531}
+  m_AnchoredPosition: {x: 0.00030517578, y: -0.00007491531}
   m_SizeDelta: {x: 513, y: 208}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!1 &586008092
@@ -34819,6 +34836,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_toggled: 0
+  checkMark: {fileID: 0}
 --- !u!114 &672299101
 MonoBehaviour:
   m_ObjectHideFlags: 0

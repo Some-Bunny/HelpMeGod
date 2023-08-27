@@ -43,7 +43,6 @@ public class RoomProperties
         data.AmbientLight_G = this.AmbientLight_G;
         data.AmbientLight_B = this.AmbientLight_B;
 		data.usesAmbientLight = this.usesAmbientLight;
-
     }
 
 
@@ -208,6 +207,5 @@ public class RoomProperties
     public float AmbientLight_G = 1;
     public float AmbientLight_B = 1;
 	public bool usesAmbientLight;
-
 
 }

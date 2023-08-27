@@ -53,7 +53,8 @@ public static class ImportExport
 			AmbientLight_R = 1f,
             AmbientLight_G = 1f,
             AmbientLight_B = 1f,
-            usesAmbientLight = false
+            usesAmbientLight = false,
+            nodePathVisible = new bool[0],
         };
 		
 		Manager i = Manager.Instance;
@@ -549,19 +550,25 @@ public static class ImportExport
             }
 
             Dictionary<int, string> bastard = new Dictionary<int, string>();
+            Dictionary<int, bool> bastard_2 = new Dictionary<int, bool>();
 
             List<Tuple<int, int>> stupidJankyPieceOfShit = new List<Tuple<int, int>>();  //Dictionary<int, int> stupidJankyPieceOfShit = new Dictionary<int, int>();
 
             for (int j = 0; j < data.nodeOrder.Length; j++)
 			{
-				Debug.LogError($"data.nodeOrder[]{data.nodeOrder[j]} - j{j}");
+				//Debug.LogError($"data.nodeOrder[]{data.nodeOrder[j]} - j{j}");
 
-                stupidJankyPieceOfShit.Add(new Tuple<int, int>(data.nodeOrder[j], j));
-				if (!bastard.ContainsKey(j))
+				var pPp = data.nodePaths[j];
+                stupidJankyPieceOfShit.Add(new Tuple<int, int>(pPp, j));
+				if (!bastard.ContainsKey(pPp))
 				{
-                    bastard.Add(j, data.nodeWrapModes[j]);
+                    bastard.Add(pPp, data.nodeWrapModes[j]);
                 }
-
+                if (!bastard_2.ContainsKey(pPp) && data.nodePathVisible != null)
+				{
+					//Debug.LogError(data.nodePathVisible[j]);
+                    bastard_2.Add(pPp, data.nodePathVisible[j]);
+                }
             }
 
             for (int i = 0; i < data.nodeOrder.Length; i++)
@@ -569,7 +576,7 @@ public static class ImportExport
 
 				int j = stupidJankyPieceOfShit[i].Item2;
 				 //.ToString/.TryGetValue(i, out j);
-				Debug.LogError($"{data.nodeTypes[j]} - j{j} - i{i} - {data.nodeTypes[j]}");
+				//Debug.LogError($"{data.nodeTypes[j]} - j{j} - i{i} - {data.nodeTypes[j]}");
 
 				int layer = data.nodePaths[j];
 				NodeMap mapHandler = NodePathLayerHandler.Instance.GetMap(layer);
@@ -617,8 +624,9 @@ public static class ImportExport
 
 					(NodePathLayerHandler.Instance.GetMap(k) as NodeMap).AddNewNodeTile(tileShit.Value as DataTile, TilemapHandler.GameToLocalPosition(tileShit.Key));
 				}
-				//NodePathLayerHandler.Instance.GetMap(k).BuildFromTileArray(tileArrays[k]);
-			}
+                NodePathLayerHandler.Instance.ReturnButtons()[k].toggleVisibility.Toggled = data.nodePathVisible != null ? bastard_2[k] : true;
+                //NodePathLayerHandler.Instance.GetMap(k).BuildFromTileArray(tileArrays[k]);
+            }
 		}
 	}
 
@@ -758,11 +766,11 @@ public static class ImportExport
 
 	public static void PrepareNodeMaps(ImportExport.NewRoomData data)
 	{
-		if (data.nodeTypes == null || data.nodePaths == null || data.nodePositions == null || data.nodeWrapModes == null || data.nodeOrder == null) return;
+		if (data.nodeTypes == null || data.nodePaths == null || data.nodePositions == null || data.nodeWrapModes == null || data.nodeOrder == null || data.nodePathVisible == null) return;
 
 		if (data.nodeTypes.Length != data.nodePaths.Length || data.nodeTypes.Length != data.nodePositions.Length || data.nodeTypes.Length != data.nodeWrapModes.Length)
 		{
-			Debug.LogError($"Uneven Node data array length: {data.nodeTypes.Length} != {data.nodePositions.Length} != {data.nodePaths.Length} != {data.nodeWrapModes.Length}");
+			Debug.LogError($"Uneven Node data array length: {data.nodeTypes.Length} != {data.nodePositions.Length} != {data.nodePaths.Length} != {data.nodeWrapModes.Length} != {data.nodePathVisible.Length}");
 			//return;
 		}
 		int numLayers = 0;
@@ -868,7 +876,8 @@ public static class ImportExport
 
 		public string[] nodeTypes;
 		public string[] nodeWrapModes;
-		public Vector2[] nodePositions;
+        public bool[] nodePathVisible;
+        public Vector2[] nodePositions;
 		public int[] nodePaths;
 		public int[] nodeOrder;
 
@@ -901,7 +910,6 @@ public static class ImportExport
         public float AmbientLight_B;
 
         public bool usesAmbientLight;
-
     }
 
     public struct RoomData

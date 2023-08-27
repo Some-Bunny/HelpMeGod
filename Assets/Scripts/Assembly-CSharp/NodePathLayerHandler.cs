@@ -51,7 +51,7 @@ public class NodePathLayerHandler : MonoBehaviour
 		for (int i = 0; i < count; i++)
 		{
 			Debug.LogError("startIndex" + i);
-			this.nodeMaps[i].CollectDataForExport2(ref data, i, buttons[i].WrapMode, this.nodeMaps[i].fuckYou);
+			this.nodeMaps[i].CollectDataForExport2(ref data, i, buttons[i].WrapMode, this.nodeMaps[i].fuckYou, buttons[i].toggleVisibility.Toggled);
 		}
 	}
 

@@ -106,7 +106,7 @@ public class NodeMap : TilemapHandler
         }            
     }
     */
-    public void CollectDataForExport2(ref ImportExport.NewRoomData data, int index, Enums.SerializedPathWrapMode trigger, List<DataTile> indexesData)
+    public void CollectDataForExport2(ref ImportExport.NewRoomData data, int index, Enums.SerializedPathWrapMode trigger, List<DataTile> indexesData, bool isVisible)
 	{
 
         UpdateAtrributeList();
@@ -126,6 +126,8 @@ public class NodeMap : TilemapHandler
 		List<int> order = new List<int>();
 		*/
 		List<string> triggers = new List<string>();
+        List<bool> isVisiblly = new List<bool>();
+
         //List<string> guids = new List<string>();
         //List<Vector2> positions = new List<Vector2>();
 
@@ -165,6 +167,7 @@ public class NodeMap : TilemapHandler
                     pp.tileName.Add(this.tileDatabase.AllEntries[tile.name]);
                 }
                 triggers.Add(trigger.ToString());
+                isVisiblly.Add(isVisible);
             }
 
 
@@ -227,10 +230,11 @@ public class NodeMap : TilemapHandler
         data.nodePaths = data.nodePaths.Concat(indexes.ToArray()).ToArray<int>();
         data.nodeOrder = data.nodeOrder.Concat(order.ToArray()).ToArray<int>();
         data.nodeWrapModes = data.nodeWrapModes.Concat(triggers.ToArray()).ToArray();
+        data.nodePathVisible = data.nodePathVisible.Concat(isVisiblly.ToArray()).ToArray();
 
 
         //var diediediediediediediediedie = 0;
-		/*foreach (var cunt in nodes)
+        /*foreach (var cunt in nodes)
         {
 			if (cunt == null) continue;
 			DataTile tile = cunt as DataTile;
@@ -248,9 +252,9 @@ public class NodeMap : TilemapHandler
 			}
 		}*/
 
-		
 
-		/*
+
+        /*
 		for (int x = 0; x < tiles.GetLength(0); x++)
 		{
 			var diediediediediediediediedie = 0;
@@ -276,9 +280,9 @@ public class NodeMap : TilemapHandler
 		}*/
 
 
-	}
+    }
 
-	public void CollectDataForExport2(ref ImportExport.RoomData data, int index, Enums.SerializedPathWrapMode trigger)
+    public void CollectDataForExport2(ref ImportExport.RoomData data, int index, Enums.SerializedPathWrapMode trigger)
 	{
 
 		Tile[,] tiles = base.AllTiles();

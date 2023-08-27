@@ -215,7 +215,6 @@ public class RoomPropertiesMenu : MonoBehaviour
             this.AmbientColor_G.text = properties.AmbientLight_G.ToString();
             this.AmbientColor_B.text = properties.AmbientLight_B.ToString();
 			this.usesAmbientLighting.Toggled = properties.usesAmbientLight;
-
             this.InitializeDropdowns();
 		}
 	}
@@ -330,5 +329,7 @@ public class RoomPropertiesMenu : MonoBehaviour
     public InputField AmbientColor_B;
 
     public ToggleButton usesAmbientLighting;
+
+    public ToggleButton nodeModifyTilemap;
 
 }

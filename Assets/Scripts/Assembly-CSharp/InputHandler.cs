@@ -1040,11 +1040,8 @@ public class InputHandler : MonoBehaviour
 			Manager.Instance.environment.GetComponent<Tilemap>().color = Color.white;
 			Manager.Instance.exits.GetComponent<Tilemap>().color = Color.white;
 			Manager.Instance.placeables.GetComponent<Tilemap>().color = Color.white;
-            if (EnemyLayerHandler.Instance.EnemyMapIndex > 0)
-			{
-                EnemyLayerHandler.Instance.SetSelectedLayer(EnemyLayerHandler.Instance.ReturnButtons()[EnemyLayerHandler.Instance.EnemyMapIndex]);
+            EnemyLayerHandler.Instance.SetSelectedLayer(EnemyLayerHandler.Instance.ReturnButtons()[EnemyLayerHandler.Instance.EnemyMapIndex]);
 
-            }
             if (NodePathLayerHandler.Instance.nodeMaps.Count > 0)
 			{
                 NodePathLayerHandler.Instance.nodeMaps.ForEach(x => x.GetComponent<Tilemap>().color = new Color(1f, 1f, 1f, 0.5f));

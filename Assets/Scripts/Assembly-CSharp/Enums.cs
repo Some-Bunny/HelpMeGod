@@ -193,6 +193,8 @@ public static class Enums
 
 		Shadow_Magician,
 
+        Glitched_Boss,
+
         Gatling_Gull,
 
         Bullet_King,
