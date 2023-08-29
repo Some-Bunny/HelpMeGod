@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.Scripts.Assembly_CSharp;
+using System;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.UI;
@@ -65,8 +66,17 @@ public class TileButton : MonoBehaviour
 		InputHandler.Instance.SetSelectedTile(this.tile, this.mapType);
 	}
 
-	
-	public Tile tile;
+	public void OnHover()
+	{
+		TileDescriptionHandler.Instance.OnTileHover(this.tile);
+
+    }
+    public void OnHoverExit()
+    {
+        TileDescriptionHandler.Instance.OnTileExit(this.tile);
+    }
+
+    public Tile tile;
 
 	
 	public Text text;

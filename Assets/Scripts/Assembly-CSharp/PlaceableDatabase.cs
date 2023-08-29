@@ -1141,7 +1141,7 @@ public class PlaceableDatabase : TileDatabase
                 },
 
                 {
-                    "Boss Room Arema Parts",
+                    "Boss Room Arena Parts",
                     Manager.paletteDividerGuid
                 },
                 {

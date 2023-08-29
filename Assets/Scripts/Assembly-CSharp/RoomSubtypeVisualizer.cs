@@ -24,6 +24,7 @@ public class RoomSubtypeVisualizer : MonoBehaviour
             mouseListener.OnEntered += O_EN;
             mouseListener.OnExited += O_EX;
         }
+        SubtypeChanged();
         Toggled();
     }
 

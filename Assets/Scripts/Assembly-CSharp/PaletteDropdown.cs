@@ -96,4 +96,6 @@ public class PaletteDropdown : MonoBehaviour
 	public static PaletteDropdown Instance;
 
 	private Dropdown dropdown;
+
+
 }

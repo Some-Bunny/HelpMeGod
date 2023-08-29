@@ -235,16 +235,12 @@ public class EnvironmentMap : TilemapHandler
 				null
 			},
             {
-                "Ice [Hollow Only]",
+                "Hazard Tiles",
                 Manager.paletteDividerGuid
             },
             {
                 "ice",
                 null
-            },
-            {
-                "Effect Hazard [Mines / Forge]",
-                Manager.paletteDividerGuid
             },
             {
                 "effecthazard",

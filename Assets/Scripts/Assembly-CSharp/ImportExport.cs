@@ -624,7 +624,10 @@ public static class ImportExport
 
 					(NodePathLayerHandler.Instance.GetMap(k) as NodeMap).AddNewNodeTile(tileShit.Value as DataTile, TilemapHandler.GameToLocalPosition(tileShit.Key));
 				}
-                NodePathLayerHandler.Instance.ReturnButtons()[k].toggleVisibility.Toggled = data.nodePathVisible != null ? bastard_2[k] : true;
+				if (bastard_2.Count > 0)
+				{
+                    NodePathLayerHandler.Instance.ReturnButtons()[k].toggleVisibility.Toggled = data.nodePathVisible != null ? bastard_2[k] : true;
+                }
                 //NodePathLayerHandler.Instance.GetMap(k).BuildFromTileArray(tileArrays[k]);
             }
 		}
