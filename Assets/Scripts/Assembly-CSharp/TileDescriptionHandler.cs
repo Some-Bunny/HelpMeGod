@@ -155,6 +155,8 @@ namespace Assets.Scripts.Assembly_CSharp
             new TileDescription(){ tileName = "spinning_ice_log_spike_vertical_001", DisplayName = "Rolling Log [Vetical Movement]", Description = "A rolling log that follows an assigned Node Path.\nConfigurable, horizontal size can be changed."},
             new TileDescription(){ tileName = "spinning_log_spike_vertical_001", DisplayName = "Rolling Log [Vetical Movement]", Description = "A rolling log that follows an assigned Node Path.\nConfigurable, horizontal size can be changed."},
             new TileDescription(){ tileName = "Boss_Pedestal", DisplayName = "Boss Pedestal", Description = "A Boss Pedestal, that can have items on it.\nConfigurable."},
+            new TileDescription(){ tileName = "pedestal_gold_001", DisplayName = "Golden Boss Pedestal", Description = "A Golden Boss Pedestal, that can have items on it.\nConfigurable."},
+           
             new TileDescription(){ tileName = "artfull_dodger_talk_002", DisplayName = "Winchester", Description = "Lets you play his game.\nConfigurable."},
             new TileDescription(){ tileName = "blobulord_sewer_grate_001", DisplayName = "Blobulord Grate", Description = "Contrary to popular belief, it's purely decorative."},
             new TileDescription(){ tileName = "conveyor_belt_right", DisplayName = "Conveyor Belt [Horizontal]", Description = "Pushes the player in a certain direction.\nConfigurable."},
@@ -226,8 +228,70 @@ namespace Assets.Scripts.Assembly_CSharp
             new TileDescription(){ tileName = "pedestal_mimic", DisplayName = "Pedestal Mimic", Description = "Does not drop items."},
             new TileDescription(){ tileName = "rat_chest_mimic", DisplayName = "Rat Chest Mimic", Description = "Does not drop items."},
             new TileDescription(){ tileName = "wall_mimic", DisplayName = "Wall Mimic", Description = "Does not drop items."},
+            new TileDescription(){ tileName = "baby_good_shelleton", DisplayName = "Baby Good Shelleton", Description = "[Warning]\n\nCompanion entity, use with caution."},
+            new TileDescription(){ tileName = "baby_mimic", DisplayName = "Baby Good Mimic", Description = "[Warning]\n\nCompanion entity, use with caution."},
+            new TileDescription(){ tileName = "blank_companion", DisplayName = "Blank Companion", Description = "[Warning]\n\nCompanion entity, use with caution."},
+            new TileDescription(){ tileName = "blank_companion_synergy", DisplayName = "Elder Blank Companion", Description = "[Warning]\n\nCompanion entity, use with caution."},
+            new TileDescription(){ tileName = "caterpillar", DisplayName = "Caterpillar", Description = "[Warning]\n\nCompanion entity, use with caution."},
+            new TileDescription(){ tileName = "chicken", DisplayName = "Chicken", Description = "Chimken."},
+            new TileDescription(){ tileName = "dog", DisplayName = "Dog", Description = "[Warning]\n\nCompanion entity, use with caution."},
+            new TileDescription(){ tileName = "dragun_egg_slimeguy", DisplayName = "Dragun Egg", Description = "[Warning]\n\nCompanion entity, use with caution."},
+            new TileDescription(){ tileName = "friendly_gatling_gull", DisplayName = "Friendly Gatling Gull", Description = "[Warning]\n\nCompanion entity, use with caution."},
+            new TileDescription(){ tileName = "hunters_past_dog", DisplayName = "Wolf", Description = "[Warning]\n\nCompanion entity, use with caution."},
+            new TileDescription(){ tileName = "payday_shooter_03", DisplayName = "Payday Companion", Description = "[Warning]\n\nCompanion entity, use with caution."},
+            new TileDescription(){ tileName = "phoenix", DisplayName = "Phoenix", Description = "[Warning]\n\nCompanion entity, use with caution."},
+            new TileDescription(){ tileName = "raccoon", DisplayName = "Raccoon", Description = "[Warning]\n\nCompanion entity, use with caution."},
+            new TileDescription(){ tileName = "ser_junkan", DisplayName = "Ser Junkan", Description = "[Warning]\n\nCompanion entity, use with caution."},
+            new TileDescription(){ tileName = "snake", DisplayName = "Snake", Description = "Snek."},
+            new TileDescription(){ tileName = "super_space_turtle", DisplayName = "Super Space Turtle", Description = "[Warning]\n\nCompanion entity, use with caution."},
+            new TileDescription(){ tileName = "super_space_turtle_dummy", DisplayName = "Turtle", Description = "[Warning]\n\nCompanion entity, use with caution."},
+            new TileDescription(){ tileName = "super_space_turtle_synergy", DisplayName = "Super Space Turtle Synergy", Description = "[Warning]\n\nCompanion entity, use with caution."},
+            new TileDescription(){ tileName = "turkey", DisplayName = "Turkey", Description = "[Warning]\n\nCompanion entity, use with caution."},
+            new TileDescription(){ tileName = "unused_muzzle_flare", DisplayName = "Unused Muzzle Flare", Description = "No thoughts, head empty.\nUse with caution."},
+            new TileDescription(){ tileName = "pig", DisplayName = "Pig", Description = "[Warning]\n\nCompanion entity, use with caution."},
+            new TileDescription(){ tileName = "pig_synergy", DisplayName = "Cannon Pig", Description = "[Warning]\n\nCompanion entity, use with caution."},
+            new TileDescription(){ tileName = "bullet_kings_toadie", DisplayName = "Bullet Kings Toadie", Description = "Passive until hit. Can tank any hit until they become aggressive."},
+            new TileDescription(){ tileName = "bullet_kings_toadie_revenge", DisplayName = "Enraged Bullet Kings Toadie", Description = "Chases the player until killed."},
+            new TileDescription(){ tileName = "old_kings_toadie", DisplayName = "Old Kings Toadie", Description = "Passive until hit. Can tank any hit until they become aggressive."},
+            new TileDescription(){ tileName = "spectre", DisplayName = "Spectre", Description = "Unused but functional.\nActs as a normal hollowpoint, but when it teleports out, spawns 3 copies of itself near the player that occasionally fire at the player, until the Spectre returns."},
+            new TileDescription(){ tileName = "land_point", DisplayName = "Move Point", Description = "Certain bosses, like the Blobulord, will use these to define where it can move to for its special leaping attack."},
 
+            new TileDescription(){ tileName = "demon_face_001", DisplayName = "Black Market Entrance", Description = "Under the right conditions, lets you enter the Black Market.\nIf there is not Black Market room on the floor, does nothing."},
+            new TileDescription(){ tileName = "teleporter", DisplayName = "Teleporter", Description = "Lets you teleport to this room from the Map\n\nDo NOT, under ANY circumstances, place more than 1 per room. It will break the game."},
+            new TileDescription(){ tileName = "shopItemPosition", DisplayName = "Additional Shop Item Position", Description = "Adds an additional purchasable item to any shop in the room.\nConfigurable."},
+            new TileDescription(){ tileName = "round_shop_table", DisplayName = "Round Table", Description = "A table found commonly in Bellos shop, this table will place down additional pickups like Blanks on itself."},
+
+            new TileDescription(){ tileName = "glass_case_pedestal", DisplayName = "Glass Case [Default]", Description = "The default glass case object found in shops. Usually contains the Prime Primer, Rat Key or other occasional items. Uusually not active until required, always place one in a normal shop as a failsafe."},
+            new TileDescription(){ tileName = "glass_case_pedestal_whatever", DisplayName = "Glass Case [Custom]", Description = "A custom variant of the Glass Case.\nConfigurable."},
+
+            new TileDescription(){ tileName = "rat", DisplayName = "Rat", Description = "Not related to in any way to Room Architect Tool."},
+            new TileDescription(){ tileName = "random_sometimes_candles", DisplayName = "Randomized Placeable [Candles]", Description = "Places a random amount of candles or nothing into the room when the room is generated."},
+
+            new TileDescription(){ tileName = "shop_ak-47_barrel1", DisplayName = "AK47 Barrel", Description = "Used by Bello as decoration.\nHas no collision."},
+            new TileDescription(){ tileName = "shop_bucket_of_bullets_001", DisplayName = "Bucket Of Shells", Description = "Used by Bello as decoration.\nHas no collision."},
+            new TileDescription(){ tileName = "shop_crate_001", DisplayName = "Shop Crate", Description = "Used by Bello as decoration.\nHas no collision."},
+            new TileDescription(){ tileName = "shop_crates_001", DisplayName = "Shop Crates", Description = "Used by Bello as decoration.\nHas no collision."},
+            new TileDescription(){ tileName = "shop_mask_wall_001", DisplayName = "Shop Mask", Description = "Used by Bello as decoration.\nHas no collision, obviously."},
+            new TileDescription(){ tileName = "shop_sack_001", DisplayName = "Shop Sack", Description = "Used by Bello as decoration.\nHas no collision, obviously."},
+
+            new TileDescription(){ tileName = "shop_shop_shelf_001", DisplayName = "Shop Stocked Shelf", Description = "Used by Bello as decoration.\nHas no collision."},
+            new TileDescription(){ tileName = "shop_sign", DisplayName = "Shop Sign", Description = "Used by Bello to tell people that Teleporters are a thing.\nHas configurable text."},
+            new TileDescription(){ tileName = "shop_stool", DisplayName = "Shop Stool", Description = "Used by Bello as decoration.\nHas no collision, obviously."},
+
+            new TileDescription(){ tileName = "shop_sword_wall_001", DisplayName = "Shop Sword", Description = "Used by Bello as decoration.\nHas no collision, obviously."},
+            new TileDescription(){ tileName = "shop_wall_shelf_001", DisplayName = "Shop Shelf", Description = "Used by Bello as decoration.\nHas no collision, obviously."},
+
+            new TileDescription(){ tileName = "gunsling_king_idle_001", DisplayName = "Gunsling King", Description = "One half of a pair, Gunsling King is always with Manservantes."},
+            new TileDescription(){ tileName = "toadie_idle_001", DisplayName = "Manservantes", Description = "One half of a pair, Manservantes is always with Gunsling King."},
+
+            new TileDescription(){ tileName = "toadie_idle_001", DisplayName = "Manservantes", Description = "One half of a pair, Manservantes is always with Gunsling King."},
+
+            new TileDescription(){ tileName = "no_pickup_tile", DisplayName = "Floor [No Pickup]", Description = "A normal floor tile, but prevents pickups from spawning on top of it."},
+
+            //no_pickup_tile
         };
+
+        
         public class TileDescription
         {
             public string tileName;

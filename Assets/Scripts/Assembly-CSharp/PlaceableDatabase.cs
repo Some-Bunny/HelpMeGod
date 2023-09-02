@@ -443,10 +443,6 @@ public class PlaceableDatabase : TileDatabase
 					"blacksmith_workbench"
 				},
 				{
-					"round_shop_table",
-					"shoptable"
-				},
-				{
 					"cabinet",
 					"wine_cabinet"
 				},
@@ -470,15 +466,24 @@ public class PlaceableDatabase : TileDatabase
 					"shabby_shelf_2",
 					"shabby_shelf_2"
 				},
+
 				{
-					"glass_case_pedestal",
-					"shop_specialcase"
-				},
-				{
-					"ratty_carpet",
+                    "ratty_carpet",
 					"ratty_carpet_001"
 				},
-				{
+                {
+                    "glass_case_pedestal_empty",
+                    "Glass_Case_Empty"
+                },
+                {
+                    "round_shop_table_empty",
+                    "round_table_empty"
+                },
+                {
+                    "gungeon_entrance_carpet_001",
+                    "RedTornCarpet"
+                },
+                {
 					"Skulls and Skeletons",
 					Manager.paletteDividerGuid
 				},
@@ -527,11 +532,15 @@ public class PlaceableDatabase : TileDatabase
                     "floor_skeleton",
                     "FloorSkeleton_Flop"
                 },
+
                 {
                     "floor_note",
                     "FloorSkeleton_Note"
                 },
-
+                {
+                    "skeleton_of_ser_manfred",
+                    "Ser_Manuels_Body"
+                },
                 {
                     "head_skull_001",
                     "DragunSkull"
@@ -1139,7 +1148,98 @@ public class PlaceableDatabase : TileDatabase
                     "cartstub_south",
                     "cartstub_south"
                 },
+                {
+                    "wood_sign_idle_arrow_down_001",
+                    "WoodSignArrow_S"
+                },
+                {
+                    "wood_sign_idle_arrow_left_001",
+                    "WoodSignArrow_E"
+                },
+                {
+                    "wood_sign_idle_arrow_right_001",
+                    "WoodSignArrow_W"
+                },
+                {
+                    "wood_sign_idle_arrow_up_001",
+                    "WoodSignArrow_N"
+                },
 
+                {
+                    "gungeon_entrance_broken_stairs_001",
+                    "StairCase"
+                },
+                {
+                    "gungeon_arena_gate_closed_001",
+                    "GungeonGrate"
+                },
+                {
+                    "hanging_chain_block_idle_001",
+                    "HangingConcreteBlock"
+                },
+                {
+                    "battle_floor_dark_blue_circle_001",
+                    "Start_Room_Decor"
+                },
+                {
+                    "battle_floor_dark_blue_circle_002",
+                    "Start_Room_Floor"
+                },
+               
+                {
+                    "raised_dais_001",
+                    "Special_Dais"
+                },
+                {
+                    "Shop Objects",
+                    Manager.paletteDividerGuid
+                },
+                {
+                    "shop_sign",
+                    "ShopSign"
+                },
+                {
+                    "shop_crates_001",
+                    "Shop_Crates"
+                },
+                {
+                    "shop_crate_001",
+                    "Shop_Crate"
+                },
+                {
+                    "shop_sack_001",
+                    "Shop_Sack"
+                },
+                {
+                    "shop_bucket_of_bullets_001",
+                    "Shop_ShelfBarrel"
+                },
+                {
+                    "shop_wall_shelf_001",
+                    "Shop_Shelf"
+                },
+
+
+                {
+                    "shop_mask_wall_001",
+                    "Shop_Mask"
+                },
+                {
+                    "shop_sword_wall_001",
+                    "Shop_Wallsword"
+                },
+                {
+                    "shop_shop_shelf_001",
+                    "Shop_StandingShelf"
+                },
+                {
+                    "shop_ak-47_barrel1",
+                    "Shop_AKBarrel"
+                },
+                {
+                    "shop_stool",
+                    "Shop_Stool"
+                },
                 {
                     "Boss Room Arena Parts",
                     Manager.paletteDividerGuid
@@ -1319,6 +1419,12 @@ public class PlaceableDatabase : TileDatabase
                     "Boss_Pedestal",
                     "bossPedestal"
                 },
+                {
+                    "pedestal_gold_001",
+                    "bossPedestalGolden"
+                },
+
+                
             }
 		},
 		{
@@ -1547,6 +1653,10 @@ public class PlaceableDatabase : TileDatabase
                     "gullLeapPoint"
                 },
                 {
+                    "land_point",
+                    "land_point"
+                },
+                {
                     "glitch_floor_properties",
                     "glitch_floor_properties"
                 },
@@ -1560,8 +1670,27 @@ public class PlaceableDatabase : TileDatabase
 					"Merchants",
 					Manager.paletteDividerGuid
 				},
-				{
-					"npc_blacksmith",
+                {
+                    "shopLayout",
+                    "shopLayout"
+                },
+                {
+                    "round_shop_table",
+                    "round_table"
+                },
+                {
+                    "glass_case_pedestal",
+                    "Glass_Case"
+                },
+                {
+                    "glass_case_pedestal_whatever",
+                    "Glass_Case_Custom"
+                },
+
+				
+
+                {
+                    "npc_blacksmith",
 					"npc_blacksmith"
 				},
 				{
@@ -1588,7 +1717,11 @@ public class PlaceableDatabase : TileDatabase
 					"rat_merchant",
 					"merchant_rat_placeable"
 				},
-				{
+                {
+                    "shopItemPosition",
+                    "ShopItemObject"
+                },
+                {
 					"Other Useful NPCs",
 					Manager.paletteDividerGuid
 				},
@@ -1676,6 +1809,14 @@ public class PlaceableDatabase : TileDatabase
                 {
                     "lost_adventurer_idle_left_001",
                     "lonk_NPC_pathing"
+                },
+                {
+                    "Other",
+                    Manager.paletteDividerGuid
+                },
+                {
+                    "demon_face_001",
+                    "demonFace"
                 },
                 {
                     "Winchester Assets",

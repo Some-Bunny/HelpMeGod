@@ -469,12 +469,56 @@ public static class AttributeDatabase
             "crushTrapEnemyKnockbackForce",
             new AC("Enemy Knockback Force", "crushTrapEnemyKnockbackForce", 50f, new object[0])
         },
+        {
+            "shopItemBase",
+            new AC("Item Table", "shopItemBase", "Primary", new object[]{"Primary", "Secondary"})
+        },
+        {
+            "UsedByShop",
+            new AC("Used By Shop", "UsedByShop", "Any", new object[]{"Any", "Bello", "Goopton", "Old Red", "Flynt", "Cursula", "Trorc", "Blacksmith", "Shortcut Rat", "Meta Shop" })
+        },
+        {
+            "shopItemBaseChance",
+            new AC("Chance", "shopItemBaseChance", 1f, new object[0])
+        },
+        {
+            "overridePrice",
+            new AC("Override Price", "overridePrice", -1, new object[0])
+        },
+        {
+            "priceMultiplier",
+            new AC("Price Multiplier", "priceMultiplier", 1f, new object[0])
+        },
+        {
+            "omniDir",
+            new AC("Omnidirectional?", "omniDir", true, new object[0])
+        },
+        {
+            "facingDirItem",
+            new AC("Facing Direction", "facingDirItem", "NORTH", new object[]{"NORTH", "SOUTH", "EAST", "WEST"})
+        },
     };
+
+    
 
 
     public static Dictionary<AttributeDatabase.ValidAttribute, string[]> attributeListings = new Dictionary<AttributeDatabase.ValidAttribute, string[]>
 	{
-        //trapProjSpeed-trapProjRange-projectileTypeTurret
+        {
+            (string name) => name == "shopItemPosition" | name == "glass_case_pedestal_whatever",
+            new string[]
+            {
+                "shopItemBase",
+                "UsedByShop",
+                "shopItemBaseChance",
+                "omniDir",
+                "facingDirItem",
+                "bossPdstlItmID",
+                "bossPdstlItmStringID",
+                "overridePrice",
+                "priceMultiplier"
+            }
+        },
         {
             (string name) => name == "firebar_trap",
             new string[]
@@ -626,7 +670,7 @@ public static class AttributeDatabase
        },
 
        {
-            (string name) => name == "floor_note",
+            (string name) => name == "floor_note" | name == "shop_sign",
             new string[]
             {
                 "customNoteText",
@@ -854,7 +898,7 @@ public static class AttributeDatabase
             }
         },
         {
-            (string name) => name == "Boss_Pedestal",
+            (string name) => name == "Boss_Pedestal" | name == "pedestal_gold_001",
             new string[]
             {
                 "bossPdstlItmID",

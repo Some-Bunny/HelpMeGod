@@ -171,9 +171,29 @@ public static class Enums
     {
 		None,
 
+		Old_Red,
+
+		Cursula,
+
+		Flynt,
+
+		Trorc,
+
+		Goopton,
+
         Misc_Reward,
 
-        Winchester,
+		Cleanse_Shrine,
+
+		Glass_Shrine,
+
+		Black_Market,
+
+		Random_Shrine,
+
+        Cursed_Mirror,
+		
+		Winchester,
 
         Fireplace,
 
@@ -191,9 +211,35 @@ public static class Enums
 
 		Blockner_Miniboss,
 
+		Fuselier,
+
 		Shadow_Magician,
 
         Glitched_Boss,
+
+		Lost_Adventurer,
+
+		Gunsling_King,
+
+		Mendy_And_Patches,
+
+		Synergrace,
+
+		Vampire,
+
+		Gun_Muncher,
+
+		Black_Market_Entrance,
+
+		Challenge_Shrine_Keep,
+
+        Challenge_Shrine_Proper,
+
+        Challenge_Shrine_Mines,
+        
+		Challenge_Shrine_Hollow,
+        
+		Challenge_Shrine_Forge,
 
         Gatling_Gull,
 

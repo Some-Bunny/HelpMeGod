@@ -55,6 +55,7 @@ public static class ImportExport
             AmbientLight_B = 1f,
             usesAmbientLight = false,
             nodePathVisible = new bool[0],
+			specialRoomPool = null,
         };
 		
 		Manager i = Manager.Instance;
@@ -422,7 +423,7 @@ public static class ImportExport
 
 	private static Tile TileFromNumber(string type, TilemapHandler tilemapHandler)
 	{
-		Dictionary<string, string> types = new Dictionary<string, string> { { "1", "floor" }, { "2", "wall" }, { "3", "pit" }, { "4", "ice" } , { "5", "effecthazard" }, { "6", "diagonal_NE" }, { "7", "diagonal_NW" }, { "8", "diagonal_SE" }, { "9", "diagonal_SW" } };
+		Dictionary<string, string> types = new Dictionary<string, string> { { "1", "floor" }, { "2", "wall" }, { "3", "pit" }, { "4", "ice" } , { "5", "effecthazard" }, { "6", "diagonal_NE" }, { "7", "diagonal_NW" }, { "8", "diagonal_SE" }, { "9", "diagonal_SW" }, { "X", "no_pickup_tile" } };
 
 		return type != null ? tilemapHandler.palette[types[type]] : null;
 	}
@@ -913,6 +914,9 @@ public static class ImportExport
         public float AmbientLight_B;
 
         public bool usesAmbientLight;
+
+        public string specialRoomPool;
+
     }
 
     public struct RoomData

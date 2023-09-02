@@ -159,50 +159,54 @@ public class EnvironmentMap : TilemapHandler
 				Tile tile = tiles[x, y];
 				if (tile == null)
 				{
-					tileData += 2;
+					tileData += "2";
 				}
 				else
 				{
 					string name = tile.name.ToLower();
 					if (name.Contains("floor"))
 					{
-						tileData += 1;
+						tileData += "1";
 					}
 					else if (name.Contains("wall"))
 					{
-						tileData += 2;
+						tileData += "2";
 					}
 					else if (name.Contains("pit"))
 					{
-						tileData += 3;
+						tileData += "3";
 					}	
 					else if (name.Contains("ice"))
 					{
-						tileData += 4;
+						tileData += "4";
 					}
                     else if (name.Contains("effecthazard"))
                     {
-                        tileData += 5;
+                        tileData += "5";
                     }
                     else if (name.Contains("diagonal_ne"))
 					{
-                        tileData += 6;
+                        tileData += "6";
                     }
                     else if (name.Contains("diagonal_nw"))
                     {
-                        tileData += 7;
+                        tileData += "7";
                     }
                     else if (name.Contains("diagonal_se"))
                     {
-                        tileData += 8;
+                        tileData += "8";
                     }
                     else if (name.Contains("diagonal_sw"))
                     {
-                        tileData += 9;
+                        tileData += "9";
+                    }
+                    else if (name.Contains("no_pickup_tile"))
+                    {
+                        tileData += "X";
                     }
                     else
                     {
-						tileData += 2;
+						tileData += "2";
 					}
 				}
 			}
@@ -234,6 +238,10 @@ public class EnvironmentMap : TilemapHandler
 				"pit",
 				null
 			},
+            {
+                "no_pickup_tile",
+                null
+            },
             {
                 "Hazard Tiles",
                 Manager.paletteDividerGuid

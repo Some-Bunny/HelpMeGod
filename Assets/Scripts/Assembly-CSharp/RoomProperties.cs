@@ -43,6 +43,7 @@ public class RoomProperties
         data.AmbientLight_G = this.AmbientLight_G;
         data.AmbientLight_B = this.AmbientLight_B;
 		data.usesAmbientLight = this.usesAmbientLight;
+		data.specialRoomPool = this.specialRoomPool;
     }
 
 
@@ -121,6 +122,9 @@ public class RoomProperties
         this.AmbientLight_G = data.AmbientLight_G;
         this.AmbientLight_B = data.AmbientLight_B;
 		this.usesAmbientLight = data.usesAmbientLight;
+        this.specialRoomPool = data.specialRoomPool;
+
+
     }
 
     public void ImportRoomProperties(ImportExport.RoomData data)
@@ -207,5 +211,7 @@ public class RoomProperties
     public float AmbientLight_G = 1;
     public float AmbientLight_B = 1;
 	public bool usesAmbientLight;
+
+	public string specialRoomPool;
 
 }

@@ -112,6 +112,7 @@ public class RoomPropertiesMenu : MonoBehaviour
         properties.AmbientLight_G = int.Parse(this.AmbientColor_G.text);
         properties.AmbientLight_B = int.Parse(this.AmbientColor_B.text);
         properties.usesAmbientLight = this.usesAmbientLighting.Toggled;
+        properties.specialRoomPool = this.specialRoomPool.text;
 
     }
 
@@ -158,6 +159,7 @@ public class RoomPropertiesMenu : MonoBehaviour
 			this.weightField.text = "1";
 		}
 	}
+
 
     public void OnSubtypeChanged()
     {
@@ -215,6 +217,7 @@ public class RoomPropertiesMenu : MonoBehaviour
             this.AmbientColor_G.text = properties.AmbientLight_G.ToString();
             this.AmbientColor_B.text = properties.AmbientLight_B.ToString();
 			this.usesAmbientLighting.Toggled = properties.usesAmbientLight;
+			this.specialRoomPool.text = properties.specialRoomPool;
             this.InitializeDropdowns();
 		}
 	}
@@ -330,6 +333,6 @@ public class RoomPropertiesMenu : MonoBehaviour
 
     public ToggleButton usesAmbientLighting;
 
-    public ToggleButton nodeModifyTilemap;
+    public InputField specialRoomPool;
 
 }

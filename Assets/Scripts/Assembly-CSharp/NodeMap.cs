@@ -181,22 +181,22 @@ public class NodeMap : TilemapHandler
             List<string> asad = new List<string> { };
 
         foreach (var entry in fuck)
-            {
-                entry.Value.placmentOrders.Sort();
+        {
+            entry.Value.placmentOrders.Sort();
 
-            }
+        }
 
-            foreach (var entry in fuck)
+        foreach (var entry in fuck)
+        {
+            foreach (var entry2 in entry.Value.placmentOrders)
             {
-                foreach (var entry2 in entry.Value.placmentOrders)
-                {
-                    cextors.Add(entry.Value.positions[entry2]);
-                    asad.Add(entry.Value.tileName[entry2]);
+                cextors.Add(entry.Value.positions[entry2]);
+                asad.Add(entry.Value.tileName[entry2]);
 
                 //data.nodePaths = data.nodePaths.Concat(layers.ToArray()).ToArray<int>();
                 //data.nodeOrder =  //data.nodeOrder.Concat().ToArray<int>();
-                }
             }
+        }
 
 
         //entry.Keyint[]
@@ -208,21 +208,21 @@ public class NodeMap : TilemapHandler
 
 
         foreach (var entry in fuck)
+        {
+            foreach (var entry2 in entry.Value.placmentOrders)
             {
-                foreach(var entry2 in entry.Value.placmentOrders)
-                {
 
 
-                    indexes.Add(entry.Key);
-                    order.Add(entry2);
+                indexes.Add(entry.Key);
+                order.Add(entry2);
 
-                    //Debug.LogError("added " + entry.Key + " to indexes");
-                    //Debug.LogError("added " + entry2 + " to order");
+                //Debug.LogError("added " + entry.Key + " to indexes");
+                //Debug.LogError("added " + entry2 + " to order");
 
-                    //data.nodePaths = data.nodePaths.Concat(layers.ToArray()).ToArray<int>();
-                    //data.nodeOrder =  //data.nodeOrder.Concat().ToArray<int>();
-                }
+                //data.nodePaths = data.nodePaths.Concat(layers.ToArray()).ToArray<int>();
+                //data.nodeOrder =  //data.nodeOrder.Concat().ToArray<int>();
             }
+        }
 
 
         data.nodePositions = data.nodePositions.Concat(cextors.ToArray()).ToArray<Vector2>();
