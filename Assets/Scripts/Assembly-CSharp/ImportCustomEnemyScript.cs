@@ -12,8 +12,6 @@ public class ImportCustomEnemyScript : MonoBehaviour
     {
         this.m_hideable = base.GetComponent<HideableObject>();
         ImportCustomEnemyScript.Instance = this;
-        base.gameObject.SetActive(false);
-
     }
 
     public void OnCloseClicked()

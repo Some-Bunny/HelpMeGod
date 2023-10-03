@@ -6,6 +6,14 @@ using UnityEngine;
 public class HideableObject : MonoBehaviour
 {
 	
+	public void Start()
+	{
+		if (HiddenByDefault == true)
+		{
+			this.gameObject.SetActive(false);
+		}
+	}
+
 	public void Hide()
 	{
 		if (this.disableShortcutsOnShow)
@@ -40,9 +48,10 @@ public class HideableObject : MonoBehaviour
 	
 	public float showTime;
 
-	
 	public Action OnShow;
 
 	
 	public Action OnHide;
+
+	public bool HiddenByDefault = false;
 }

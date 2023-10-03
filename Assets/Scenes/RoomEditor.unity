@@ -1544,7 +1544,7 @@ GameObject:
   m_Layer: 5
   m_Name: Popup Menu Canvas
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -8364,7 +8364,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0.000030517578, y: -0.00007491531}
+  m_AnchoredPosition: {x: -0.00015448501, y: -0.00007491531}
   m_SizeDelta: {x: 513, y: 208}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!224 &588
@@ -15758,6 +15758,7 @@ MonoBehaviour:
   hideOnClickElsewhere: 1
   disableShortcutsOnShow: 1
   showTime: 0
+  HiddenByDefault: 0
 --- !u!114 &915
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18390,8 +18391,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1103}
   m_HandleRect: {fileID: 723}
   m_Direction: 0
-  m_Value: 0
-  m_Size: 1
+  m_Value: 1
+  m_Size: 0.5000002
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -19123,6 +19124,7 @@ MonoBehaviour:
   hideOnClickElsewhere: 1
   disableShortcutsOnShow: 0
   showTime: 0
+  HiddenByDefault: 0
 --- !u!114 &1021
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21325,6 +21327,7 @@ MonoBehaviour:
   hideOnClickElsewhere: 0
   disableShortcutsOnShow: 1
   showTime: 0
+  HiddenByDefault: 0
 --- !u!114 &1090
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23949,6 +23952,7 @@ MonoBehaviour:
   hideOnClickElsewhere: 0
   disableShortcutsOnShow: 1
   showTime: 0
+  HiddenByDefault: 0
 --- !u!114 &1169
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24409,6 +24413,7 @@ MonoBehaviour:
   hideOnClickElsewhere: 0
   disableShortcutsOnShow: 1
   showTime: 0
+  HiddenByDefault: 0
 --- !u!114 &1185
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26515,6 +26520,7 @@ MonoBehaviour:
   hideOnClickElsewhere: 1
   disableShortcutsOnShow: 0
   showTime: 0
+  HiddenByDefault: 0
 --- !u!114 &1243
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26636,6 +26642,7 @@ MonoBehaviour:
   hideOnClickElsewhere: 1
   disableShortcutsOnShow: 0
   showTime: 0
+  HiddenByDefault: 0
 --- !u!114 &1248
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -33760,7 +33767,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.00007491531}
+  m_AnchoredPosition: {x: -0.00009344988, y: -0.00007491531}
   m_SizeDelta: {x: 513, y: 208}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!1 &586008092
@@ -36736,7 +36743,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &910519703
 RectTransform:
   m_ObjectHideFlags: 0
@@ -36774,6 +36781,7 @@ MonoBehaviour:
   hideOnClickElsewhere: 1
   disableShortcutsOnShow: 0
   showTime: 0
+  HiddenByDefault: 1
 --- !u!114 &910519705
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -37000,7 +37008,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &950950041
 RectTransform:
   m_ObjectHideFlags: 0
@@ -37061,6 +37069,7 @@ MonoBehaviour:
   hideOnClickElsewhere: 0
   disableShortcutsOnShow: 1
   showTime: 0
+  HiddenByDefault: 1
 --- !u!114 &950950044
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -37194,8 +37203,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2130013989}
   m_HandleRect: {fileID: 2130013987}
   m_Direction: 0
-  m_Value: 0
-  m_Size: 1
+  m_Value: 1
+  m_Size: 0.49999994
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -41663,7 +41672,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1417073414
 RectTransform:
   m_ObjectHideFlags: 0
@@ -41702,6 +41711,7 @@ MonoBehaviour:
   hideOnClickElsewhere: 0
   disableShortcutsOnShow: 1
   showTime: 0
+  HiddenByDefault: 1
 --- !u!114 &1417073417
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -46366,7 +46376,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2017879198
 RectTransform:
   m_ObjectHideFlags: 0
@@ -46427,6 +46437,7 @@ MonoBehaviour:
   hideOnClickElsewhere: 0
   disableShortcutsOnShow: 1
   showTime: 0
+  HiddenByDefault: 1
 --- !u!114 &2017879201
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -47285,7 +47296,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2122359830}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -0.8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2035980997}
@@ -47293,7 +47304,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.8999939, y: -2.3999996}
+  m_AnchoredPosition: {x: -0.8999939, y: -0.79999924}
   m_SizeDelta: {x: -5, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2122359832
