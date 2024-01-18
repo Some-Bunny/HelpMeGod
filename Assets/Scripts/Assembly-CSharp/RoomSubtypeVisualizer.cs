@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,7 @@ using UnityEngine.UI;
 
 public class RoomSubtypeVisualizer : MonoBehaviour
 {
+    public SpriteRenderer SpecialSprite__;
 
     public void Start()
     {
@@ -37,12 +39,16 @@ public class RoomSubtypeVisualizer : MonoBehaviour
     {
         if (FloorTextBox) { FloorTextBox.text = this.FloorType; }
         if (DescriptionTextBox) { DescriptionTextBox.text = this.currentInfo; }
-
     }
+
+
+
+
+
     public void O_EX()
     {
         if (FloorTextBox) { FloorTextBox.text = "[None.]"; }
-        if (DescriptionTextBox) { DescriptionTextBox.text = "[None.]"; }
+        if (DescriptionTextBox) { DescriptionTextBox.text = "[Hold Shift to expand image.]"; }
     }
 
     public void SubtypeChanged()
@@ -78,6 +84,18 @@ public class RoomSubtypeVisualizer : MonoBehaviour
     public void Update()
     {
         bool b = false;
+        if (Input.GetKey(KeyCode.LeftShift) && mouseListener.Hovered == true)
+        {
+            SpecialSprite__.gameObject.SetActive(mouseListener.Hovered);
+            SpecialSprite__.sprite = this.spriteRenderer.sprite;
+        }
+        else if (!Input.GetKey(KeyCode.LeftShift) )
+        {
+            SpecialSprite__.gameObject.SetActive(false);
+
+        }
+
+
         foreach (ChamberButton button in propertiesMenu.chamberButtons.Values)
         {
             if (button.Toggled == true)

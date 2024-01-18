@@ -78,7 +78,7 @@ public class PlaceableMap : TilemapHandler
 
 		CustomObjectDatabase.Instance.Start();
 
-		Debug.Log(CustomObjectDatabase.Instance.customPlaceables.Count);
+		//Debug.Log(CustomObjectDatabase.Instance.customPlaceables.Count);
 		foreach (var enemy in CustomObjectDatabase.Instance.customPlaceables)
 		{
 			this.tileDatabase.Entries.Add($"customPlaceableAsset-{enemy.name}", enemy.guid);

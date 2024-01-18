@@ -84,6 +84,9 @@ public class ImportCustomEnemyScript : MonoBehaviour
     {
         var map = Manager.Instance.GetTilemap(TilemapHandler.MapType.Enemies);
 
+        if (importedSpritePath == null) { return; }
+
+
         File.Copy(importedSpritePath, Path.Combine(Manager.EnemyOutputPath, $"{outputName}.png"));
 
         CustomObjectDatabase.Instance.AddEntry(outputName, inputGuid.text, CustomObjectDatabase.Type.Enemy);
@@ -149,6 +152,7 @@ public class ImportCustomEnemyScript : MonoBehaviour
                 var uwrTexture = DownloadHandlerTexture.GetContent(uwr);
                 importedSprite.texture = uwrTexture;
                 importedSpritePath = path;
+                importedSprite.texture.filterMode = FilterMode.Point;
             }
         }
     }
@@ -183,6 +187,8 @@ public class ImportCustomEnemyScript : MonoBehaviour
         var t = map.tiles.Find(x => x.name == $"customEnemyAsset-{nameToRemove}");
         if (t) map.tiles.Remove(t);
 
+        if (map.spriteSwitch.ContainsKey($"customEnemyAsset-{nameToRemove}")) map.spriteSwitch.Remove($"customEnemyAsset-{nameToRemove}");
+
 
         if (PaletteDropdown.Instance.palettes[2].Populated && reload)
         {
@@ -207,8 +213,6 @@ public class ImportCustomEnemyScript : MonoBehaviour
                 }
             }
         }
-
-
     }
 
     public void RemoveCustomPlaceable(string nameToRemove, bool reload = false)
@@ -221,6 +225,7 @@ public class ImportCustomEnemyScript : MonoBehaviour
 
         var t = map.tiles.Find(x => x.name == $"customPlaceableAsset-{nameToRemove}");
         if (t) map.tiles.Remove(t);
+        if (map.spriteSwitch.ContainsKey($"customPlaceableAsset-{nameToRemove}")) map.spriteSwitch.Remove($"customPlaceableAsset-{nameToRemove}");
 
 
         if (PaletteDropdown.Instance.palettes[3].Populated && reload)

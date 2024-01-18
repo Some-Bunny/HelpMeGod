@@ -423,7 +423,7 @@ public static class ImportExport
 
 	private static Tile TileFromNumber(string type, TilemapHandler tilemapHandler)
 	{
-		Dictionary<string, string> types = new Dictionary<string, string> { { "1", "floor" }, { "2", "wall" }, { "3", "pit" }, { "4", "ice" } , { "5", "effecthazard" }, { "6", "diagonal_NE" }, { "7", "diagonal_NW" }, { "8", "diagonal_SE" }, { "9", "diagonal_SW" }, { "X", "no_pickup_tile" } };
+		Dictionary<string, string> types = new Dictionary<string, string> { { "1", "floor" }, { "2", "wall" }, { "3", "pit" }, { "4", "ice" } , { "5", "effecthazard" }, { "6", "diagonal_NE" }, { "7", "diagonal_NW" }, { "8", "diagonal_SE" }, { "9", "diagonal_SW" }, { "X", "no_pickup_tile" }, { "G", "grass" } };
 
 		return type != null ? tilemapHandler.palette[types[type]] : null;
 	}
@@ -659,17 +659,21 @@ public static class ImportExport
 				Vector2 position = data.enemyPositions[j];
 				string attributes = data.enemyAttributes[j];
 				string id = mapHandler.tileDatabase.GetID(guid);
-				bool flag2 = !mapHandler.palette.ContainsKey(id);
-				if (flag2)
+				if (id != null)
 				{
-					Debug.Log(id);
-				}
-				else
-				{
-					DataTile tile = TilemapHandler.Clone(mapHandler.palette[id]);
-					tile.data = AttributeDatabase.ToLongNamed(JObject.Parse(attributes));
-					tileArrays[layer][(int)position.x, (int)position.y] = tile;
-				}
+                    bool flag2 = !mapHandler.palette.ContainsKey(id);
+                    if (flag2)
+                    {
+                        Debug.Log(id);
+                    }
+                    else
+                    {
+                        DataTile tile = TilemapHandler.Clone(mapHandler.palette[id]);
+                        tile.data = AttributeDatabase.ToLongNamed(JObject.Parse(attributes));
+                        tileArrays[layer][(int)position.x, (int)position.y] = tile;
+                    }
+                }
+				
 			}
 			for (int k = 0; k < EnemyLayerHandler.Instance.LayerCount; k++)
 			{

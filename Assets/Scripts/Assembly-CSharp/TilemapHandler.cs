@@ -456,21 +456,28 @@ public abstract class TilemapHandler : MonoBehaviour
 		Sprite sprite = null;
 		if (name.StartsWith("customEnemyAsset-"))
 		{
-			sprite = IMG2Sprite.LoadNewSprite(Path.Combine(Application.persistentDataPath, "CustomEnemyData", name.Replace("customEnemyAsset-", "") + ".png"));			
-		}
+			sprite = IMG2Sprite.LoadNewSprite(Path.Combine(Application.persistentDataPath, "CustomEnemyData", name.Replace("customEnemyAsset-", "") + ".png"));
+
+        }
 		else if (name.StartsWith("customPlaceableAsset-"))
 		{
 			sprite = IMG2Sprite.LoadNewSprite(Path.Combine(Application.persistentDataPath, "CustomPlaceableData", name.Replace("customPlaceableAsset-", "") + ".png"));
-		}
-		else
+        }
+        else
         {
 			sprite = Resources.Load<Sprite>(Path.Combine(tdb.spriteDirectory, name));
-		}
-		
-		GameObject tileText = null;
+        }
+
+
+
+        GameObject tileText = null;
 		DataTile tile = ScriptableObject.CreateInstance<DataTile>();
 		tile.sprite = (sprite ? sprite.texture.CropWhiteSpace().ToSprite() : Manager.Instance.missingImageTileSprite);
-		tile.name = ((guid != Manager.paletteDividerGuid) ? name : Manager.paletteDividerGuid);
+		if (tile.sprite != null)
+		{
+            tile.sprite.texture.filterMode = FilterMode.Point;
+        }
+        tile.name = ((guid != Manager.paletteDividerGuid) ? name : Manager.paletteDividerGuid);
 		tile.gameObject = tileText;
 		tile.colliderType = emptyTile.colliderType;
 		tile.color = emptyTile.color;

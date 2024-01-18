@@ -163,7 +163,8 @@ public class EnvironmentMap : TilemapHandler
 				}
 				else
 				{
-					string name = tile.name.ToLower();
+                    string name = tile.name.ToLower();
+					
 					if (name.Contains("floor"))
 					{
 						tileData += "1";
@@ -204,6 +205,10 @@ public class EnvironmentMap : TilemapHandler
                     {
                         tileData += "X";
                     }
+                    else if (name.Contains("grass"))
+                    {
+                        tileData += "G";
+                    }
                     else
                     {
 						tileData += "2";
@@ -215,9 +220,9 @@ public class EnvironmentMap : TilemapHandler
 		//data.tilePositions = pos.ToArray();
 		data.tileInfo = tileData;		
 	}
+    //grass
 
-
-	public override TileDatabase InitializeDatabase()
+    public override TileDatabase InitializeDatabase()
 	{
 		this.tileDatabase = new TileDatabase();
 		this.tileDatabase.Entries = new Dictionary<string, string>
@@ -272,6 +277,14 @@ public class EnvironmentMap : TilemapHandler
             },
             {
                 "diagonal_SW",
+                null
+            },
+            {
+                "Misc / Unused",
+                Manager.paletteDividerGuid
+            },
+            {
+                "grass",
                 null
             },
         };
