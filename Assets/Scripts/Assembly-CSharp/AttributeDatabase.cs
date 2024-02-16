@@ -497,6 +497,14 @@ public static class AttributeDatabase
             "facingDirItem",
             new AC("Facing Direction", "facingDirItem", "NORTH", new object[]{"NORTH", "SOUTH", "EAST", "WEST"})
         },
+        {
+            "initDelay",
+            new AC("Pause here for:", "initDelay", 0f, new object[0])
+        },
+        {
+            "addDelay",
+            new AC("Pause upon reaching node for:", "addDelay", 0f, new object[0])
+        },
     };
 
     
@@ -592,6 +600,7 @@ public static class AttributeDatabase
                 "mS",
                 "TileSizeX_",
                 "TileSizeY_",
+                "addDelay"
             }
         },
         {
@@ -608,7 +617,9 @@ public static class AttributeDatabase
                 "tSP",
                 "nSP_O",
                 "logLength",
-                "mS"
+                "mS",
+                "addDelay"
+
             }
         },
         {
@@ -618,7 +629,8 @@ public static class AttributeDatabase
                 "tSP",
                 "nSP_O",
                 "logHeight",
-                "mS"
+                "mS",
+                "addDelay"
             }
         },
 
@@ -758,7 +770,8 @@ public static class AttributeDatabase
             new string[]
             {
                 "nodPos",
-                "nodType"
+                "nodType",
+                "initDelay"
             }
         },
         /*
@@ -790,7 +803,8 @@ public static class AttributeDatabase
 			{
 				"tSP",
                 "nSP_O",
-                "mS"
+                "mS",
+                "addDelay"
             }
 		},
         {
@@ -799,7 +813,8 @@ public static class AttributeDatabase
             {
                 "tSP",
                 "nSP_O",
-                "WinchestTargetSpeed"
+                "WinchestTargetSpeed",
+                "addDelay"
             }
         },
 		{ 
@@ -808,7 +823,8 @@ public static class AttributeDatabase
             {
                 "tSP",
                 "nSP_O",
-                "WinchestTargetSpeed"
+                "WinchestTargetSpeed",
+                "addDelay"
             }
         },
 
@@ -818,7 +834,8 @@ public static class AttributeDatabase
             {
                 "tSP",
                 "nSP_O",
-                "WinchestTargetSpeed"
+                "WinchestTargetSpeed",
+                "addDelay"
             }
         },
         {
@@ -827,7 +844,8 @@ public static class AttributeDatabase
             {
                 "tSP",
                 "nSP_O",
-                "mS"
+                "mS",
+                "addDelay"
             }
         },
         {
@@ -1020,30 +1038,44 @@ public static class AttributeDatabase
 
 
         new SpecialDefaultValue("mS", "lost_adventurer_idle_left_001", 0.1f ){ },
+        new SpecialDefaultValue("addDelay", "lost_adventurer_idle_left_001", 1f ){ },
+        
+        //addDelay
         new SpecialDefaultValue("mS", "spinning_log_spike_horizontal_001", 3f ){ },
         new SpecialDefaultValue("mS", "spinning_ice_log_spike_horizontal_001", 3f ){ },
         new SpecialDefaultValue("mS", "spinning_log_spike_vertical_001", 3f ){ },
         new SpecialDefaultValue("mS", "spinning_ice_log_spike_vertical_001", 3f ){ },
 
+        new SpecialDefaultValue("addDelay", "spinning_log_spike_horizontal_001", 0.5f ){ },
+        new SpecialDefaultValue("addDelay", "spinning_ice_log_spike_horizontal_001", 0.5f ){ },
+        new SpecialDefaultValue("addDelay", "spinning_log_spike_vertical_001", 0.5f ){ },
+        new SpecialDefaultValue("addDelay", "spinning_ice_log_spike_vertical_001", 0.5f ){ },
+
+
         new SpecialDefaultValue("TileSizeX_", "sewer_platform_moving_001", 3 ){ },
         new SpecialDefaultValue("TileSizeY_", "sewer_platform_moving_001", 3 ){ },
         new SpecialDefaultValue("mS", "sewer_platform_moving_001", 3f ){ },
+        new SpecialDefaultValue("addDelay", "sewer_platform_moving_001", 1f ){ },
 
         new SpecialDefaultValue("TileSizeX_", "gungeon_platform_moving_001", 3 ){ },
         new SpecialDefaultValue("TileSizeY_", "gungeon_platform_moving_001", 3 ){ },
         new SpecialDefaultValue("mS", "gungeon_platform_moving_001", 3f ){ },
+        new SpecialDefaultValue("addDelay", "gungeon_platform_moving_001", 1f ){ },
 
         new SpecialDefaultValue("TileSizeX_", "mines_platform_moving_001", 3 ){ },
         new SpecialDefaultValue("TileSizeY_", "mines_platform_moving_001", 3 ){ },
         new SpecialDefaultValue("mS", "mines_platform_moving_001", 3f ){ },
+        new SpecialDefaultValue("addDelay", "mines_platform_moving_001", 1f ){ },
 
         new SpecialDefaultValue("TileSizeX_", "catacombs_platform_moving_001", 3 ){ },
         new SpecialDefaultValue("TileSizeY_", "catacombs_platform_moving_001", 3 ){ },
         new SpecialDefaultValue("mS", "catacombs_platform_moving_001", 3f ){ },
+        new SpecialDefaultValue("addDelay", "catacombs_platform_moving_001", 1f ){ },
 
         new SpecialDefaultValue("TileSizeX_", "forge_platform_moving_001", 3 ){ },
         new SpecialDefaultValue("TileSizeY_", "forge_platform_moving_001", 3 ){ },
         new SpecialDefaultValue("mS", "forge_platform_moving_001", 3f ){ },
+        new SpecialDefaultValue("addDelay", "forge_platform_moving_001", 1f ){ },
 
         new SpecialDefaultValue("cartActive", "minecart_spawner", true ){ },
 
@@ -1052,6 +1084,9 @@ public static class AttributeDatabase
         new SpecialDefaultValue("TrapTriggerDelay", "horizontal_crusher", 3f ){ },
         new SpecialDefaultValue("TrapTriggerDelay", "vertical_crusher", 3f ){ },
 
+
+
+        //addDelay
     };
 
     //TrapTriggerDelay--vertical_crusher-horizontal_crusher

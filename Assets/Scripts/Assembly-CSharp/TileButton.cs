@@ -26,6 +26,7 @@ public class TileButton : MonoBehaviour
 	
 	public void UpdateAppearance()
 	{
+		Debug.Log(1);
 		bool flag = !this.tile;
 		if (flag)
 		{
@@ -33,19 +34,22 @@ public class TileButton : MonoBehaviour
 		}
 		else
 		{
-			bool flag2 = this.tile.sprite != Manager.Instance.missingImageTileSprite;
+            bool flag2 = this.tile.sprite != Manager.Instance.missingImageTileSprite;
 			if (flag2)
 			{
-				Texture2D squaredTexture = this.tile.sprite.texture.Square();
-				this.image.sprite = squaredTexture.ToSprite();
-				this.text.enabled = false;
-			}
+                if (this.tile.sprite)
+				{
+                    Texture2D squaredTexture = this.tile.sprite.texture.Square();
+                    this.image.sprite = squaredTexture.ToSprite();
+                    this.text.enabled = false;
+                }
+            }
 			else
 			{
-				this.text.text = this.tile.name.Replace("_", " ");
-				this.image.enabled = false;
-			}
-		}
+                this.text.text = this.tile.name.Replace("_", " ");
+                this.image.enabled = false;
+            }
+        }
 	}
 
 	

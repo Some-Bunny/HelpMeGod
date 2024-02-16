@@ -59,10 +59,10 @@ public abstract class AttributeItem : MonoBehaviour
 
                     int H = int.Parse(Obj);
                     int H2 = int.Parse(JToken.FromObject(this.Value).ToString());
-                    Debug.LogError(System.DateTime.Now);
+                    //Debug.LogError(System.DateTime.Now);
 
-                    Debug.LogError("Value Current: " + H.ToString());
-                    Debug.LogError("Value New: " + H2.ToString());
+                    //Debug.LogError("Value Current: " + H.ToString());
+                    //Debug.LogError("Value New: " + H2.ToString());
 
                     for (int k = 0; k < NodePathLayerHandler.Instance.LayerCount; k++)
                     {

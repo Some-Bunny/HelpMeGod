@@ -39,7 +39,8 @@ public static class ImportExport
 			nodePositions = new Vector2[0],
 			nodeTypes = new string[0],
 			nodeWrapModes = new string[0],
-			exitDirections = new string[0],
+            additionalPauseDelay = new float[0],
+            exitDirections = new string[0],
 			exitPositions = new Vector2[0],
 			floors = new string[0],
 			category = "",
@@ -543,8 +544,9 @@ public static class ImportExport
         if (NodePathLayerHandler.Instance.LayerCount != 0)
 		{
 			List<Dictionary<Vector2Int, Tile>> tileArrays = new List<Dictionary<Vector2Int, Tile>>();
-			
-			for (int i = 0; i < NodePathLayerHandler.Instance.LayerCount; i++)
+            Dictionary<Vector2Int, float> tileArrays_ = new Dictionary<Vector2Int, float>();
+
+            for (int i = 0; i < NodePathLayerHandler.Instance.LayerCount; i++)
             {
                 //tileArrays.Add(new Tile[Manager.roomSize.x, Manager.roomSize.y]);
                 tileArrays.Add(new Dictionary<Vector2Int, Tile>());
@@ -574,8 +576,9 @@ public static class ImportExport
 
             for (int i = 0; i < data.nodeOrder.Length; i++)
 			{
+                JToken value = null;
 
-				int j = stupidJankyPieceOfShit[i].Item2;
+                int j = stupidJankyPieceOfShit[i].Item2;
 				 //.ToString/.TryGetValue(i, out j);
 				//Debug.LogError($"{data.nodeTypes[j]} - j{j} - i{i} - {data.nodeTypes[j]}");
 
@@ -609,8 +612,9 @@ public static class ImportExport
 					{
                         tileArrays[layer].Add(new Vector2Int((int)position.x, (int)position.y), tile);
                     }
+                    tileArrays_.Add(new Vector2Int((int)position.x, (int)position.y), data.additionalPauseDelay != null ? data.additionalPauseDelay[i] : 0f);
                 }
-			}
+            }
 
 			for (int k = 0; k < NodePathLayerHandler.Instance.LayerCount; k++)
 			{
@@ -623,7 +627,7 @@ public static class ImportExport
 
                     NodePathLayerHandler.Instance.GetMap(k).map.SetTile(TilemapHandler.GameToLocalPosition(tileShit.Key), tileShit.Value);
 
-					(NodePathLayerHandler.Instance.GetMap(k) as NodeMap).AddNewNodeTile(tileShit.Value as DataTile, TilemapHandler.GameToLocalPosition(tileShit.Key));
+					(NodePathLayerHandler.Instance.GetMap(k) as NodeMap).AddNewNodeTile(tileShit.Value as DataTile, TilemapHandler.GameToLocalPosition(tileShit.Key), tileArrays_[tileShit.Key]);
 				}
 				if (bastard_2.Count > 0)
 				{
@@ -677,7 +681,7 @@ public static class ImportExport
 			}
 			for (int k = 0; k < EnemyLayerHandler.Instance.LayerCount; k++)
 			{
-                Debug.LogError("dadsaklokjioojuik " + k);
+                //Debug.LogError("dadsaklokjioojuik " + k);
 
 				if (bastard.ContainsKey(k))
 				{
@@ -888,9 +892,10 @@ public static class ImportExport
         public Vector2[] nodePositions;
 		public int[] nodePaths;
 		public int[] nodeOrder;
+        public float[] additionalPauseDelay;
 
 
-		public Vector2[] placeablePositions;
+        public Vector2[] placeablePositions;
 		public string[] placeableGUIDs;
 		public string[] placeableAttributes;
 
@@ -920,6 +925,7 @@ public static class ImportExport
         public bool usesAmbientLight;
 
         public string specialRoomPool;
+
 
     }
 

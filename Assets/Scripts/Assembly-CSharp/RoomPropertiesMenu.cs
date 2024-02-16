@@ -108,9 +108,9 @@ public class RoomPropertiesMenu : MonoBehaviour
 		properties.doLighting = this.lightingButton.Toggled;
 		properties.visualSubtype = int.Parse(this.visualSubtypeField.text);
 
-        properties.AmbientLight_R = int.Parse(this.AmbientColor_R.text);
-        properties.AmbientLight_G = int.Parse(this.AmbientColor_G.text);
-        properties.AmbientLight_B = int.Parse(this.AmbientColor_B.text);
+		properties.AmbientLight_R = float.Parse(this.AmbientColor_R.text);
+        properties.AmbientLight_G = float.Parse(this.AmbientColor_G.text);
+        properties.AmbientLight_B = float.Parse(this.AmbientColor_B.text);
         properties.usesAmbientLight = this.usesAmbientLighting.Toggled;
         properties.specialRoomPool = this.specialRoomPool.text;
 

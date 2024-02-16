@@ -53,11 +53,15 @@ public class ImportCustomEnemyScript : MonoBehaviour
                 SaveCustomEnemy();
             }
         }
-
-
-        Reset();
+        InputHandler.Instance.StartCoroutine(Delay());
     }
 
+    public IEnumerator Delay()
+    {
+        yield return new WaitForSeconds(0.05f);
+        Reset();
+        yield break;
+    }
 
     public void Reset()
     {
@@ -84,7 +88,7 @@ public class ImportCustomEnemyScript : MonoBehaviour
     {
         var map = Manager.Instance.GetTilemap(TilemapHandler.MapType.Enemies);
 
-        if (importedSpritePath == null) { return; }
+        if (importedSpritePath == null || importedSpritePath == string.Empty || importedSpritePath == "") { return; }
 
 
         File.Copy(importedSpritePath, Path.Combine(Manager.EnemyOutputPath, $"{outputName}.png"));
@@ -111,6 +115,9 @@ public class ImportCustomEnemyScript : MonoBehaviour
 
         map.tileDatabase.Entries.Add($"customPlaceableAsset-{outputName}", inputGuid.text);
         map.tiles.Add(map.SetupTile(map.tileDatabase, $"customPlaceableAsset-{outputName}", inputGuid.text, Manager.Instance.emptyTile));
+
+        //if (!map.spriteSwitch.ContainsKey($"customEnemyAsset-{outputName}")) map.spriteSwitch.Add($"customEnemyAsset-{outputName}", importedSprite.spr);
+
 
         if (PaletteDropdown.Instance.palettes[3].Populated)
         {

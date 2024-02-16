@@ -217,9 +217,9 @@ public class InputHandler : MonoBehaviour
             }
 			if (!InputHandler.Instance.nodeMode && p != true)
 			{
-                Debug.LogError("A + " + p.ToString());
+                //Debug.LogError("A + " + p.ToString());
                 p = true;
-				Debug.LogError("A + " + p.ToString());
+				//Debug.LogError("A + " + p.ToString());
                 Manager.Instance.environment.GetComponent<Tilemap>().color = Color.white;
                 Manager.Instance.exits.GetComponent<Tilemap>().color = Color.white;
                 Manager.Instance.placeables.GetComponent<Tilemap>().color = Color.white;
@@ -375,7 +375,7 @@ public class InputHandler : MonoBehaviour
         this.selectedTilePosition = tilePosition;
         if (this.selectedTile)
         {
-            NotificationHandler.Instance.Notify("Copied Tile:" + this.selectedTile.name);
+            NotificationHandler.Instance.Notify("[ Copied Tile: " + this.selectedTile.name + " ]");
             map.SetTileFlags(tilePosition, TileFlags.None);
             this.attributesWindow.Repopulate();
             t.CopiedTile = this.selectedTile;
@@ -617,13 +617,13 @@ public class InputHandler : MonoBehaviour
 		}
         if (Input.GetKey(KeyCode.Mouse1))
         {
-			if (this.m_brushType == BrushButton.BrushType.COPY)
+			//if (this.m_brushType == BrushButton.BrushType.COPY)
 			{
 				var tileMap = Manager.Instance.GetTilemap(this.activeTilemap);
 
                 if (tileMap.CopiedTile != null)
 				{
-                    NotificationHandler.Instance.Notify("Deselected Tile:" + tileMap.CopiedTile.name);
+                    NotificationHandler.Instance.Notify("[ Deselected Tile: " + tileMap.CopiedTile.name + " ]");
                     tileMap.CopiedTile = null;
                 }
             }

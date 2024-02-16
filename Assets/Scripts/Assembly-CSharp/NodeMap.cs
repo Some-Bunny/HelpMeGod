@@ -50,7 +50,9 @@ public class NodeMap : TilemapHandler
 		public List<int> placmentOrders = new List<int>();
 		public List<Vector2> positions = new List<Vector2>();
         public List<string> tileName = new List<string>();
-		public int Order;
+        public List<float> delayTime = new List<float>();
+
+        public int Order;
     }
 
 	public Vector2? returnTilePositionWorld(Tile[,] tiles, DataTile myTile)
@@ -145,13 +147,19 @@ public class NodeMap : TilemapHandler
             Vector2? vector2 = returnTilePositionWorld(tiles, tile);
             if (vector2 != null)
             {
+                JToken value = null;
                 if (!fuck.ContainsKey(index))
                 {
+                    var f = tile.data.TryGetValue("Pause here for:", out value) ? ((float)value) : 0f;
+                    Debug.LogError("pissPee: " + f);
                     fuck.Add(index, new ValueStoragetoPreventHeadaches()
                     {
                         placmentOrders = new List<int>() { tile.PositionInNodeMap(this) },
                         positions = new List<Vector2>() { vector2.Value },
                         tileName = new List<string>() { this.tileDatabase.AllEntries[tile.name] },
+
+                        delayTime = new List<float>() { tile.data.TryGetValue("Pause here for:", out value) ? ((float)value) : 0f                
+                        },
                         Order = index
                     }); //new List<int>() { tile.placmentOrder });
                         //Debug.LogError("new index of" + index + ": " + tile.placmentOrder);
@@ -165,6 +173,9 @@ public class NodeMap : TilemapHandler
                     Debug.LogWarning(tile.PositionInNodeMap(this));
                     pp.positions.Add(vector2.Value);
                     pp.tileName.Add(this.tileDatabase.AllEntries[tile.name]);
+                    var f = tile.data.TryGetValue("Pause here for:", out value) ? ((float)value) : 0f;
+                    Debug.LogError("pissPee: " + f);
+                    pp.delayTime.Add(tile.data.TryGetValue("Pause here for:", out value) ? ((float)value) : 0f);
                 }
                 triggers.Add(trigger.ToString());
                 isVisiblly.Add(isVisible);
@@ -179,6 +190,7 @@ public class NodeMap : TilemapHandler
 
         List<Vector2> cextors = new List<Vector2> { };
             List<string> asad = new List<string> { };
+        List<float> dfgfg = new List<float> { };
 
         foreach (var entry in fuck)
         {
@@ -192,7 +204,7 @@ public class NodeMap : TilemapHandler
             {
                 cextors.Add(entry.Value.positions[entry2]);
                 asad.Add(entry.Value.tileName[entry2]);
-
+                dfgfg.Add(entry.Value.delayTime[entry2]);
                 //data.nodePaths = data.nodePaths.Concat(layers.ToArray()).ToArray<int>();
                 //data.nodeOrder =  //data.nodeOrder.Concat().ToArray<int>();
             }
@@ -232,6 +244,7 @@ public class NodeMap : TilemapHandler
         data.nodeWrapModes = data.nodeWrapModes.Concat(triggers.ToArray()).ToArray();
         data.nodePathVisible = data.nodePathVisible.Concat(isVisiblly.ToArray()).ToArray();
 
+        data.additionalPauseDelay = data.additionalPauseDelay.Concat(dfgfg.ToArray()).ToArray();
 
         //var diediediediediediediediedie = 0;
         /*foreach (var cunt in nodes)
@@ -323,7 +336,7 @@ public class NodeMap : TilemapHandler
 
 
 
-	public void AddNewNodeTile(DataTile tile, Vector3Int position)
+	public void AddNewNodeTile(DataTile tile, Vector3Int position, float delay = 0)
     {
 		//overrideOrder = -1;
 		//Debug.LogError("ORDER:");
@@ -428,13 +441,16 @@ public class NodeMap : TilemapHandler
             foreach (AC ac in aCs)
             {
 				if (!tile.data.ContainsKey(ac.longName) && ac.longName == "Node Order") tile.data.Add(ac.longName, tile.PositionInNodeMap(this).ToString());
-				else if (!tile.data.ContainsKey(ac.longName))
+				else if (!tile.data.ContainsKey(ac.longName) && ac.longName != "Pause here for:")
 				{
 
                     tile.data.Add(ac.longName, JToken.FromObject(tile.name));
-                    tile.data[ac.longName] = JToken.FromObject(tile.name);
-
-                   
+                    tile.data[ac.longName] = JToken.FromObject(tile.name);         
+                }
+                else if (ac.longName == "Pause here for:")
+                {
+                    //tile.data.Add(ac.longName, JToken.FromObject(delay));
+                    tile.data[ac.longName] = JToken.FromObject(delay);
                 }
             }
         }

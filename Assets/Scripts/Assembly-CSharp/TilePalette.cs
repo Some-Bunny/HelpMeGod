@@ -8,12 +8,7 @@ using UnityEngine.UI;
 
 public class TilePalette : MonoBehaviour
 {
-	
-	
-	 
 	public bool Populated { get; set; }
-
-	
 	public void Show()
 	{
 		if (Manager.Instance.GetTilemap(this.mapType))
