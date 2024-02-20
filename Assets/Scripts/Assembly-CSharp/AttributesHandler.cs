@@ -116,14 +116,24 @@ public class AttributesHandler : MonoBehaviour
 	public void AddTileAttribute(string attributeName, JToken attribute)
 	{
 		GameObject prefab;
+		Debug.LogError("Att Type: "+attribute.Type);
+
 		switch (attribute.Type)
 		{
 		case JTokenType.Integer:
 			prefab = this.intAttributePrefab;
 			break;
 		case JTokenType.Float:
-			prefab = ((AttributeDatabase.allAttributes[AttributeDatabase.LongToShortName(attributeName)].possibleValues.Length == 2) ? this.floatBarAttributePrefab : this.floatAttributePrefab);
-			break;
+                if (attributeName == "Start At Node:")
+				{
+                    prefab = intAttributePrefab;
+                    break;
+                }
+				else
+				{
+                    prefab = ((AttributeDatabase.allAttributes[AttributeDatabase.LongToShortName(attributeName)].possibleValues.Length == 2) ? this.floatBarAttributePrefab : this.floatAttributePrefab);
+                    break;
+                }
 		case JTokenType.String:
 			prefab = ((AttributeDatabase.allAttributes[AttributeDatabase.LongToShortName(attributeName)].possibleValues.Length != 0) ? this.dropdownStringAttributePrefab : this.stringAttributePrefab);
 			break;

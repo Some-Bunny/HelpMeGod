@@ -36,18 +36,18 @@ public abstract class AttributeItem : MonoBehaviour
 
                         if (node.fuckYou.Count -1 < int.Parse(this.Value.ToString()))
                         {
-                            dataTile.data[this.propertyName] = JToken.FromObject(node.fuckYou.Count -1);
+                            dataTile.data[this.propertyName] = (int)JToken.FromObject(node.fuckYou.Count -1);
                             NotificationHandler.Instance.Notify("Value was Out Of Bounds, reverting back to: "+(node.fuckYou.Count - 1));
 
                         }
                         else if (int.Parse(this.Value.ToString()) < 0)
                         {
-                            dataTile.data[this.propertyName] = JToken.FromObject(0);
+                            dataTile.data[this.propertyName] = (int)JToken.FromObject(0);
                             NotificationHandler.Instance.Notify("Value was Out Of Bounds, reverting back to: 0");
                         }
                         else
                         {
-                            dataTile.data[this.propertyName] = JToken.FromObject(this.Value);
+                            dataTile.data[this.propertyName] = (int)JToken.FromObject(this.Value);
                         }
                     }
                 }

@@ -544,12 +544,16 @@ public static class ImportExport
         if (NodePathLayerHandler.Instance.LayerCount != 0)
 		{
 			List<Dictionary<Vector2Int, Tile>> tileArrays = new List<Dictionary<Vector2Int, Tile>>();
-            Dictionary<Vector2Int, float> tileArrays_ = new Dictionary<Vector2Int, float>();
+            List<Dictionary<Vector2Int, float>> tileArrays_ = new List<Dictionary<Vector2Int, float>>();
+
+            //Dictionary<Vector2Int, float> tileArrays_ = new Dictionary<Vector2Int, float>();
 
             for (int i = 0; i < NodePathLayerHandler.Instance.LayerCount; i++)
             {
                 //tileArrays.Add(new Tile[Manager.roomSize.x, Manager.roomSize.y]);
                 tileArrays.Add(new Dictionary<Vector2Int, Tile>());
+                tileArrays_.Add(new Dictionary<Vector2Int, float>());
+
             }
 
             Dictionary<int, string> bastard = new Dictionary<int, string>();
@@ -612,13 +616,17 @@ public static class ImportExport
 					{
                         tileArrays[layer].Add(new Vector2Int((int)position.x, (int)position.y), tile);
                     }
-                    tileArrays_.Add(new Vector2Int((int)position.x, (int)position.y), data.additionalPauseDelay != null ? data.additionalPauseDelay[i] : 0f);
+                    if (!tileArrays_[layer].ContainsKey(new Vector2Int((int)position.x, (int)position.y)))
+					{
+                        tileArrays_[layer].Add(new Vector2Int((int)position.x, (int)position.y), data.additionalPauseDelay != null ? data.additionalPauseDelay[i] : 0f);
+                    }
                 }
             }
 
 			for (int k = 0; k < NodePathLayerHandler.Instance.LayerCount; k++)
 			{
-				foreach(var tileShit in tileArrays[k])
+
+                foreach (var tileShit in tileArrays[k])
                 {
 					//NodePathLayerHandler.Instance.GetMap(k)
 
@@ -627,7 +635,7 @@ public static class ImportExport
 
                     NodePathLayerHandler.Instance.GetMap(k).map.SetTile(TilemapHandler.GameToLocalPosition(tileShit.Key), tileShit.Value);
 
-					(NodePathLayerHandler.Instance.GetMap(k) as NodeMap).AddNewNodeTile(tileShit.Value as DataTile, TilemapHandler.GameToLocalPosition(tileShit.Key), tileArrays_[tileShit.Key]);
+					(NodePathLayerHandler.Instance.GetMap(k) as NodeMap).AddNewNodeTile(tileShit.Value as DataTile, TilemapHandler.GameToLocalPosition(tileShit.Key), tileArrays_[k][tileShit.Key]);
 				}
 				if (bastard_2.Count > 0)
 				{
