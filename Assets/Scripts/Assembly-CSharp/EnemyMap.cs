@@ -84,7 +84,7 @@ public class EnemyMap : TilemapHandler
 		foreach(var enemy in CustomObjectDatabase.Instance.customEnemies)
         {
 			this.tileDatabase.Entries.Add($"customEnemyAsset-{enemy.name}", enemy.guid);
-			Debug.Log(enemy.name);
+			//Debug.Log(enemy.name);
 		}
 
 		return this.tileDatabase;

@@ -64,7 +64,7 @@ public class FileButton : DropdownContentButton
 	{
 		Manager.FilePath = null;
 		Manager.r0dent = true;
-		Manager.roomSize = new Vector2Int(36, 27);
+		Manager.roomSize = new Vector2Int(34, 24);
 		Manager.Reload();
 	}
 

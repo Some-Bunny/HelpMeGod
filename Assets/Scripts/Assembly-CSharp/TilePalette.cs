@@ -73,10 +73,13 @@ public class TilePalette : MonoBehaviour
 					{
 						if (tile.name != Manager.paletteDividerGuid)
 						{
-							this.AddTileButton(tile);
+                            //Debug.Log("A");
+
+                            this.AddTileButton(tile);
 						}
 						else
 						{
+							//Debug.Log("B");
 							this.AddPaletteDivider(map.tileDatabase.Entries.Keys.ToList<string>()[map.tiles.IndexOf(tile)]);
 						}
 						this.content.sizeDelta = new Vector2(this.content.sizeDelta.x, -this.GetCellPosition(this.buttons.Last<KeyValuePair<string, List<TileButton>>>().Value.Count - 1).y + this.CellSize);

@@ -92,12 +92,12 @@ public class EnvironmentMap : TilemapHandler
 		this.map.FloodFill(new Vector3Int(xmax - 5, ymax - 7, 0), this.palette["floor"]);
 
 		var exitMap = Manager.Instance.GetTilemap(TilemapHandler.MapType.Exits);
-		exitMap.map.SetTile(new Vector3Int(xmin + 17, ymin, 0), exitMap.palette["door_south"]);
-		exitMap.map.SetTile(new Vector3Int(xmin + 17, ymax - 1, 0), exitMap.palette["door_north"]);
+		exitMap.map.SetTile(new Vector3Int(xmin + 16, ymin, 0), exitMap.palette["door_south"]);
+		exitMap.map.SetTile(new Vector3Int(xmin + 16, ymax - 1, 0), exitMap.palette["door_north"]);
 
 
-		exitMap.map.SetTile(new Vector3Int(xmin, ymax - 15, 0), exitMap.palette["door_west"]);
-		exitMap.map.SetTile(new Vector3Int(xmax - 1, ymax - 15, 0), exitMap.palette["door_east"]);
+		exitMap.map.SetTile(new Vector3Int(xmin, ymax - 13, 0), exitMap.palette["door_west"]);
+		exitMap.map.SetTile(new Vector3Int(xmax - 1, ymax - 13, 0), exitMap.palette["door_east"]);
 	}
 
 	public TileBase[] CreateTileArrayOfLength(int length, TileBase tile)

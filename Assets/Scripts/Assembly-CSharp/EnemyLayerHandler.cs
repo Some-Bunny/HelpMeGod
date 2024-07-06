@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -35,6 +36,7 @@ public class EnemyLayerHandler : MonoBehaviour
 	
 	public EnemyMap GetMap(int index)
 	{
+		if (this.enemyMaps.Count <= index) { return this.enemyMaps.Last();  }
 		return this.enemyMaps[index];
 	}
 

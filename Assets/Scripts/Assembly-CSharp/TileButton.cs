@@ -26,7 +26,6 @@ public class TileButton : MonoBehaviour
 	
 	public void UpdateAppearance()
 	{
-		Debug.Log(1);
 		bool flag = !this.tile;
 		if (flag)
 		{

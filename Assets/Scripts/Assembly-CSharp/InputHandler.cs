@@ -83,7 +83,8 @@ public class InputHandler : MonoBehaviour
 	 
 	public void SetSelectedTile(Tile tile, TilemapHandler.MapType type)
 	{
-		if (this.BrushType == BrushButton.BrushType.ERASER)
+
+        if (this.BrushType == BrushButton.BrushType.ERASER)
 		{
 			this.BrushType = BrushButton.BrushType.BRUSH;
 		}
@@ -94,12 +95,13 @@ public class InputHandler : MonoBehaviour
         this.m_selectedTile = t.CopiedTile != null ? t.CopiedTile : tile;
 		this.lastTiles[type] = t.CopiedTile != null ? t.CopiedTile : tile;
 
-		//selectedThingIsCustom = ;
-		ToggleDeleteButton(tile.name.Contains("customEnemyAsset-") || tile.name.Contains("customPlaceableAsset-"));
-	}
+        //selectedThingIsCustom = ;
+        ToggleDeleteButton(tile.name.Contains("customEnemyAsset-") || tile.name.Contains("customPlaceableAsset-"));
 
-	 
-	private void Awake()
+    }
+
+
+    private void Awake()
 	{
 		InputHandler.Instance = this;
 		this.activeTilemap = TilemapHandler.MapType.Environment;

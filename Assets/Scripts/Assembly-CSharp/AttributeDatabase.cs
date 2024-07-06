@@ -505,6 +505,15 @@ public static class AttributeDatabase
             "addDelay",
             new AC("Pause upon reaching node for:", "addDelay", 0f, new object[0])
         },
+        {
+            "offsetx",
+            new AC("Offset X by:", "offsetx", 0f, new object[0])
+        },
+        {
+            "offsety",
+            new AC("Offset Y by:", "offsety", 0f, new object[0])
+        },
+
     };
 
     
@@ -512,6 +521,15 @@ public static class AttributeDatabase
 
     public static Dictionary<AttributeDatabase.ValidAttribute, string[]> attributeListings = new Dictionary<AttributeDatabase.ValidAttribute, string[]>
 	{
+        //godray
+        {
+            (string name) => name == "godray",
+            new string[]
+            {
+                "offsetx",
+                "offsety",
+            }
+        },
         {
             (string name) => name == "shopItemPosition" | name == "glass_case_pedestal_whatever",
             new string[]

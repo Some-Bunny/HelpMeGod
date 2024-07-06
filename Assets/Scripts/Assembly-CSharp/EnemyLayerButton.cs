@@ -59,8 +59,8 @@ public class EnemyLayerButton : MonoBehaviour
     public void OnValueChanged()
     {
         triggerCondition = Enums.GetEnumValue<RoomEventTriggerCondition>(triggerDropdown.options[triggerDropdown.value].text);
-        Debug.Log(triggerCondition);
-        Debug.Log("changed");
+        //Debug.Log(triggerCondition);
+        //Debug.Log("changed");
     }
 
     private float m_lastClick;

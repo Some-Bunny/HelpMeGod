@@ -702,12 +702,16 @@ public class PlaceableDatabase : TileDatabase
                 },
 
                 {
-                    "Custom Lights",
+                    "Special Lights",
                     Manager.paletteDividerGuid
                 },
                 {
                     "lightbulbThankYouNevernamed",
                     "CustomlightSource"
+                },
+                {
+                    "godray",
+                    "godray"
                 },
                 {
 					"People",
@@ -719,24 +723,24 @@ public class PlaceableDatabase : TileDatabase
 				},
 				{
 					"npc_cultist_bowright",
-					"cultistbaldbowbackleft_cutout"
-				},
+                    "cultistbaldbowbackright_cutout"
+                },
 				{
 					"npc_cultist_bowleft",
-					"cultistbaldbowbackright_cutout"
-				},
+                    "cultistbaldbowbackleft_cutout"
+                },
 				{
 					"npc_cultist_hooded_facingaway",
 					"cultisthoodbowback_cutout"
 				},
 				{
 					"npc_cultist_hooded_facingright",
-					"cultisthoodbowleft_cutout"
-				},
+                    "cultisthoodbowright_cutout"
+                },
 				{
 					"npc_cultist_hooded_facingleft",
-					"cultisthoodbowright_cutout"
-				},
+                    "cultisthoodbowleft_cutout"
+                },
 				{
 					"unconscious_soldier_1",
 					"unconscious_soldier_1"

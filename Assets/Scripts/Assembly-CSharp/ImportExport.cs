@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Xml.Linq;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -468,8 +471,18 @@ public static class ImportExport
 			{
 				string guid = data.placeableGUIDs[i];
 				Vector2 position = data.placeablePositions[i];
-				string attributes = data.placeableAttributes[i];
-				string id = mapHandler.tileDatabase.GetID(guid);
+
+                string attributes = String.Empty;
+
+                if (data.enemyAttributes == null)
+                {
+                    
+                }
+                else
+                {
+                    attributes = data.enemyAttributes[i];
+                }
+                string id = mapHandler.tileDatabase.GetID(guid);
 				bool flag = id == null || !mapHandler.palette.ContainsKey(id);
 				if (flag)
 				{
@@ -478,8 +491,11 @@ public static class ImportExport
 				else
 				{
 					DataTile tile = TilemapHandler.Clone(mapHandler.palette[id]);
-					tile.data = AttributeDatabase.ToLongNamed(JObject.Parse(attributes));
-					mapHandler.map.SetTile(TilemapHandler.GameToLocalPosition((int)position.x, (int)position.y), tile);
+                    if (attributes != String.Empty)
+                    {
+                        tile.data = AttributeDatabase.ToLongNamed(JObject.Parse(attributes));
+                    }
+                    mapHandler.map.SetTile(TilemapHandler.GameToLocalPosition((int)position.x, (int)position.y), tile);
 				}
 			}
 		}
@@ -758,29 +774,48 @@ public static class ImportExport
 			}
 			for (int j = 0; j < data.enemyGUIDs.Length; j++)
 			{
-				int layer = data.enemyReinforcementLayers[j];
-				EnemyMap mapHandler = EnemyLayerHandler.Instance.GetMap(layer);
-				string guid = data.enemyGUIDs[j];
-				Vector2 position = data.enemyPositions[j];
-				string attributes = data.enemyAttributes[j];
+
+                int layer = data.enemyReinforcementLayers[j];
+
+                EnemyMap mapHandler = EnemyLayerHandler.Instance.GetMap(layer);
+
+                string guid = data.enemyGUIDs[j];
+
+                Vector2 position = data.enemyPositions[j];
+
+                string attributes = String.Empty;
+
+                if (data.enemyAttributes == null)
+				{
+
+                }
+				else
+				{
+					attributes = data.enemyAttributes[j];
+                }
 				string id = mapHandler.tileDatabase.GetID(guid);
 				bool flag2 = !mapHandler.palette.ContainsKey(id);
 				if (flag2)
 				{
 					Debug.Log(id);
-				}
-				else
+
+                }
+                else
 				{
-					DataTile tile = TilemapHandler.Clone(mapHandler.palette[id]);
-					tile.data = AttributeDatabase.ToLongNamed(JObject.Parse(attributes));
-					tileArrays[layer][(int)position.x, (int)position.y] = tile;
-				}
-			}
+                    DataTile tile = TilemapHandler.Clone(mapHandler.palette[id]);
+					if (attributes != String.Empty)
+					{
+                        tile.data = AttributeDatabase.ToLongNamed(JObject.Parse(attributes));
+                    }
+                    tileArrays[layer][(int)position.x, (int)position.y] = tile;
+
+                }
+            }
 			for (int k = 0; k < EnemyLayerHandler.Instance.LayerCount; k++)
 			{
-				EnemyLayerHandler.Instance.GetMap(k).BuildFromTileArray(tileArrays[k]);
-			}
-		}
+                EnemyLayerHandler.Instance.GetMap(k).BuildFromTileArray(tileArrays[k]);
+            }
+        }
 	}
 
 
