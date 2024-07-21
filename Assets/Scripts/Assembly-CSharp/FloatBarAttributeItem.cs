@@ -20,8 +20,6 @@ public class FloatBarAttributeItem : AttributeItem
 			this.input.maxValue = (float)atr.possibleValues[1];
 			this.input.value = (float)value;
 		}
-	}
-
-	
+	}	
 	public Slider input;
 }

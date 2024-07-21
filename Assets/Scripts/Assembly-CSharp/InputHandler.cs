@@ -123,6 +123,8 @@ public class InputHandler : MonoBehaviour
 	{
 		yield return null;
         if (LineRenderer_Dynamic_Instance == null) LineRenderer_Dynamic_Instance = new GameObject("Line Renderer");
+		
+		Camera.main.orthographicSize = StartScale;
 
         //if (LineRenderer != null) { Debug.LogError("NOT NULL"); }
         var renderer = LineRenderer_Dynamic_Instance.gameObject.GetOrAddComponent<LineRenderer>();
@@ -705,12 +707,23 @@ public class InputHandler : MonoBehaviour
 			if (flag2)
 			{
 			}
-			Vector3 s = this.grid.transform.localScale;
-			s.x = Mathf.Clamp(s.x + amount / 10f, 0.15f, 2f);
-			s.y = s.x;
-			this.ScaleAround(this.grid.gameObject, Camera.main.ScreenToWorldPoint(new Vector3(this.m_mousePosition.x, this.m_mousePosition.y, this.grid.transform.localPosition.z)), s);
+
+
+            currentScale = Mathf.Clamp(currentScale - amount, 1, 14);
+
+
+
+            Camera.main.orthographicSize = currentScale;
+
+            //Vector3 s = this.grid.transform.localScale;
+            //s.x = Mathf.Clamp(s.x + amount / 10f, 0.15f, 2f);
+            //s.y = s.x;
+            //this.ScaleAround(this.grid.gameObject, Camera.main.ScreenToWorldPoint(new Vector3(this.m_mousePosition.x, this.m_mousePosition.y, this.grid.transform.localPosition.z)), s);
         }
     }
+
+	private static float StartScale = 5;//Camera.main.orthographicSize;
+    private float currentScale = 5;
 
 
 
@@ -845,19 +858,21 @@ public class InputHandler : MonoBehaviour
 
     private void ScaleAround(GameObject target, Vector3 pivot, Vector3 newScale)
 	{
+		/*
 		Vector3 A = target.transform.localPosition;
 		Vector3 C = A - pivot;
 		float RS = newScale.x / target.transform.localScale.x;
 		Vector3 FP = pivot + C * RS;
 		target.transform.localScale = newScale;
 		target.transform.localPosition = FP;
+		*/
     }
 
 	 
 	private void Pan()
 	{
         Vector3 d = this.m_mousePosition - this.m_mouseLastPosition;
-		this.grid.transform.position += d / 61f;
+		this.grid.transform.position += d / (60f / (currentScale / 3));
 	}
 
 	 

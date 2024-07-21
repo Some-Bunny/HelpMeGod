@@ -116,7 +116,6 @@ public class AttributesHandler : MonoBehaviour
 	public void AddTileAttribute(string attributeName, JToken attribute)
 	{
 		GameObject prefab;
-		Debug.LogError("Att Type: "+attribute.Type);
 
 		switch (attribute.Type)
 		{
@@ -144,7 +143,9 @@ public class AttributesHandler : MonoBehaviour
 			return;
 		}
 		AttributeItem att = UnityEngine.Object.Instantiate<GameObject>(prefab, this.content.transform).GetComponent<AttributeItem>();
-		att.propertyName = attributeName;
+        Debug.LogError("Att Type: " + attribute.Type + " : " + attribute.ToObject<object>());
+
+        att.propertyName = attributeName;
 		att.text.text = attributeName.SplitCamelCase().UppercaseFirst();
 		att.Value = attribute.ToObject<object>();
         this.attributes.Add(att);

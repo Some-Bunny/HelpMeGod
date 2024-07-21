@@ -49,7 +49,9 @@ public class CanvasHandler : MonoBehaviour
                     }
                 }
                 map.map.ClearAllTiles();
+
                 pain.fuckYou.Clear();
+                
                 map.ResizeBounds();
                 map.map.SetTilesBlock(newBounds, tiles);
                 for (int i = 0; i < c; i++)

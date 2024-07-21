@@ -474,14 +474,16 @@ public static class ImportExport
 
                 string attributes = String.Empty;
 
-                if (data.enemyAttributes == null)
+                if (data.placeableAttributes == null)
                 {
                     
                 }
                 else
                 {
-                    attributes = data.enemyAttributes[i];
+                    attributes = data.placeableAttributes[i];
                 }
+
+
                 string id = mapHandler.tileDatabase.GetID(guid);
 				bool flag = id == null || !mapHandler.palette.ContainsKey(id);
 				if (flag)

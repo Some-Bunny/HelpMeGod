@@ -28,7 +28,7 @@ namespace Assets.Scripts.Assembly_CSharp
         public static void DynamicWinchester(DataTile tile, LineRenderer renderer)
         {
             renderer.enabled = true;
-            renderer.startWidth = 0.1f * InputHandler.Instance.grid.transform.localScale.x;
+            renderer.startWidth = 0.1f;// * InputHandler.Instance.grid.transform.localScale.x;
             renderer.loop = true;
             renderer.gameObject.layer = 5;
             var localScale = InputHandler.Instance.grid.transform.localScale;
@@ -70,7 +70,7 @@ namespace Assets.Scripts.Assembly_CSharp
             bool vert = false;
             if (tile.name == "conveyor_belt_up") { vert = true; }
 
-            renderer.startWidth = 0.1f * InputHandler.Instance.grid.transform.localScale.x;
+            renderer.startWidth = 0.1f;// * InputHandler.Instance.grid.transform.localScale.x;
             renderer.loop = true;
             renderer.enabled = true;
             Tilemap map = Manager.Instance.GetTilemap(TilemapHandler.MapType.Nodes).map;
@@ -105,10 +105,10 @@ namespace Assets.Scripts.Assembly_CSharp
                 mode = GradientMode.Blend,
                 colorKeys = new GradientColorKey[]
                 {
-                    new GradientColorKey() { color = renderer.startColor * 2, time = 0 + (vert ? 0.25f : 0)},
-                    new GradientColorKey() { color = color * 2, time = 0.25f + (vert ? 0.25f : 0)},
-                    new GradientColorKey() { color = color * 2, time = 0.50f + (vert ? 0.25f : 0)},
-                    new GradientColorKey() { color =  renderer.startColor * 2, time = 0.75f + (vert ? 0.25f : 0)}
+                    new GradientColorKey() { color = renderer.startColor, time = 0 + (vert ? 0.25f : 0)},
+                    new GradientColorKey() { color = color, time = 0.25f + (vert ? 0.25f : 0)},
+                    new GradientColorKey() { color = color, time = 0.50f + (vert ? 0.25f : 0)},
+                    new GradientColorKey() { color =  renderer.startColor, time = 0.75f + (vert ? 0.25f : 0)}
                 },
                 alphaKeys = new GradientAlphaKey[]
                 {
@@ -168,7 +168,7 @@ namespace Assets.Scripts.Assembly_CSharp
         public static void DynamicRollersHeight(DataTile tile, LineRenderer renderer)
         {
             renderer.enabled = true;
-            renderer.startWidth = 0.1f * InputHandler.Instance.grid.transform.localScale.x;
+            renderer.startWidth = 0.1f;// * InputHandler.Instance.grid.transform.localScale.x;
             renderer.loop = true;
             renderer.gameObject.layer = 5;
             var localScale = InputHandler.Instance.grid.transform.localScale;
@@ -205,7 +205,7 @@ namespace Assets.Scripts.Assembly_CSharp
         public static void DynamicRollersLength(DataTile tile, LineRenderer renderer)
         {
             renderer.enabled = true;
-            renderer.startWidth = 0.1f * InputHandler.Instance.grid.transform.localScale.x;
+            renderer.startWidth = 0.1f;// * InputHandler.Instance.grid.transform.localScale.x;
             renderer.loop = true;
             renderer.gameObject.layer = 5;
             var localScale = InputHandler.Instance.grid.transform.localScale;
@@ -241,7 +241,7 @@ namespace Assets.Scripts.Assembly_CSharp
 
         public static void DynamicMovingTiles(DataTile tile, LineRenderer renderer)
         {
-            renderer.startWidth = 0.1f * InputHandler.Instance.grid.transform.localScale.x;
+            renderer.startWidth = 0.1f;// * InputHandler.Instance.grid.transform.localScale.x;
             renderer.loop = true;
             renderer.enabled = true;
             Tilemap map = Manager.Instance.GetTilemap(TilemapHandler.MapType.Nodes).map;
@@ -290,6 +290,5 @@ namespace Assets.Scripts.Assembly_CSharp
             renderer.SetPosition(2, pos + pos2);//new Vector3(pos.x + (pain.x * localScale.x), pos.y + (pain.y * localScale.y), pos.z));
             renderer.SetPosition(3, pos + pos3);//new Vector3(pos.x, pos.y + (pain.y * localScale.y), pos.z));
         }
-
     }
 }
